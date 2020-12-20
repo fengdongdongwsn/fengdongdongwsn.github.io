@@ -8,13 +8,21 @@
     <link href="/2020/12/20/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%B5%8B%E8%AF%95/"/>
     <url>/2020/12/20/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%B5%8B%E8%AF%95/</url>
     
-    <content type="html"><![CDATA[<p>这是我的第一篇博客</p>]]></content>
+    <content type="html"><![CDATA[<p>这是我的第一篇博客</p><h6 id="dfgfdg"><a href="#dfgfdg" class="headerlink" title="dfgfdg"></a>dfgfdg</h6>]]></content>
     
+    
+    <categories>
+      
+      <category>java</category>
+      
+    </categories>
     
     
     <tags>
       
-      <tag>测试</tag>
+      <tag>Hexo</tag>
+      
+      <tag>Fluid</tag>
       
     </tags>
     
