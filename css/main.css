@@ -316,7 +316,7 @@ img[srcset] {
 }
 :root {
   --color-mode: 'light';
-  --body-bg-color: #808080;
+  --body-bg-color: #bbb;
   --board-bg-color: #fff;
   --text-color: #3c4858;
   --sec-text-color: #718096;
