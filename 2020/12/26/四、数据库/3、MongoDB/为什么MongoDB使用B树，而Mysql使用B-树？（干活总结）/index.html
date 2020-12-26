@@ -215,7 +215,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      共99 字
+      共1.2k 字
     </span>
   
 
@@ -225,7 +225,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       约
-      1
+      12
        分钟阅读完成
     </span>
   
@@ -275,7 +275,41 @@
               <blockquote>
 <p><strong>出自公众号《愚公要移山》中，地址<a href="http://www.javachat.cc/">www.javachat.cc</a></strong><br><strong>本文已收录在《MongoDB学习系列》专栏中</strong></p>
 </blockquote>
-<p>这里是正文</p>
+<p>本文献给准备面试或者是还在面试的你。常见面试题，送分题目，不拿白不拿。</p>
+<h2 id="一、B树和B-树的区别"><a href="#一、B树和B-树的区别" class="headerlink" title="一、B树和B+树的区别"></a><strong>一、B树和B+树的区别</strong></h2><p>很明显，我们想向弄清楚原因就要知道B树和B+树的区别。为了不长篇大论。我们直接给出他们的形式总结他们的特点。</p>
+<h3 id="1、B树"><a href="#1、B树" class="headerlink" title="1、B树"></a><strong>1、B树</strong></h3><p>B树是一种自平衡的搜索树，形式很简单：</p>
+<p><img src="https://s3.ax1x.com/2020/12/26/rfRAYQ.png" srcset="/img/loading.gif"></p>
+<p>这就是一颗B-树。针对我们这个问题的最核心的特点如下：</p>
+<p><strong>（1）多路，非二叉树</strong></p>
+<p><strong>（2）每个节点既保存索引，又保存数据</strong></p>
+<p><strong>（3）搜索时相当于二分查找</strong></p>
+<p>其他的基本上都是一些常见的数据结构，假定都已经了解了B树相关的结构。</p>
+<h3 id="2、B-树"><a href="#2、B-树" class="headerlink" title="2、B+树"></a><strong>2、B+树</strong></h3><p>B+树是B树的变种</p>
+<p><img src="https://s3.ax1x.com/2020/12/26/rfRkFg.png" srcset="/img/loading.gif"></p>
+<p>最核心的特点如下：</p>
+<p><strong>（1）多路非二叉</strong></p>
+<p><strong>（2）只有叶子节点保存数据</strong></p>
+<p><strong>（3）搜索时相当于二分查找</strong></p>
+<p><strong>（4）增加了相邻接点的指向指针。</strong></p>
+<p>从上面我们可以看出最核心的区别主要有俩，</p>
+<p><strong>一个是数据的保存位置：B树保存在所有的节点中，B+树保存在叶子节点</strong></p>
+<p><strong>一个是相邻节点的指向：B树叶子节点之间没有指针，B+树有</strong></p>
+<p>这里区别分别给B树和B+树带来了什么好处呢？其实对于数据库来说，选用什么数据结构无非就是为了增删改查和存储更加高效，因为找特点时也要从这个点去回答。</p>
+<h3 id="3、从区别找特点"><a href="#3、从区别找特点" class="headerlink" title="3、从区别找特点"></a><strong>3、从区别找特点</strong></h3><h4 id="第一：查找元素"><a href="#第一：查找元素" class="headerlink" title="第一：查找元素"></a>第一：查找元素</h4><p>（1）B树的数据保存在所有节点，查询复杂度最好是 O(1)。</p>
+<p>（2）B+树的数据保存在叶子节点，查询时间复杂度固定是O(log(n))</p>
+<h4 id="第二：区间查找"><a href="#第二：区间查找" class="headerlink" title="第二：区间查找"></a>第二：区间查找</h4><p>（1）B树每个节点 key 和 data 在一起，则无法区间查找。</p>
+<p>（2）B+树相邻接点的指针可以大大增加区间访问性，可使用在范围查询等</p>
+<h4 id="第三：存储"><a href="#第三：存储" class="headerlink" title="第三：存储"></a>第三：存储</h4><p>（1）B树每个节点即保存数据又保存索引，所以每一节点特别大，这一层所有节点加起来数据量将非常大。磁盘每次IO一定量的数据，对于Mysql来说如何衡量查询效率呢？就是磁盘IO次数。既然B树每一层特别大，那每一层就需要对数据分开从而进行多次IO操作。所有Mysql不用。</p>
+<p>（2）B+树更适合外部存储，也就是磁盘存储。由于内节点无 data 域，每个节点能索引的范围更大更精确，所以不需要用B+树。</p>
+<p>有了他们的区别之后，现在我们再来解释这个原因就好多了。</p>
+<h2 id="二、原因解释"><a href="#二、原因解释" class="headerlink" title="二、原因解释"></a><strong>二、原因解释</strong></h2><p>上面解释了不使用的原因，我们再来看为什么Mysql使用B+树，而MongoDB使用B树，想要解释原因，我们还必须要了解一下MongoDB和Mysql的基本概念。</p>
+<h3 id="1、MongoDB"><a href="#1、MongoDB" class="headerlink" title="1、MongoDB"></a><strong>1、MongoDB</strong></h3><p>MongoDB 是文档型的数据库，是一种 nosql，它使用类 Json 格式保存数据。比如之前我们的表可能有用户表、订单表、购物篮表等等，还要建立他们之间的外键关联关系。但是类Json就不一样了。</p>
+<p><img src="https://s3.ax1x.com/2020/12/26/rfRiTS.png" srcset="/img/loading.gif"></p>
+<p>我们可以看到这种形式更简单，通俗易懂。那为什么 MongoDB 使用B-树呢？</p>
+<p><strong>MongoDB使用B树，所有节点都有Data域，只要找到指定索引就可以进行访问，无疑单次查询平均快于Mysql</strong>。</p>
+<h3 id="2、Mysql"><a href="#2、Mysql" class="headerlink" title="2、Mysql"></a><strong>2、Mysql</strong></h3><p><strong>Mysql作为一个关系型数据库，数据的关联性是非常强的，区间访问是常见的一种情况，B+树由于数据全部存储在叶子节点，并且通过指针串在一起，这样就很容易的进行区间遍历甚至全部遍历。</strong></p>
+<p>还有一点，B+树只有叶子节点保存数据，所以每一节点比较小，每一层所有节点加起来数据量也相对比较小。磁盘每次IO一定量的数据，对于Mysql来说。既然B+树每一层小，那每一层只需要少量IO操作。</p>
+<p>这俩区别的核心如果你能看懂B-树和B+树的区别就很容易理解。</p>
 <P class="note note-warning">如需转载，请提前联系作者，否则追究法律责任</P>
 
 <p> <strong><P class="note note-primary">这有5T资源，涵盖了java小白到架构师整个体系各种相关资源（视频、电子书、面试、简历、IDE破解等），更多文章请关注：</P></strong></p>
