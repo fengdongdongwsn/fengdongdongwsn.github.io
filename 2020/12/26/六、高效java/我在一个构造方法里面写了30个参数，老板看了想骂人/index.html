@@ -1,0 +1,565 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/./img/global/head.png">
+  <link rel="icon" type="image/png" href="/./img/global/head.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="冯冬冬">
+  <meta name="keywords" content="">
+  <title>【高效java】我在一个构造方法里面写了30个参数，老板看了想骂人 - 愚公要移山</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"www.javachat.cc","root":"/","version":"1.8.6","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":4},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"f3cb5680bcdd7f7a451689fcff9759f2","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 45vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>愚公要移山</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/life/">
+                <i class="iconfont icon-th-large"></i>
+                生活
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/sources/">
+                <i class="iconfont icon-link-fill"></i>
+                资源
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" false
+         style="background: url('/img/global/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="【高效java】我在一个构造方法里面写了30个参数，老板看了想骂人">
+              
+                【高效java】我在一个构造方法里面写了30个参数，老板看了想骂人
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      冯冬冬
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-12-26 15:15" pubdate>
+        2020年12月26日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      共2.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      约
+      30
+       分钟阅读完成
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        共<span id="busuanzi_value_page_pv"></span> 次浏览
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【高效java】我在一个构造方法里面写了30个参数，老板看了想骂人</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2020年12月26日 下午
+                
+              </p>
+            
+            <div class="markdown-body">
+              <blockquote>
+<p><strong>出自公众号《愚公要移山》中，地址<a href="http://www.javachat.cc/">www.javachat.cc</a></strong><br><strong>本文基于《Effective java》第二条</strong></p>
+</blockquote>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一般我们写参数如果写个一两个，那就可以了，如果写七八个，那就有点难受了。如果写十几个？尼玛，难受，我要去缓缓。</p>
+<p><img src="https://s3.ax1x.com/2020/12/26/rhBVgK.png" srcset="/img/loading.gif"></p>
+<p>于是乎，一种新的方法策略运用而生。那就是builder模式，在构造方法的参数过多时，可以方便的进行创建一个类对象。所以本文的中心主旨一句话总结：<strong>当构造方法的参数过多时，推荐使用builder模式</strong></p>
+<p>既然推荐使用builder模式，那我们一个一个来，分析一下如果不使用builder模式有什么缺点。</p>
+<h2 id="一、传统方式的缺点"><a href="#一、传统方式的缺点" class="headerlink" title="一、传统方式的缺点"></a>一、传统方式的缺点</h2><h3 id="1、可伸缩构造方法"><a href="#1、可伸缩构造方法" class="headerlink" title="1、可伸缩构造方法"></a>1、可伸缩构造方法</h3><p>可伸缩构造方法就是我们平时书写最常见的那种，请看下文代码；</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span> </span>&#123;<br>	<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> id; <span class="hljs-comment">//必要</span><br>	<span class="hljs-keyword">private</span> String name;<span class="hljs-comment">//必要</span><br>	<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> age; <span class="hljs-comment">//可选</span><br>	<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> sclass; <span class="hljs-comment">//可选</span><br>	<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> height;<span class="hljs-comment">//可选</span><br>	<span class="hljs-keyword">private</span> <span class="hljs-keyword">float</span> weight;<span class="hljs-comment">//可选</span><br>	<span class="hljs-keyword">private</span> <span class="hljs-keyword">float</span> score;<span class="hljs-comment">//可选</span><br>	<span class="hljs-comment">//构造函数1：默认构造方法</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Student</span><span class="hljs-params">()</span> </span>&#123;&#125;;<br>	<span class="hljs-comment">//构造方法2：必要字段构造方法</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Student</span><span class="hljs-params">(<span class="hljs-keyword">int</span> id, String name)</span> </span>&#123;<br>		<span class="hljs-keyword">this</span>.id = id;<br>		<span class="hljs-keyword">this</span>.name = name;<br>	&#125;<br>	<span class="hljs-comment">//构造方法3：全部字段构造方法</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Student</span><span class="hljs-params">(<span class="hljs-keyword">int</span> id, String name, <span class="hljs-keyword">int</span> age, <span class="hljs-keyword">int</span> sclass, <span class="hljs-keyword">int</span> height, <span class="hljs-keyword">float</span> weight, <span class="hljs-keyword">float</span> score)</span> </span>&#123;<br>		<span class="hljs-keyword">super</span>();<br>		<span class="hljs-keyword">this</span>.id = id;<br>		<span class="hljs-keyword">this</span>.name = name;<br>		<span class="hljs-keyword">this</span>.age = age;<br>		<span class="hljs-keyword">this</span>.sclass = sclass;<br>		<span class="hljs-keyword">this</span>.height = height;<br>		<span class="hljs-keyword">this</span>.weight = weight;<br>		<span class="hljs-keyword">this</span>.score = score;<br>	&#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>下面如果我们要创建一个Student类，一般这样创建，看下面代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>&#123;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>		<span class="hljs-comment">//1、可伸缩构造方法</span><br>		Student student1 = <span class="hljs-keyword">new</span> Student();<br>		Student student2 = <span class="hljs-keyword">new</span> Student(<span class="hljs-number">1</span>,<span class="hljs-string">&quot;愚公要移山&quot;</span>);<br>		Student student3 = <span class="hljs-keyword">new</span> Student(<span class="hljs-number">2</span>,<span class="hljs-string">&quot;愚公要移山&quot;</span>,<span class="hljs-number">18</span>,<span class="hljs-number">1</span>,<span class="hljs-number">175</span>,<span class="hljs-number">120</span>,<span class="hljs-number">99</span>);<br>	&#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>现在我们列举了一个具有七个字段的例子，比较容易理解，现在我们来分析一下，他有什么缺点：</p>
+<h4 id="缺点1：反转字段，编译器不会报错"><a href="#缺点1：反转字段，编译器不会报错" class="headerlink" title="缺点1：反转字段，编译器不会报错"></a>缺点1：反转字段，编译器不会报错</h4><p>比如上面的字段里面有一个weight和一个score，都是float类型，如果再new一个Student类时，不小心写反了，编译器不会察觉。</p>
+<h4 id="缺点2：难以理解"><a href="#缺点2：难以理解" class="headerlink" title="缺点2：难以理解"></a>缺点2：难以理解</h4><p>这里只是七个字段，如果有十几个，我们就需要不断地去Student类中去查看，看看第几个参数应该写哪些东西，实在是比较麻烦。用户在看到这个Student(2,”愚公要移山”,18,1,175,120,99)无法理解每一个字段属性代表的是什么含义。</p>
+<h4 id="缺点3：不想设置的参数，却不得不设置值"><a href="#缺点3：不想设置的参数，却不得不设置值" class="headerlink" title="缺点3：不想设置的参数，却不得不设置值"></a>缺点3：不想设置的参数，却不得不设置值</h4><p>有时候我们的Student只想着设置ID、name和age字段，其他的无关紧要，但是这种模式必须要设置所有的属性值。</p>
+<p>既然上面有这些缺点，我们可能还想到另外一种方式，那就是javaBean。</p>
+<h3 id="2、javaBean模式"><a href="#2、javaBean模式" class="headerlink" title="2、javaBean模式"></a>2、javaBean模式</h3><p>先看javaBean模式如何写的。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span> </span>&#123;<br>	<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> id; <span class="hljs-comment">//必要</span><br>	<span class="hljs-keyword">private</span> String name;<span class="hljs-comment">//必要</span><br>	<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> age; <span class="hljs-comment">//可选</span><br>	<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> sclass; <span class="hljs-comment">//可选</span><br>	<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> height;<span class="hljs-comment">//可选</span><br>	<span class="hljs-keyword">private</span> <span class="hljs-keyword">float</span> weight;<span class="hljs-comment">//可选</span><br>	<span class="hljs-keyword">private</span> <span class="hljs-keyword">float</span> score;<span class="hljs-comment">//可选</span><br>	<span class="hljs-comment">//构造函数1：默认构造方法</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Student</span><span class="hljs-params">()</span> </span>&#123;&#125;<br>    <span class="hljs-comment">//getter和setter方法</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getId</span><span class="hljs-params">()</span> </span>&#123;<span class="hljs-keyword">return</span> id;&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setId</span><span class="hljs-params">(<span class="hljs-keyword">int</span> id)</span> </span>&#123;<span class="hljs-keyword">this</span>.id = id;&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getName</span><span class="hljs-params">()</span> </span>&#123;<span class="hljs-keyword">return</span> name;&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setName</span><span class="hljs-params">(String name)</span> </span>&#123;<span class="hljs-keyword">this</span>.name = name;&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getAge</span><span class="hljs-params">()</span> </span>&#123;<span class="hljs-keyword">return</span> age;&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setAge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> age)</span> </span>&#123;<span class="hljs-keyword">this</span>.age = age;&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getSclass</span><span class="hljs-params">()</span> </span>&#123;<span class="hljs-keyword">return</span> sclass;&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setSclass</span><span class="hljs-params">(<span class="hljs-keyword">int</span> sclass)</span> </span>&#123;<span class="hljs-keyword">this</span>.sclass = sclass;&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getHeight</span><span class="hljs-params">()</span> </span>&#123;<span class="hljs-keyword">return</span> height;&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setHeight</span><span class="hljs-params">(<span class="hljs-keyword">int</span> height)</span> </span>&#123;<span class="hljs-keyword">this</span>.height = height;&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">float</span> <span class="hljs-title">getWeight</span><span class="hljs-params">()</span> </span>&#123;<span class="hljs-keyword">return</span> weight;&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setWeight</span><span class="hljs-params">(<span class="hljs-keyword">float</span> weight)</span> </span>&#123;<span class="hljs-keyword">this</span>.weight = weight;&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">float</span> <span class="hljs-title">getScore</span><span class="hljs-params">()</span> </span>&#123;<span class="hljs-keyword">return</span> score;&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setScore</span><span class="hljs-params">(<span class="hljs-keyword">float</span> score)</span> </span>&#123;<span class="hljs-keyword">this</span>.score = score;&#125;;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>这种模式，看起来还比较舒服，只是设置了相应的getter和setter方法。再来看看如何使用这种方式去new一个Student类。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>&#123;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>		<span class="hljs-comment">//2、javaBean模式</span><br>		Student student1 = <span class="hljs-keyword">new</span> Student();<br>		student1.setId(<span class="hljs-number">1</span>);<br>		student1.setName(<span class="hljs-string">&quot;愚公要移山&quot;</span>);<br>		student1.setSclass(<span class="hljs-number">1</span>);<br>		student1.setWeight(<span class="hljs-number">180</span>);<br>		student1.setHeight(<span class="hljs-number">175</span>);<br>		student1.setScore(<span class="hljs-number">100</span>);<br>		student1.setAge(<span class="hljs-number">20</span>);<br>	&#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>这样看起来还可以，不过这只是我自己一个一个敲出来的。实际在用的时候就知道同样恶心了，现在来总结一波他的缺点。</p>
+<h4 id="缺点1：构造过程中-JavaBean可能处于不一致的状态"><a href="#缺点1：构造过程中-JavaBean可能处于不一致的状态" class="headerlink" title="缺点1：构造过程中 JavaBean可能处于不一致的状态"></a>缺点1：构造过程中 JavaBean可能处于不一致的状态</h4><p>JavaBeans 模式本身有严重的缺陷。由于构造方法在多次调用中被分割，所以在构造过程中 JavaBean<br>可能处于不一致的状态。该类没有通过检查构造参数参数的有效性来执行一致性的选项。在不一致的状态下尝试使用对象可能会导致与包含 bug 的代码大相径庭的错误，因此很难调试。</p>
+<p>说一下我对其的理解，在上面的例子中，我们的student1对象被多次调用了set方法，但是可能有时候在用到这个bean时，剩下的setter方法还没有做完，于是再次调用时发现同一个javaBean呈现出了两种状态。于是处于一种不一致的状态。</p>
+<h4 id="缺点2：无法保证javaBean的不可变性"><a href="#缺点2：无法保证javaBean的不可变性" class="headerlink" title="缺点2：无法保证javaBean的不可变性"></a>缺点2：无法保证javaBean的不可变性</h4><p>使用第一种模式可伸缩构造方法实例化之后不会更改可变性，所有的数据都是确定好了的。也可以保证线程安全。但是提供了setter方法，就不能保证了。比如：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>&#123;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>		<span class="hljs-comment">//2、javaBean模式</span><br>		Student student1 = <span class="hljs-keyword">new</span> Student();<br>		student1.setId(<span class="hljs-number">1</span>);<br>		student1.setName(<span class="hljs-string">&quot;愚公要移山&quot;</span>);<br>		student1.setSclass(<span class="hljs-number">1</span>);<br>		student1.setWeight(<span class="hljs-number">180</span>);<br>		student1.setHeight(<span class="hljs-number">175</span>);<br>		student1.setScore(<span class="hljs-number">100</span>);<br>		student1.setAge(<span class="hljs-number">20</span>);<br>		System.out.println(student1.getName());<br>		student1.setName(<span class="hljs-string">&quot;冯冬冬&quot;</span>);<br>		System.out.println(student1.getName());<br>	&#125;<br>&#125;<br><span class="hljs-comment">//输出结果：愚公要移山  冯冬冬</span><br></code></pre></div></td></tr></table></figure>
+<p>可以看到，我们可以对Student对象设置多次name，前后是不一致的状态。</p>
+<p>既然前面两种都存在各种各样的问题。现在我们再来看今天的主题builder模式，</p>
+<h2 id="二、builder模式"><a href="#二、builder模式" class="headerlink" title="二、builder模式"></a>二、builder模式</h2><p>还是老样子，我们先看看builder模式长得什么样子。再来分析一下他的优缺点。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span> </span>&#123;<br>	<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> id; <span class="hljs-comment">// 必要</span><br>	<span class="hljs-keyword">private</span> String name;<span class="hljs-comment">// 必要</span><br>	<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> age; <span class="hljs-comment">// 可选</span><br>	<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> sclass; <span class="hljs-comment">// 可选</span><br>	<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> height;<span class="hljs-comment">// 可选</span><br>	<span class="hljs-keyword">private</span> <span class="hljs-keyword">float</span> weight;<span class="hljs-comment">// 可选</span><br>	<span class="hljs-keyword">private</span> <span class="hljs-keyword">float</span> score;<span class="hljs-comment">// 可选</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Student</span><span class="hljs-params">(Builder builder)</span> </span>&#123;<br>		<span class="hljs-keyword">this</span>.id = builder.id;<br>		<span class="hljs-keyword">this</span>.name = builder.name;<br>		<span class="hljs-keyword">this</span>.age = builder.age;<br>		<span class="hljs-keyword">this</span>.sclass = builder.sclass;<br>		<span class="hljs-keyword">this</span>.height = builder.height;<br>		<span class="hljs-keyword">this</span>.weight = builder.weight;<br>		<span class="hljs-keyword">this</span>.score = builder.score;<br>	&#125;<br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Builder</span> </span>&#123;<br>		<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> id; <span class="hljs-comment">// 必要</span><br>		<span class="hljs-keyword">private</span> String name;<span class="hljs-comment">// 必要</span><br>		<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> age; <span class="hljs-comment">// 可选</span><br>		<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> sclass; <span class="hljs-comment">// 可选</span><br>		<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> height;<span class="hljs-comment">// 可选</span><br>		<span class="hljs-keyword">private</span> <span class="hljs-keyword">float</span> weight;<span class="hljs-comment">// 可选</span><br>		<span class="hljs-keyword">private</span> <span class="hljs-keyword">float</span> score;<span class="hljs-comment">// 可选</span><br>		<span class="hljs-comment">// 必要参数的构造方法</span><br>		<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Builder</span><span class="hljs-params">(<span class="hljs-keyword">int</span> id, String name)</span> </span>&#123;<br>			<span class="hljs-keyword">this</span>.id = id;<br>			<span class="hljs-keyword">this</span>.name = name;<br>		&#125;<br>		<span class="hljs-function"><span class="hljs-keyword">public</span> Builder <span class="hljs-title">setId</span><span class="hljs-params">(<span class="hljs-keyword">int</span> id)</span> </span>&#123;<br>			<span class="hljs-keyword">this</span>.id = id;<br>			<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;<br>		&#125;<br>		<span class="hljs-function"><span class="hljs-keyword">public</span> Builder <span class="hljs-title">setName</span><span class="hljs-params">(String name)</span> </span>&#123;<br>			<span class="hljs-keyword">this</span>.name = name;<br>			<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;<br>		&#125;<br>		<span class="hljs-function"><span class="hljs-keyword">public</span> Builder <span class="hljs-title">setAge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> age)</span> </span>&#123;<br>			<span class="hljs-keyword">this</span>.age = age;<br>			<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;<br>		&#125;<br>		<span class="hljs-function"><span class="hljs-keyword">public</span> Builder <span class="hljs-title">setSclass</span><span class="hljs-params">(<span class="hljs-keyword">int</span> sclass)</span> </span>&#123;<br>			<span class="hljs-keyword">this</span>.sclass = sclass;<br>			<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;<br>		&#125;<br>		<span class="hljs-function"><span class="hljs-keyword">public</span> Builder <span class="hljs-title">setHeight</span><span class="hljs-params">(<span class="hljs-keyword">int</span> height)</span> </span>&#123;<br>			<span class="hljs-keyword">this</span>.height = height;<br>			<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;<br>		&#125;<br>		<span class="hljs-function"><span class="hljs-keyword">public</span> Builder <span class="hljs-title">setWeight</span><span class="hljs-params">(<span class="hljs-keyword">float</span> weight)</span> </span>&#123;<br>			<span class="hljs-keyword">this</span>.weight = weight;<br>			<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;<br>		&#125;<br>		<span class="hljs-function"><span class="hljs-keyword">public</span> Builder <span class="hljs-title">setScore</span><span class="hljs-params">(<span class="hljs-keyword">float</span> score)</span> </span>&#123;<br>			<span class="hljs-keyword">this</span>.score = score;<br>			<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;<br>		&#125;<br>		<span class="hljs-comment">// 对外提供的</span><br>		<span class="hljs-function"><span class="hljs-keyword">public</span> Student <span class="hljs-title">build</span><span class="hljs-params">()</span> </span>&#123;<br>			<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Student(<span class="hljs-keyword">this</span>);<br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>上面的代码是在内部构造了一个Builder类，然后我们看看如何去使用。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>&#123;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>		<span class="hljs-comment">//3、Builder模式</span><br>		Student stu = <span class="hljs-keyword">new</span> Student.Builder(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;愚公要移山&quot;</span>)<br>				.setAge(<span class="hljs-number">20</span>)<br>				.setHeight(<span class="hljs-number">175</span>)<br>				.setSclass(<span class="hljs-number">1</span>)<br>				.setScore(<span class="hljs-number">100</span>)<br>				.setWeight(<span class="hljs-number">100</span>).build();<br>	&#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>这本书中对其的缺点也进行了介绍，很直观可以看到，Student类中的代码量增加了很多。但是Student类，我们只需要写一次，这却为我们创建对象带来了方便。</p>
+<h3 id="优点1：不存在反转字段的情况"><a href="#优点1：不存在反转字段的情况" class="headerlink" title="优点1：不存在反转字段的情况"></a>优点1：不存在反转字段的情况</h3><p>上面可以看出，每次添加新字段值的时候是通过set方式进行的。具有javaBean的优点。</p>
+<h3 id="优点2：灵活构造参数"><a href="#优点2：灵活构造参数" class="headerlink" title="优点2：灵活构造参数"></a>优点2：灵活构造参数</h3><p>我们把必要的字段一写，那些非必要的字段我们可以自己选择是不是要set。</p>
+<h3 id="优点3：不存在不一致状态"><a href="#优点3：不存在不一致状态" class="headerlink" title="优点3：不存在不一致状态"></a>优点3：不存在不一致状态</h3><p>使用builder模式，对象的创建必须要等到build完成才可以。</p>
+<h3 id="优点4：使用灵活"><a href="#优点4：使用灵活" class="headerlink" title="优点4：使用灵活"></a>优点4：使用灵活</h3><p>单个 builder 可以重复使用来构建多个对象。 builder 的参数可以在构建方法的调用之间进行调整，以改变创建的对象。 builder 可以在创建对象时自动填充一些属性，例如每次创建对象时增加的序列号。</p>
+<h3 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h3><p>为了创建对象，首先必须创建它的 builder。虽然创建这个 builder 的成本在实践中不太可能被注意到，但在性能关键的情况下可能会出现问题。而且，builder 模式比伸缩构造方法模式更冗长，因此只有在有足够的参数时才值得使用它，比如四个或更多。</p>
+<p>但是，如果从构造方法或静态工厂开始，并切换到 builder，当类演化到参数数量失控的时候，过时的构造方法或静态工厂就会面临尴尬的处境。因此，所以，最好从一开始就创建一个 builder。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果我们的参数比较多时，builder模式是一个不错的选择，如果比较少时，由于Builder本身也是个对象占用一定的资源，所以还是使用可伸缩或者是javaBean的那种模式比较好。</p>
+<P class="note note-warning">如需转载，请提前联系作者，否则追究法律责任</P>
+
+<p> <strong><P class="note note-primary">这有5T资源，涵盖了java小白到架构师整个体系各种相关资源（视频、电子书、面试、简历、IDE破解等），更多文章请关注：</P></strong></p>
+<p align="center"><img src="https://s3.ax1x.com/2020/12/18/rJnbO1.jpg" srcset="/img/loading.gif" height="250" width="480" /></p>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%86%99%E4%BB%A3%E7%A0%81%E7%9A%84%E5%BB%BA%E8%AE%AE/">写代码的建议</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%AB%98%E6%95%88java/">高效java</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/12/26/%E5%9B%9B%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93/3%E3%80%81MongoDB/%E4%B8%BA%E4%BB%80%E4%B9%88MongoDB%E4%BD%BF%E7%94%A8B%E6%A0%91%EF%BC%8C%E8%80%8CMysql%E4%BD%BF%E7%94%A8B-%E6%A0%91%EF%BC%9F%EF%BC%88%E5%B9%B2%E6%B4%BB%E6%80%BB%E7%BB%93%EF%BC%89/">
+                        <span class="hidden-mobile">为什么MongoDB使用B树，而Mysql使用B+树？（干活总结）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="http://www.javachat.cc" target="_blank" rel="nofollow noopener"><span>愚公要移山</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    document.addEventListener('DOMContentLoaded', function() {
+      window.NProgress && window.NProgress.inc();
+    })
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f3cb5680bcdd7f7a451689fcff9759f2";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
