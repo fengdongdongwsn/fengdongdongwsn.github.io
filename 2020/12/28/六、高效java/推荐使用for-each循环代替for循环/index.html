@@ -1,0 +1,559 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/./img/global/head.png">
+  <link rel="icon" type="image/png" href="/./img/global/head.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="冯冬冬">
+  <meta name="keywords" content="">
+  <title>推荐使用for-each循环代替for循环 - 愚公要移山</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"www.javachat.cc","root":"/","version":"1.8.6","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":4},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"f3cb5680bcdd7f7a451689fcff9759f2","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 45vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>愚公要移山</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/life/">
+                <i class="iconfont icon-th-large"></i>
+                生活
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/sources/">
+                <i class="iconfont icon-link-fill"></i>
+                资源
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" false
+         style="background: url('/img/global/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="推荐使用for-each循环代替for循环">
+              
+                推荐使用for-each循环代替for循环
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      冯冬冬
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-12-28 16:29" pubdate>
+        2020年12月28日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      共1.9k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      约
+      24
+       分钟阅读完成
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        共<span id="busuanzi_value_page_pv"></span> 次浏览
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">推荐使用for-each循环代替for循环</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2020年12月28日 下午
+                
+              </p>
+            
+            <div class="markdown-body">
+              <blockquote>
+<p><strong>出自公众号《愚公要移山》中，地址<a href="http://www.javachat.cc/">www.javachat.cc</a></strong><br><strong>本文基于《Effective java》第三版第58条</strong></p>
+</blockquote>
+<p>for循环是平时写代码用的最多的，但是之前看《effectivejava》大佬在某些场景写并不推荐。结合着自己之前刷算法题的经历。收益匪浅。</p>
+<h2 id="一、for循环的缺点"><a href="#一、for循环的缺点" class="headerlink" title="一、for循环的缺点"></a>一、for循环的缺点</h2><p>在以往遍历元素的时候，我们通常采用以下的形式：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>&#123;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>		<span class="hljs-comment">//1、数组元素</span><br>		<span class="hljs-keyword">int</span>[] num = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[] &#123;<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>&#125;;<br>		<span class="hljs-comment">//数组的遍历</span><br>		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;num.length;i++) <br>			System.out.println(num[i]);<br>		<span class="hljs-comment">//2、对象元素</span><br>		ArrayList&lt;Person&gt; lists = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br>		lists.add(<span class="hljs-keyword">new</span> Person(<span class="hljs-string">&quot;张三&quot;</span>));<br>		lists.add(<span class="hljs-keyword">new</span> Person(<span class="hljs-string">&quot;李四&quot;</span>));<br>		lists.add(<span class="hljs-keyword">new</span> Person(<span class="hljs-string">&quot;愚公要移山&quot;</span>));<br>		<span class="hljs-comment">//对象元素的遍历</span><br>		<span class="hljs-keyword">for</span>(Iterator&lt;Person&gt; it=lists.iterator();it.hasNext();) &#123;<br>			Person p = it.next();<br>			System.out.println(p.getName());<br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>这种写法看起来还不错，但是却并不完美。我们来分析一下，有什么缺点。然后给出解决方案。</p>
+<h3 id="问题1：迭代器或索引多次出现，容易造成使用错误"><a href="#问题1：迭代器或索引多次出现，容易造成使用错误" class="headerlink" title="问题1：迭代器或索引多次出现，容易造成使用错误"></a>问题1：迭代器或索引多次出现，容易造成使用错误</h3><p>从上面两种遍历的代码上来看，对于数组元素是通过索引i来遍历的，但是整个for循环出现了四次i，对于对象元素是通过迭代器it来遍历的，但是整个for循环出现了三次it。在for循环遍历元素的时候，就有多次机会使用了错误的变量。而且有时候这些错误编译器无法发现。对整个应用系统造成无法预知的错误。</p>
+<h3 id="问题2：遍历对象元素时，需要注意容器类型"><a href="#问题2：遍历对象元素时，需要注意容器类型" class="headerlink" title="问题2：遍历对象元素时，需要注意容器类型"></a>问题2：遍历对象元素时，需要注意容器类型</h3><p>比如我们这里使用的是list，当然还有可能是其他容器类型，这些类型在更改时比较麻烦。</p>
+<h3 id="问题3：嵌套迭代抛出异常"><a href="#问题3：嵌套迭代抛出异常" class="headerlink" title="问题3：嵌套迭代抛出异常"></a>问题3：嵌套迭代抛出异常</h3><p>这种情况比较复杂一些，先来搞个例子。比如说，我们想要列举每种花，这些花有两种属性一种是颜色，一种是大小。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>&#123;<br>	<span class="hljs-comment">//枚举颜色和尺寸</span><br>	<span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">Color</span> </span>&#123; RED, GREEN, BLUE, BLACK &#125;<br>	<span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">Size</span> </span>&#123; ONE, TWO, THREE, FOUR, FIVE,<br>				SIX, SEVEN, EIGHT,NINE, TEN&#125;<br>	<span class="hljs-comment">//定义花</span><br>	<span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Flower</span></span>&#123;<br>		<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Flower</span><span class="hljs-params">(Color color, Size size)</span> </span>&#123;&#125;<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>		Collection&lt;Color&gt; colors = Arrays.asList(Color.values());<br>		Collection&lt;Size&gt; sizes = Arrays.asList(Size.values());<br>		List&lt;Flower&gt; flowers = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br>		<span class="hljs-comment">//for循环添加所有的花和尺寸</span><br>		<span class="hljs-keyword">for</span> (Iterator&lt;Color&gt; color = colors.iterator(); color.hasNext(); ) &#123;<br>			<span class="hljs-keyword">for</span> (Iterator&lt;Size&gt; size = sizes.iterator(); size.hasNext(); ) &#123;<br>				flowers.add(<span class="hljs-keyword">new</span> Flower(color.next(), size.next()));<br>			&#125;	<br>		&#125;	<br>	&#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>看似人畜无害，现在我们运行一波。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">Exception in thread <span class="hljs-string">&quot;main&quot;</span> java.util.NoSuchElementException<br>	at java.util.AbstractList$Itr.next(Unknown Source)<br>	at com.f2.Main.main(Main.java:<span class="hljs-number">25</span>)<br></code></pre></div></td></tr></table></figure>
+<p>是不是感觉有点奇怪，好像双重循环遍历没啥问题，但是出现了异常，原因是外部的Color迭代器调用了多次，第一层for循环被调用了，但是又在第二层for循环内部被调用了，所以color的next被调用完了。所以出现了NoSuchElementException。但是有时候也不会出现这种情况，场景是外部循环迭代器调用的次数刚好是内部调用的n倍。</p>
+<h3 id="问题4：嵌套迭代不抛异常，但是结果不正确"><a href="#问题4：嵌套迭代不抛异常，但是结果不正确" class="headerlink" title="问题4：嵌套迭代不抛异常，但是结果不正确"></a>问题4：嵌套迭代不抛异常，但是结果不正确</h3><p>这种情况是外部循环迭代器调用的次数刚好是内部调用的n倍。我们再来个例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>&#123;<br>	<span class="hljs-comment">//枚举颜色</span><br>	<span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">Color</span> </span>&#123; RED, GREEN, BLUE, BLACK &#125;	<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>		Collection&lt;Color&gt; colors = Arrays.asList(Color.values());<br>		<span class="hljs-comment">//两层for循环</span><br>		<span class="hljs-keyword">for</span> (Iterator&lt;Color&gt; c1 = colors.iterator(); c1.hasNext(); ) &#123;<br>			<span class="hljs-keyword">for</span> (Iterator&lt;Color&gt; c2 = colors.iterator(); c2.hasNext(); ) &#123;<br>				System.out.println(c1.next()+<span class="hljs-string">&quot; &quot;</span>+c2.next());<br>			&#125;	<br>		&#125;	<br>	&#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>现在对颜色进行for循环遍历，一共两层for循环，因为一共有四种颜色，两层for循环应该是打印16个结果。现在运行一遍看看结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">RED RED<br>GREEN GREEN<br>BLUE BLUE<br>BLACK BLACK<br></code></pre></div></td></tr></table></figure>
+<p>没错，确实是打印了四条。原因和<strong>问题三</strong>是一样的。有一种方式可以很好地解决这种嵌套的问题。</p>
+<h3 id="嵌套迭代问题解决："><a href="#嵌套迭代问题解决：" class="headerlink" title="嵌套迭代问题解决："></a>嵌套迭代问题解决：</h3><p>直接看代码。既然是外部的迭代器it在内部使用了，那我在内部和外部之间用一个变量缓存起来不久好了。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>&#123;<br>	<span class="hljs-comment">//枚举颜色</span><br>	<span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">Color</span> </span>&#123; RED, GREEN, BLUE, BLACK &#125;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>		Collection&lt;Color&gt; colors = Arrays.asList(Color.values());<br>		<span class="hljs-comment">//for循环</span><br>		<span class="hljs-keyword">for</span> (Iterator&lt;Color&gt; c1 = colors.iterator(); c1.hasNext(); ) &#123;<br>			<span class="hljs-comment">//用一个变量缓存起来</span><br>			Color c = c1.next();<br>			<span class="hljs-keyword">for</span> (Iterator&lt;Color&gt; c2 = colors.iterator(); c2.hasNext(); ) &#123;<br>				System.out.println(c+<span class="hljs-string">&quot; &quot;</span>+c2.next());<br>			&#125;	<br>		&#125;	<br>	&#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>现在再来运行，就可以很好地得出16种结果了。这种方式也比较不错，但是却不能很好地解决问题1和问题2。因此，为了解决这一现象，大佬Joshua Bloch在书中提出，推荐使用for-each循环来代替for循环。</p>
+<h2 id="二、for-each循环"><a href="#二、for-each循环" class="headerlink" title="二、for-each循环"></a>二、for-each循环</h2><p>既然作者推荐使用for-each循环，我们看看他有什么好处。是如何解决上面的问题的。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>&#123;<br>	<span class="hljs-comment">//枚举颜色和尺寸</span><br>	<span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">Color</span> </span>&#123; RED, GREEN, BLUE, BLACK &#125;<br>	<span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">Size</span> </span>&#123; ONE, TWO, THREE, FOUR, FIVE,<br>				SIX, SEVEN, EIGHT,NINE, TEN&#125;<br>	<span class="hljs-comment">//定义花</span><br>	<span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Flower</span></span>&#123;<br>		<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Flower</span><span class="hljs-params">(Color color, Size size)</span> </span>&#123;&#125;<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>		Collection&lt;Color&gt; colors = Arrays.asList(Color.values());<br>		Collection&lt;Size&gt; sizes = Arrays.asList(Size.values());<br>		List&lt;Flower&gt; flowers = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br>		<span class="hljs-comment">//for-each循环</span><br>		<span class="hljs-keyword">for</span> (Color color:colors) &#123;<br>			<span class="hljs-keyword">for</span> (Size size:sizes ) &#123;<br>				flowers.add(<span class="hljs-keyword">new</span> Flower(color, size));<br>			&#125;	<br>		&#125;	<br>	&#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>看里面的for-each循环。上面的问题就全都解决了。好吧，可能你会感觉，就这？还有一个好处还没说，再往下看。</p>
+<p>for-each 循环不仅允许遍历集合和数组，还允许遍历实现 Iterable 接口的任何对象，该接口由单个方法组成。接<br>口定义如下： </p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Iterable</span>&lt;<span class="hljs-title">E</span>&gt; </span>&#123;<br>	<span class="hljs-comment">// Returns an iterator over the elements in this iterable</span><br>	<span class="hljs-function">Iterator&lt;E&gt; <span class="hljs-title">iterator</span><span class="hljs-params">()</span></span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>如果必须从头开始编写自己的 Iterator 实现，那么实现 Iterable 会有点棘手，但是如果你正在编写表示一组元素<br>的类型，那么你应该强烈考虑让它实现 Iterable 接口，甚至可以选择不让它实现 Collection 接口。这允许用户使用for-each 循环遍历类型，他们会永远感激不尽的 。</p>
+<p>但是，有三种常见的情况是你不能分别使用 for-each 循环的:</p>
+<p><strong>（1）有损过滤（</strong>Destructive filtering）：如果需要遍历集合，并删除指定选元素，则需要使用显式迭代器，以便可以调用其 remove 方法。 通常可以使用在 Java 8 中添加的 Collection 类中的 removeIf 方法，来避免显式遍历。</p>
+<p><strong>（2）转换</strong>：如果需要遍历一个列表或数组并替换其元素的部分或全部值，那么需要列表迭代器或数组索引来替换元素的值。</p>
+<p><strong>（3）并行迭代</strong>：如果需要并行地遍历多个集合，那么需要显式地控制迭代器或索引变量，以便所有迭代器或索引变量都可以同步进行 。</p>
+<p>如果发现自己处于这些情况中的任何一种，请使用传统的 for 循环，并警惕本条目中提到的陷阱 。</p>
+<P class="note note-warning">如需转载，请提前联系作者，否则追究法律责任</P>
+
+<p> <strong><P class="note note-primary">这有5T资源，涵盖了java小白到架构师整个体系各种相关资源（视频、电子书、面试、简历、IDE破解等），更多文章请关注：</P></strong></p>
+<p align="center"><img src="https://s3.ax1x.com/2020/12/18/rJnbO1.jpg" srcset="/img/loading.gif" height="250" width="480" /></p>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%86%99%E4%BB%A3%E7%A0%81%E7%9A%84%E5%BB%BA%E8%AE%AE/">写代码的建议</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%AB%98%E6%95%88java/">高效java</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/12/26/%E5%85%AD%E3%80%81%E9%AB%98%E6%95%88java/%E6%88%91%E5%9C%A8%E4%B8%80%E4%B8%AA%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E9%87%8C%E9%9D%A2%E5%86%99%E4%BA%8630%E4%B8%AA%E5%8F%82%E6%95%B0%EF%BC%8C%E8%80%81%E6%9D%BF%E7%9C%8B%E4%BA%86%E6%83%B3%E9%AA%82%E4%BA%BA/">
+                        <span class="hidden-mobile">我在一个构造方法里面写了30个参数，老板看了想骂人</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="http://www.javachat.cc" target="_blank" rel="nofollow noopener"><span>愚公要移山</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    document.addEventListener('DOMContentLoaded', function() {
+      window.NProgress && window.NProgress.inc();
+    })
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f3cb5680bcdd7f7a451689fcff9759f2";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
