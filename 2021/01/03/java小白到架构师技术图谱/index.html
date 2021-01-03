@@ -1,0 +1,1192 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/./img/global/head.png">
+  <link rel="icon" type="image/png" href="/./img/global/head.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="冯冬冬">
+  <meta name="keywords" content="">
+  <title>java小白到架构师技术图谱 - 愚公要移山</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"www.javachat.cc","root":"/","version":"1.8.6","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":6},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"f3cb5680bcdd7f7a451689fcff9759f2","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 45vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>愚公要移山</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/life/">
+                <i class="iconfont icon-th-large"></i>
+                生活
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/sources/">
+                <i class="iconfont icon-link-fill"></i>
+                资源
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" false
+         style="background: url('/img/global/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="java小白到架构师技术图谱">
+              
+                java小白到架构师技术图谱
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      冯冬冬
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-01-03 17:02" pubdate>
+        2021年1月3日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      共2.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      约
+      26
+       分钟阅读完成
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        共<span id="busuanzi_value_page_pv"></span> 次浏览
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">java小白到架构师技术图谱</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2021年1月3日 下午
+                
+              </p>
+            
+            <div class="markdown-body">
+              <p><strong>本文整理于github上各大star大神仓库。并根据自己的理解重新进行了整理</strong></p>
+<blockquote>
+<p><strong>本文已经收录于<a target="_blank" rel="noopener" href="https://github.com/fengdongdongwsn/architect-java">https://github.com/fengdongdongwsn/architect-java</a></strong></p>
+<p><strong>后序会继续更新</strong></p>
+</blockquote>
+<h2 id="👨🏻‍💻-About-Me"><a href="#👨🏻‍💻-About-Me" class="headerlink" title="👨🏻‍💻 About Me"></a>👨🏻‍💻 About Me</h2><table>
+<thead>
+<tr>
+<th>个人网站</th>
+<th>公众号</th>
+<th>掘金</th>
+<th>知乎</th>
+<th><strong>CSDN</strong></th>
+<th><strong>头条</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="https://www.javachat.cc/">点我直达</a></td>
+<td><a target="_blank" rel="noopener" href="https://imgchr.com/i/rJnbO1">点我直达</a></td>
+<td><a target="_blank" rel="noopener" href="https://juejin.cn/user/1978776660213837/posts">点我直达</a></td>
+<td><a target="_blank" rel="noopener" href="https://www.zhihu.com/people/feng-dong-dong-10">点我直达</a></td>
+<td><a target="_blank" rel="noopener" href="https://blog.csdn.net/SDDDLLL">点我直达</a></td>
+<td><a target="_blank" rel="noopener" href="https://www.toutiao.com/c/user/token/MS4wLjABAAAAfhLQnyWhG1iqEVx_lsnoX7cUOlluuJf07J368xBJ7jU/">点我直达</a></td>
+</tr>
+<tr>
+<td><strong>百家号</strong></td>
+<td><strong>Segmentfault</strong></td>
+<td><strong>教程资源（5T）</strong></td>
+<td><strong>学习路线</strong></td>
+<td><strong>博客文章</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://author.baidu.com/home?from=bjh_article&app_id=1634941951856739">点我直达</a></td>
+<td><a target="_blank" rel="noopener" href="https://segmentfault.com/u/a_yugong">点我直达</a></td>
+<td><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/nIODGnCKFgs3BTZ9Qy5rHQ?scene=25#wechat_redirect">点我直达</a></td>
+<td><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/UTV2GXtBdX-oLh7M9LTEvQ">点击直达</a></td>
+<td><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/wZ_4fy_F-NecMv3HO4Hfjw">点击直达</a></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="一、计算机基础"><a href="#一、计算机基础" class="headerlink" title="一、计算机基础"></a>一、计算机基础</h2><h3 id="1、数据结构"><a href="#1、数据结构" class="headerlink" title="1、数据结构"></a>1、数据结构</h3><h4 id="（1）基本数据结构"><a href="#（1）基本数据结构" class="headerlink" title="（1）基本数据结构"></a>（1）基本数据结构</h4><ul>
+<li>数据结构基本概念（时间复杂度和空间复杂度的计算方法）</li>
+<li>数组</li>
+<li>链表</li>
+<li>集合</li>
+<li>队列</li>
+<li>栈</li>
+<li>关联数组</li>
+<li>跳表</li>
+<li>倒排索引</li>
+<li>BitSet</li>
+</ul>
+<h4 id="（2）树"><a href="#（2）树" class="headerlink" title="（2）树"></a>（2）树</h4><ul>
+<li>二叉树</li>
+<li>平衡二叉树</li>
+<li>完全二叉树</li>
+<li>哈弗曼树</li>
+<li>二叉查找树</li>
+<li>B、B+、B*树</li>
+<li>LSM树</li>
+<li>字典树</li>
+<li>红黑树</li>
+<li>线段树</li>
+</ul>
+<h4 id="（3）图"><a href="#（3）图" class="headerlink" title="（3）图"></a>（3）图</h4><ul>
+<li>最小生成树</li>
+<li>最短路径算法</li>
+<li>拓扑排序</li>
+<li>深搜和广搜</li>
+</ul>
+<h4 id="（4）排序算法"><a href="#（4）排序算法" class="headerlink" title="（4）排序算法"></a>（4）排序算法</h4><ul>
+<li>选择排序</li>
+<li>冒泡排序</li>
+<li>插入排序</li>
+<li>快速排序</li>
+<li>归并排序</li>
+<li>希尔排序</li>
+<li>基数排序</li>
+<li>计数排序</li>
+<li>桶排序</li>
+<li>堆排序</li>
+<li>排序算法使用场景特点总结</li>
+</ul>
+<h4 id="（5）查找算法"><a href="#（5）查找算法" class="headerlink" title="（5）查找算法"></a>（5）查找算法</h4><ul>
+<li>顺序查找</li>
+<li>二分查找</li>
+<li>插值查找</li>
+<li>斐波那契查找</li>
+<li>树表查找</li>
+</ul>
+<h4 id="（6）常见算法"><a href="#（6）常见算法" class="headerlink" title="（6）常见算法"></a>（6）常见算法</h4><ul>
+<li>KMP算法</li>
+<li>贪心算法</li>
+<li>回溯算法</li>
+<li>剪枝算法</li>
+<li>动态规划</li>
+<li>并查集</li>
+<li>朴素贝叶斯</li>
+<li>递归算法</li>
+<li>符号表</li>
+<li>布隆过滤器</li>
+</ul>
+<h3 id="2、计算机网络"><a href="#2、计算机网络" class="headerlink" title="2、计算机网络"></a>2、计算机网络</h3><h4 id="（1）协议"><a href="#（1）协议" class="headerlink" title="（1）协议"></a>（1）协议</h4><ul>
+<li>OSI七层协议</li>
+<li>TCP/IP协议</li>
+<li>HTTP协议</li>
+</ul>
+<h4 id="（2）网络模型"><a href="#（2）网络模型" class="headerlink" title="（2）网络模型"></a>（2）网络模型</h4><ul>
+<li>阻塞式IO</li>
+<li>非阻塞式IO</li>
+<li>复用IO</li>
+<li>信号驱动IO</li>
+<li>异步IO</li>
+<li>Epoll模型</li>
+<li>javaNIO</li>
+<li>javaAIO</li>
+<li>kqueue</li>
+</ul>
+<h4 id="（3）序列化"><a href="#（3）序列化" class="headerlink" title="（3）序列化"></a>（3）序列化</h4><ul>
+<li>java序列化</li>
+<li>protoBuf</li>
+<li>protoStuff</li>
+<li>avro</li>
+<li>Hessian</li>
+</ul>
+<h3 id="3、操作系统"><a href="#3、操作系统" class="headerlink" title="3、操作系统"></a>3、操作系统</h3><h4 id="（1）基本知识"><a href="#（1）基本知识" class="headerlink" title="（1）基本知识"></a>（1）基本知识</h4><ul>
+<li>操作系统的四个特征</li>
+<li>操作系统的功能</li>
+</ul>
+<h4 id="（2）进程与线程"><a href="#（2）进程与线程" class="headerlink" title="（2）进程与线程"></a>（2）进程与线程</h4><ul>
+<li>进程的概念与分类</li>
+<li>线程的概念与分类</li>
+<li>进程与线程的区别</li>
+<li>进行的状态转换</li>
+<li>CPU调度算法</li>
+<li>管程</li>
+<li>协程</li>
+<li>进程间的通信方式</li>
+<li>进程间同步问题<ul>
+<li>生产者消费者问题</li>
+<li>哲学家就餐问题</li>
+<li>读者-写者问题</li>
+<li>锁死的四个必要条件</li>
+<li>死锁处理</li>
+</ul>
+</li>
+</ul>
+<h4 id="（3）内存管理"><a href="#（3）内存管理" class="headerlink" title="（3）内存管理"></a>（3）内存管理</h4><ul>
+<li>段式管理</li>
+<li>页式管理</li>
+<li>段页式管理</li>
+<li>页面调度算法</li>
+</ul>
+<h4 id="（4）其他"><a href="#（4）其他" class="headerlink" title="（4）其他"></a>（4）其他</h4><ul>
+<li>虚拟内存和逻辑内存</li>
+<li>静态链接和动态链接</li>
+<li>缓存</li>
+<li>僵尸进程与孤儿进程</li>
+</ul>
+<h2 id="二、java基础"><a href="#二、java基础" class="headerlink" title="二、java基础"></a>二、java基础</h2><h3 id="1、面向对象基础"><a href="#1、面向对象基础" class="headerlink" title="1、面向对象基础"></a>1、面向对象基础</h3><ul>
+<li>继承</li>
+<li>封装</li>
+<li>多态</li>
+<li>接口</li>
+<li>抽象类</li>
+</ul>
+<h3 id="2、java集合"><a href="#2、java集合" class="headerlink" title="2、java集合"></a>2、java集合</h3><ul>
+<li>总体框架</li>
+<li>Collection</li>
+<li>ArrayList</li>
+<li>LinkedList</li>
+<li>Vector</li>
+<li>Stack</li>
+<li>快速失败和快速安全</li>
+<li>HashMap</li>
+<li>TreeMap</li>
+<li>LinkedHashMap</li>
+<li>HashSet</li>
+<li>TreeSet</li>
+<li>Hashtable</li>
+<li>WeakHashMap</li>
+</ul>
+<h3 id="3、关键字和类"><a href="#3、关键字和类" class="headerlink" title="3、关键字和类"></a>3、关键字和类</h3><ul>
+<li>transient</li>
+<li>instanceof</li>
+<li>static</li>
+<li>this</li>
+<li>super</li>
+<li>void</li>
+<li>final</li>
+<li>String<ul>
+<li>String为什么不可变</li>
+<li>String、StringBuilder、StringBuffer区别</li>
+<li>String到底新建了几个对象</li>
+</ul>
+</li>
+</ul>
+<h3 id="4、java高级特点"><a href="#4、java高级特点" class="headerlink" title="4、java高级特点"></a>4、java高级特点</h3><ul>
+<li>注解</li>
+<li>反射</li>
+<li>泛型</li>
+<li>异常</li>
+<li>枚举</li>
+<li>IO机制</li>
+<li>编码转换</li>
+<li>java8新特性</li>
+<li>java11新特性</li>
+</ul>
+<h3 id="5、并发库"><a href="#5、并发库" class="headerlink" title="5、并发库"></a>5、并发库</h3><h4 id="（1）并发基础"><a href="#（1）并发基础" class="headerlink" title="（1）并发基础"></a>（1）并发基础</h4><ul>
+<li>Thread生命周期</li>
+<li>线程安全问题</li>
+<li>线程通信模式</li>
+<li>sleep和wait的区别</li>
+<li>ThreadLocal</li>
+</ul>
+<h4 id="（2）原子特性"><a href="#（2）原子特性" class="headerlink" title="（2）原子特性"></a>（2）原子特性</h4><ul>
+<li>AtomicInteger</li>
+<li>AtomicBoolean</li>
+<li>AtomicStampedReference</li>
+<li>Unsafe</li>
+<li>CAS</li>
+</ul>
+<h4 id="（3）并发工具"><a href="#（3）并发工具" class="headerlink" title="（3）并发工具"></a>（3）并发工具</h4><ul>
+<li>CountDownLatch</li>
+<li>CylicBarrier</li>
+<li>Semaphore</li>
+<li>Exchanger</li>
+<li>Phaser</li>
+<li>ForkJoin</li>
+</ul>
+<h4 id="（4）锁机制"><a href="#（4）锁机制" class="headerlink" title="（4）锁机制"></a>（4）锁机制</h4><ul>
+<li>synchronized</li>
+<li>volatile</li>
+<li>Reentrantlock</li>
+<li>ReenReadWriteLock</li>
+<li>StampedLock</li>
+<li>公平锁和非公平锁</li>
+<li>悲观锁和乐观锁</li>
+<li>ABA问题</li>
+<li>互斥锁和共享锁</li>
+<li>可重入锁和不可重入锁</li>
+<li>AQS机制</li>
+<li>RingBuffer</li>
+<li>锁升级</li>
+<li>锁消除</li>
+<li>锁粗化</li>
+</ul>
+<h4 id="（5）并发容器"><a href="#（5）并发容器" class="headerlink" title="（5）并发容器"></a>（5）并发容器</h4><ul>
+<li>ConcurrentHashMap</li>
+<li>ConcurrentSkipListMap</li>
+<li>ConcurrentSkipSet</li>
+<li>ConcurrentLinkedQueue</li>
+<li>CopyOnWriteArrayList</li>
+<li>阻塞队列</li>
+<li>优先级队列</li>
+</ul>
+<h4 id="（6）线程池"><a href="#（6）线程池" class="headerlink" title="（6）线程池"></a>（6）线程池</h4><ul>
+<li>线程池的几种状态切换</li>
+<li>线程池的参数</li>
+<li>线程池的启动流程</li>
+<li>线程池的分类</li>
+<li>线程池的大小设置</li>
+</ul>
+<h3 id="6、JVM"><a href="#6、JVM" class="headerlink" title="6、JVM"></a>6、JVM</h3><ul>
+<li>java内存结构（jdk1.7和1.8）</li>
+<li>垃圾回收机制</li>
+<li>类加载机制</li>
+<li>内存分类和回收</li>
+<li>四种引用（强、软、弱、虚）</li>
+<li>内存溢出</li>
+<li>JVM调优工具</li>
+<li>垃圾回收器</li>
+<li>ZGC的认识</li>
+<li>JNI</li>
+<li>内存逃逸</li>
+</ul>
+<h2 id="三、必备基础"><a href="#三、必备基础" class="headerlink" title="三、必备基础"></a>三、必备基础</h2><h3 id="1、设计模式"><a href="#1、设计模式" class="headerlink" title="1、设计模式"></a>1、设计模式</h3><ul>
+<li>创建型模式</li>
+<li>结构性模式</li>
+<li>行为性模式</li>
+<li>设计模式的六种原则</li>
+<li>MVC模型</li>
+<li>MVVC模型</li>
+<li>UML</li>
+<li>康威定理</li>
+</ul>
+<h3 id="2、Linux"><a href="#2、Linux" class="headerlink" title="2、Linux"></a>2、Linux</h3><ul>
+<li>Linux目录结构</li>
+<li>常见命令</li>
+<li>文件系统管理</li>
+<li>用户系统管理</li>
+<li>进程管理</li>
+<li>网络管理</li>
+<li>备份与恢复</li>
+<li>文本文件处理命令</li>
+<li>shell编程</li>
+</ul>
+<h3 id="3、代码工具"><a href="#3、代码工具" class="headerlink" title="3、代码工具"></a>3、代码工具</h3><ul>
+<li>Git</li>
+<li>Maven</li>
+<li>gradle</li>
+<li>日志框架</li>
+<li>Junit</li>
+</ul>
+<h2 id="四、数据库"><a href="#四、数据库" class="headerlink" title="四、数据库"></a>四、数据库</h2><h3 id="1、mysql"><a href="#1、mysql" class="headerlink" title="1、mysql"></a>1、mysql</h3><h4 id="（1）基本知识-1"><a href="#（1）基本知识-1" class="headerlink" title="（1）基本知识"></a>（1）基本知识</h4><ul>
+<li>三大范式</li>
+<li>数据库、数据表、字段的增删改查基本操作</li>
+<li>分区表</li>
+<li>视图</li>
+<li>外键约束</li>
+<li>游标</li>
+<li>变量</li>
+<li>存储过程</li>
+<li>函数</li>
+<li>字符集</li>
+</ul>
+<h4 id="（2）存储引擎"><a href="#（2）存储引擎" class="headerlink" title="（2）存储引擎"></a>（2）存储引擎</h4><ul>
+<li>InnoDB</li>
+<li>MyISAM</li>
+<li>转换表的引擎</li>
+</ul>
+<h4 id="（3）事务"><a href="#（3）事务" class="headerlink" title="（3）事务"></a>（3）事务</h4><ul>
+<li>隔离级别</li>
+<li>多版本并发工具</li>
+<li>分布式事务</li>
+<li>ACID特性</li>
+</ul>
+<h4 id="（4）索引"><a href="#（4）索引" class="headerlink" title="（4）索引"></a>（4）索引</h4><ul>
+<li>聚集索引</li>
+<li>非聚集索引</li>
+<li>复合索引</li>
+<li>底层实现原理</li>
+</ul>
+<h4 id="（5）锁"><a href="#（5）锁" class="headerlink" title="（5）锁"></a>（5）锁</h4><h4 id="（6）测试"><a href="#（6）测试" class="headerlink" title="（6）测试"></a>（6）测试</h4><h4 id="（7）优化方案"><a href="#（7）优化方案" class="headerlink" title="（7）优化方案"></a>（7）优化方案</h4><ul>
+<li>数据类型优化</li>
+<li>索引优化</li>
+<li>查询性能优化</li>
+<li>mysql配置优化</li>
+<li>硬件优化</li>
+</ul>
+<h4 id="（8）高可用方案"><a href="#（8）高可用方案" class="headerlink" title="（8）高可用方案"></a>（8）高可用方案</h4><h4 id="（9）复制迁移"><a href="#（9）复制迁移" class="headerlink" title="（9）复制迁移"></a>（9）复制迁移</h4><h3 id="2、Redis"><a href="#2、Redis" class="headerlink" title="2、Redis"></a>2、Redis</h3><ul>
+<li>持久化机制</li>
+<li>缓存三种问题（穿透、击穿、雪崩）</li>
+<li>内存淘汰策略</li>
+<li>哨兵机制</li>
+<li>集群方案</li>
+<li>复制原理</li>
+</ul>
+<h3 id="3、MongoDB"><a href="#3、MongoDB" class="headerlink" title="3、MongoDB"></a>3、MongoDB</h3><h3 id="4、Hbase"><a href="#4、Hbase" class="headerlink" title="4、Hbase"></a>4、Hbase</h3><h2 id="五、常用基本框架"><a href="#五、常用基本框架" class="headerlink" title="五、常用基本框架"></a>五、常用基本框架</h2><h3 id="1、servlet"><a href="#1、servlet" class="headerlink" title="1、servlet"></a>1、servlet</h3><h3 id="2、Spring系列家族"><a href="#2、Spring系列家族" class="headerlink" title="2、Spring系列家族"></a>2、Spring系列家族</h3><h3 id="3、Mybatis"><a href="#3、Mybatis" class="headerlink" title="3、Mybatis"></a>3、Mybatis</h3><h3 id="4、JPA"><a href="#4、JPA" class="headerlink" title="4、JPA"></a>4、JPA</h3><h3 id="5、Netty"><a href="#5、Netty" class="headerlink" title="5、Netty"></a>5、Netty</h3><h3 id="6、websocket"><a href="#6、websocket" class="headerlink" title="6、websocket"></a>6、websocket</h3><h2 id="六、运维统计相关"><a href="#六、运维统计相关" class="headerlink" title="六、运维统计相关"></a>六、运维统计相关</h2><h3 id="1、平台监控"><a href="#1、平台监控" class="headerlink" title="1、平台监控"></a>1、平台监控</h3><ul>
+<li>zabbix、Nagios、Ganglia等</li>
+<li>Linux命令监控：top、sar、tsar、nload等</li>
+<li>JVM监控工具</li>
+</ul>
+<h3 id="2、APM"><a href="#2、APM" class="headerlink" title="2、APM"></a>2、APM</h3><h3 id="3、持续集成"><a href="#3、持续集成" class="headerlink" title="3、持续集成"></a>3、持续集成</h3><ul>
+<li>持续集成工具Jenkins</li>
+<li>TeamCity</li>
+<li>Travis CI</li>
+<li>GitLab CI</li>
+<li>环境分离</li>
+</ul>
+<h3 id="4、容器相关"><a href="#4、容器相关" class="headerlink" title="4、容器相关"></a>4、容器相关</h3><ul>
+<li>Docker</li>
+<li>K8S</li>
+</ul>
+<h3 id="5、虚拟化"><a href="#5、虚拟化" class="headerlink" title="5、虚拟化"></a>5、虚拟化</h3><ul>
+<li>KVM</li>
+<li>Xen</li>
+<li>OpenVZ</li>
+</ul>
+<h3 id="6、自动化运维"><a href="#6、自动化运维" class="headerlink" title="6、自动化运维"></a>6、自动化运维</h3><ul>
+<li>Ansible</li>
+<li>puppet</li>
+<li>chef</li>
+</ul>
+<h3 id="7、测试"><a href="#7、测试" class="headerlink" title="7、测试"></a>7、测试</h3><ul>
+<li>单元测试</li>
+<li>压力测试</li>
+<li>灰度测试</li>
+<li>A/B测试</li>
+<li>蓝绿测试</li>
+<li>TDD测试理论</li>
+<li>全链路测试</li>
+</ul>
+<h2 id="七、中间件"><a href="#七、中间件" class="headerlink" title="七、中间件"></a>七、中间件</h2><h3 id="1、web"><a href="#1、web" class="headerlink" title="1、web"></a>1、web</h3><ul>
+<li>Nginx</li>
+<li>OpenRestry</li>
+<li>Tengine</li>
+<li>ApacheHttpd</li>
+</ul>
+<h3 id="2、服务器"><a href="#2、服务器" class="headerlink" title="2、服务器"></a>2、服务器</h3><ul>
+<li>Tomcat</li>
+<li>Jetty</li>
+<li>WebLogic</li>
+<li>JBoss</li>
+</ul>
+<h3 id="3、缓存"><a href="#3、缓存" class="headerlink" title="3、缓存"></a>3、缓存</h3><ul>
+<li>本地缓存</li>
+<li>客户端缓存</li>
+<li>web缓存</li>
+<li>Memcached</li>
+<li>Redis</li>
+<li>Tair</li>
+<li>cellar</li>
+</ul>
+<h3 id="4、消息队列"><a href="#4、消息队列" class="headerlink" title="4、消息队列"></a>4、消息队列</h3><ul>
+<li>Kafka</li>
+<li>ActiveMQ</li>
+<li>RocketMQ</li>
+<li>RabbitMQ</li>
+<li>Redis消息队列</li>
+<li>ZeroMQ</li>
+</ul>
+<h3 id="5、RPC"><a href="#5、RPC" class="headerlink" title="5、RPC"></a>5、RPC</h3><ul>
+<li>Dubbo</li>
+<li>Thrift</li>
+<li>gRPC</li>
+<li>java的RMI</li>
+</ul>
+<h3 id="6、定时任务"><a href="#6、定时任务" class="headerlink" title="6、定时任务"></a>6、定时任务</h3><ul>
+<li>Quartz</li>
+<li>cron定时调度</li>
+<li>java定时任务</li>
+<li>Elastic-job</li>
+<li>opencron</li>
+<li>LTS</li>
+</ul>
+<h3 id="7、数据库中间件"><a href="#7、数据库中间件" class="headerlink" title="7、数据库中间件"></a>7、数据库中间件</h3><ul>
+<li>Mycat</li>
+<li>Sharding Jdbc</li>
+</ul>
+<h3 id="8、搜索引擎"><a href="#8、搜索引擎" class="headerlink" title="8、搜索引擎"></a>8、搜索引擎</h3><ul>
+<li>Lucene</li>
+<li>Elasticsearch</li>
+<li>Solr</li>
+<li>sphinx</li>
+</ul>
+<h2 id="八、微服务"><a href="#八、微服务" class="headerlink" title="八、微服务"></a>八、微服务</h2><h3 id="1、微服务框架"><a href="#1、微服务框架" class="headerlink" title="1、微服务框架"></a>1、微服务框架</h3><ul>
+<li>Springcloud</li>
+<li>SpringCloud Alibaba</li>
+<li>Dropwizard</li>
+<li>Akka</li>
+</ul>
+<h3 id="2、注册中心"><a href="#2、注册中心" class="headerlink" title="2、注册中心"></a>2、注册中心</h3><ul>
+<li>Eureka</li>
+<li>Zookeeper</li>
+<li>Consul</li>
+</ul>
+<h3 id="3、服务调用"><a href="#3、服务调用" class="headerlink" title="3、服务调用"></a>3、服务调用</h3><ul>
+<li>Feigh</li>
+<li>restTemplete</li>
+</ul>
+<h3 id="4、负载均衡"><a href="#4、负载均衡" class="headerlink" title="4、负载均衡"></a>4、负载均衡</h3><ul>
+<li>Ribbon</li>
+</ul>
+<h3 id="5、网关"><a href="#5、网关" class="headerlink" title="5、网关"></a>5、网关</h3><ul>
+<li>Gateway</li>
+<li>kong</li>
+<li>zuul</li>
+</ul>
+<h3 id="6、配置中心"><a href="#6、配置中心" class="headerlink" title="6、配置中心"></a>6、配置中心</h3><ul>
+<li>Zookeeper</li>
+<li>Apollo</li>
+<li>Springcloud Config</li>
+</ul>
+<h3 id="7、链路跟踪"><a href="#7、链路跟踪" class="headerlink" title="7、链路跟踪"></a>7、链路跟踪</h3><ul>
+<li>SpringCloud Bus</li>
+<li>SpringCloud Sleuth</li>
+<li>Zipkin</li>
+<li>Dapper</li>
+<li>log-based</li>
+<li>HTrace</li>
+</ul>
+<h2 id="九、分布式"><a href="#九、分布式" class="headerlink" title="九、分布式"></a>九、分布式</h2><h3 id="1、分布式理论"><a href="#1、分布式理论" class="headerlink" title="1、分布式理论"></a>1、分布式理论</h3><ul>
+<li>CAP理论</li>
+<li>BASE理论</li>
+<li>幂等性</li>
+<li>分布式锁<ul>
+<li>redis实现</li>
+<li>数据库实现</li>
+<li>Zookeeper实现</li>
+</ul>
+</li>
+</ul>
+<h3 id="2、一致性算法"><a href="#2、一致性算法" class="headerlink" title="2、一致性算法"></a>2、一致性算法</h3><ul>
+<li>Paxos</li>
+<li>ZAB</li>
+<li>Raft</li>
+<li>Gossip</li>
+<li>两阶段提交协议</li>
+<li>节点选举策略</li>
+<li>一致性hash算法</li>
+</ul>
+<h3 id="3、分布式文件系统"><a href="#3、分布式文件系统" class="headerlink" title="3、分布式文件系统"></a>3、分布式文件系统</h3><ul>
+<li>HDFS</li>
+<li>fastDFS</li>
+</ul>
+<h3 id="4、分布式ID"><a href="#4、分布式ID" class="headerlink" title="4、分布式ID"></a>4、分布式ID</h3><ul>
+<li>Snowflake算法</li>
+<li>Flicker算法</li>
+<li>UUID</li>
+<li>MongoDB实现</li>
+</ul>
+<h3 id="5、分布式事务"><a href="#5、分布式事务" class="headerlink" title="5、分布式事务"></a>5、分布式事务</h3><ul>
+<li>多阶段提交</li>
+<li>TCC补偿事务</li>
+<li>本地消息表</li>
+<li>MQ事务消息</li>
+<li>最大努力通知</li>
+</ul>
+<h3 id="6、稳定性高可用方案"><a href="#6、稳定性高可用方案" class="headerlink" title="6、稳定性高可用方案"></a>6、稳定性高可用方案</h3><ul>
+<li>软硬件负载均衡</li>
+<li>限流</li>
+<li>容灾</li>
+<li>平滑启动</li>
+</ul>
+<h2 id="十、安全"><a href="#十、安全" class="headerlink" title="十、安全"></a>十、安全</h2><h3 id="1、web安全"><a href="#1、web安全" class="headerlink" title="1、web安全"></a>1、web安全</h3><ul>
+<li>XSS</li>
+<li>CRSF</li>
+<li>SQL注入</li>
+<li>DDOS</li>
+<li>DNS攻击</li>
+<li>脚本注入</li>
+<li>序列化攻击</li>
+<li>中间人攻击</li>
+</ul>
+<h3 id="2、加密解密算法"><a href="#2、加密解密算法" class="headerlink" title="2、加密解密算法"></a>2、加密解密算法</h3><ul>
+<li>对称加密</li>
+<li>非对称加密</li>
+<li>hash算法</li>
+<li>数字签名</li>
+<li>Base64</li>
+</ul>
+<h3 id="3、框架"><a href="#3、框架" class="headerlink" title="3、框架"></a>3、框架</h3><ul>
+<li>Shiro</li>
+<li>SpringSecurity</li>
+</ul>
+<h3 id="4、授权认证"><a href="#4、授权认证" class="headerlink" title="4、授权认证"></a>4、授权认证</h3><ul>
+<li>RBAC</li>
+<li>OAuth2.0</li>
+<li>OIDC</li>
+<li>SAML</li>
+<li>TLS全链路加密</li>
+<li>JWT用户认证</li>
+<li>Check前置检查</li>
+<li>Quota配额管理</li>
+<li>Telemetry遥测报告</li>
+<li>双因素认证（2FA）</li>
+<li>单点登录SSO</li>
+</ul>
+<h2 id="十一、项目管理"><a href="#十一、项目管理" class="headerlink" title="十一、项目管理"></a>十一、项目管理</h2><h3 id="1、开发设计"><a href="#1、开发设计" class="headerlink" title="1、开发设计"></a>1、开发设计</h3><ul>
+<li>DDD领域驱动模型</li>
+<li>Actor模式</li>
+<li>响应式编程</li>
+<li>DODAF2.0</li>
+<li>Serverless</li>
+<li>Service Mesh</li>
+</ul>
+<h3 id="2、项目管理"><a href="#2、项目管理" class="headerlink" title="2、项目管理"></a>2、项目管理</h3><ul>
+<li>代码规范</li>
+<li>敏捷开发</li>
+<li>极限编程</li>
+<li>结对编程</li>
+<li>RUP</li>
+<li>SCRUM</li>
+<li>PDCA循环质量管理</li>
+<li>FMEA管理模式</li>
+</ul>
+<h3 id="3、架构管理"><a href="#3、架构管理" class="headerlink" title="3、架构管理"></a>3、架构管理</h3><ul>
+<li>DevOps</li>
+<li>OpenGroup</li>
+<li>ABSD架构方法论</li>
+<li>架构设计原则</li>
+<li>异地多活</li>
+<li>Knative弹性伸缩</li>
+</ul>
+<h2 id="十二、大数据云计算"><a href="#十二、大数据云计算" class="headerlink" title="十二、大数据云计算"></a>十二、大数据云计算</h2><h3 id="1、流式计算"><a href="#1、流式计算" class="headerlink" title="1、流式计算"></a>1、流式计算</h3><ul>
+<li>storm</li>
+<li>Flink</li>
+<li>KafkaStream</li>
+</ul>
+<h3 id="2、Hadoop"><a href="#2、Hadoop" class="headerlink" title="2、Hadoop"></a>2、Hadoop</h3><ul>
+<li>HDFS</li>
+<li>MapReduce</li>
+<li>Yarn</li>
+<li>Spark</li>
+</ul>
+<h2 id="十三、开发工具"><a href="#十三、开发工具" class="headerlink" title="十三、开发工具"></a>十三、开发工具</h2><ul>
+<li>IDEA</li>
+<li>VSCode</li>
+<li>VIM</li>
+<li>Gitlab</li>
+<li>Navicat</li>
+<li>XShell</li>
+<li>postman</li>
+<li>Filezilla</li>
+<li>Fiddler</li>
+</ul>
+<h2 id="十四、学习资源"><a href="#十四、学习资源" class="headerlink" title="十四、学习资源"></a>十四、学习资源</h2><h3 id="1、视频网站"><a href="#1、视频网站" class="headerlink" title="1、视频网站"></a>1、视频网站</h3><ul>
+<li>B站</li>
+<li>慕课网</li>
+<li>中国大学MOOC网</li>
+</ul>
+<h3 id="2、博客社区"><a href="#2、博客社区" class="headerlink" title="2、博客社区"></a>2、博客社区</h3><ul>
+<li>CSDN</li>
+<li>开源中国</li>
+<li>简书</li>
+<li>思否</li>
+<li>掘金</li>
+<li>博客园</li>
+<li>阿里云社区</li>
+<li>开发者头条</li>
+<li>Medium</li>
+</ul>
+<h3 id="3、技术手册"><a href="#3、技术手册" class="headerlink" title="3、技术手册"></a>3、技术手册</h3><ul>
+<li>W3Cschool</li>
+<li>Runoob.com</li>
+<li>慕课网教程手册</li>
+</ul>
+<h3 id="4、行业资讯"><a href="#4、行业资讯" class="headerlink" title="4、行业资讯"></a>4、行业资讯</h3><ul>
+<li>知乎</li>
+<li>stackoverflow</li>
+</ul>
+<h3 id="5、代码托管"><a href="#5、代码托管" class="headerlink" title="5、代码托管"></a>5、代码托管</h3><ul>
+<li>github</li>
+<li>gitee</li>
+<li>coding</li>
+</ul>
+<h3 id="6、电子书网站"><a href="#6、电子书网站" class="headerlink" title="6、电子书网站"></a>6、电子书网站</h3><ul>
+<li>gitbook</li>
+<li>aibooks</li>
+<li>书栈网</li>
+<li>搬书匠</li>
+<li>鸠摩搜索</li>
+<li>IT-ebooks国外免费</li>
+</ul>
+<h3 id="7、程序员交流网站"><a href="#7、程序员交流网站" class="headerlink" title="7、程序员交流网站"></a>7、程序员交流网站</h3><ul>
+<li>V2EX</li>
+<li>知乎</li>
+</ul>
+<h3 id="8、云服务器"><a href="#8、云服务器" class="headerlink" title="8、云服务器"></a>8、云服务器</h3><ul>
+<li>阿里云</li>
+<li>腾讯云</li>
+<li>百度云</li>
+<li>华为云</li>
+<li>七牛云</li>
+<li>西部数据</li>
+<li>金山云</li>
+</ul>
+<h3 id="9、面试刷题"><a href="#9、面试刷题" class="headerlink" title="9、面试刷题"></a>9、面试刷题</h3><ul>
+<li>LinkCode</li>
+<li>LeetCode</li>
+<li>牛客网</li>
+</ul>
+<h3 id="10、找工作"><a href="#10、找工作" class="headerlink" title="10、找工作"></a>10、找工作</h3><ul>
+<li>100offer</li>
+<li>拉勾网</li>
+</ul>
+<h3 id="11、数据资源下载"><a href="#11、数据资源下载" class="headerlink" title="11、数据资源下载"></a>11、数据资源下载</h3><ul>
+<li>国家数据</li>
+<li>MSDN</li>
+<li>PUDN</li>
+<li>OPSX阿里巴巴开源镜像</li>
+<li>TUNA清华开源软件</li>
+<li>163网易开源镜像</li>
+</ul>
+<h3 id="12、编程外包"><a href="#12、编程外包" class="headerlink" title="12、编程外包"></a>12、编程外包</h3><ul>
+<li>大神部落</li>
+<li>程序员客栈</li>
+<li>码市</li>
+<li>开源众包</li>
+</ul>
+<p>本内容为第一版，后序将继续更新。</p>
+<P class="note note-warning">如需转载，请提前联系作者，否则追究法律责任</P>
+
+<p> <strong><P class="note note-primary">这有5T资源，涵盖了java小白到架构师整个体系各种相关资源（视频、电子书、面试、简历、IDE破解等），更多文章请关注：</P></strong></p>
+<p align="center"><img src="https://s3.ax1x.com/2020/12/18/rJnbO1.jpg" srcset="/img/loading.gif" height="250" width="480" /></p>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/java%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/">java学习路线</a>
+                    
+                  </div>
+                
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/01/02/%E4%B8%83%E3%80%81%E5%B7%A5%E5%85%B7/%E6%97%A5%E5%BF%97/java%E4%B8%AD%E7%9A%84%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6%E4%BD%93%E7%B3%BB%E6%A2%B3%E7%90%86%EF%BC%88%E7%AE%80%E5%8D%95%E7%9B%B4%E7%99%BD%EF%BC%8C%E6%95%85%E4%BA%8B%E5%8F%99%E8%BF%B0%EF%BC%89/">
+                        <span class="hidden-mobile">java中的日志框架体系梳理（简单直白，故事叙述）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="http://www.javachat.cc" target="_blank" rel="nofollow noopener"><span>愚公要移山</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    document.addEventListener('DOMContentLoaded', function() {
+      window.NProgress && window.NProgress.inc();
+    })
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f3cb5680bcdd7f7a451689fcff9759f2";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
