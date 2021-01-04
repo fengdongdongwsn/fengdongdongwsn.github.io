@@ -1,0 +1,673 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/./img/global/head.png">
+  <link rel="icon" type="image/png" href="/./img/global/head.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="冯冬冬">
+  <meta name="keywords" content="">
+  <title>程序出现了bug如何排查？看看这几款JVM工具 - 愚公要移山</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"www.javachat.cc","root":"/","version":"1.8.6","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":6},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"f3cb5680bcdd7f7a451689fcff9759f2","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 45vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>愚公要移山</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/life/">
+                <i class="iconfont icon-th-large"></i>
+                生活
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/sources/">
+                <i class="iconfont icon-link-fill"></i>
+                资源
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" false
+         style="background: url('/img/global/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="程序出现了bug如何排查？看看这几款JVM工具">
+              
+                程序出现了bug如何排查？看看这几款JVM工具
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      冯冬冬
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-01-04 20:55" pubdate>
+        2021年1月4日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      共2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      约
+      21
+       分钟阅读完成
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        共<span id="busuanzi_value_page_pv"></span> 次浏览
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">程序出现了bug如何排查？看看这几款JVM工具</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2021年1月4日 晚上
+                
+              </p>
+            
+            <div class="markdown-body">
+              <blockquote>
+<p><strong>出自公众号《愚公要移山》中，地址<a href="http://www.javachat.cc/">www.javachat.cc</a></strong></p>
+</blockquote>
+<p>在平时的开发当中我们总是会遇到各种各样的问题，比如说内存泄漏、死锁、CPU等。遇到问题不可怕，关键是我们如何去排查这些错误，对症下药才是根本。不过对于很多人来说，往往找不到这些问题的根本所在，因此这篇文章主要是让我们掌握一些工具来分析到底是哪里出现了问题。</p>
+<p>在之前的文章中，主要是分析了JVM的内存结构、类加载机制和垃圾回收机制。文章的顺序也是循序渐进的，从这篇文章当中我们主要是分析JDK自带的工具，把理论应用于实践。</p>
+<p>首先我们先对几种要讲的工具进行一个概述，然后再分别分析：</p>
+<h2 id="一、性能监控工具概述"><a href="#一、性能监控工具概述" class="headerlink" title="一、性能监控工具概述"></a>一、性能监控工具概述</h2><p>工具主要是为了解决问题而生的，就是由于我们的程序存在着一些性能问题，才有了这些工具。其实当我们在下载完成JDK之后，那些工具就被SUN公司随之送给我们了。</p>
+<p>我们可以在我们的JDK安装目录，下看看会有很多这样的工具。</p>
+<p><img src="https://s3.ax1x.com/2021/01/04/siBAeI.png" srcset="/img/loading.gif"></p>
+<p>我们会发现很多这样的exe文件，这里面有很多都是性能监控工具。我们就抽出来几个进行讲解。</p>
+<table>
+<thead>
+<tr>
+<th>工具名称</th>
+<th>主要作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>jps（JVM Process Status Tool）</td>
+<td>显示指定系统中所有的HotSpot虚拟机进程</td>
+</tr>
+<tr>
+<td>jstat（JVM Statistics Monitoring Tool）</td>
+<td>收集HotSpot虚拟机各方面的运行数据</td>
+</tr>
+<tr>
+<td>jinfo（Configuration Info for Java）</td>
+<td>显示虚拟机配置信息</td>
+</tr>
+<tr>
+<td>jmap（Memory Map for Java）</td>
+<td>生成虚拟机的内存转储快照（heapdump文件）</td>
+</tr>
+<tr>
+<td>jhat（JVM Heap Dump Browser）</td>
+<td>分析内存转储快照，不推荐使用，消耗资源而且慢</td>
+</tr>
+<tr>
+<td>jstack（Stack Trace for Java）</td>
+<td>显示虚拟机的线程快照</td>
+</tr>
+<tr>
+<td>JConsole</td>
+<td>JMX的可视化管理工具</td>
+</tr>
+<tr>
+<td>VisualVM</td>
+<td>多合一故障管理工具</td>
+</tr>
+</tbody></table>
+<p>常见的几个工具都已经列出来了，还有一些其他的工具，其实用起来比JDK自带的还要好，我会在今后的文章中列出来。OK，我们就一个一个去分析一下这些工具是干嘛的，以及如何去使用的。</p>
+<h2 id="二、工具"><a href="#二、工具" class="headerlink" title="二、工具"></a><strong>二、工具</strong></h2><h3 id="1、jps-虚拟机进程状况工具"><a href="#1、jps-虚拟机进程状况工具" class="headerlink" title="1、jps:虚拟机进程状况工具"></a><strong>1、jps:虚拟机进程状况工具</strong></h3><p>jps主要用来输出JVM中运行的进程状态信息。语法格式如下：</p>
+<figure class="highlight css"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs css"><span class="hljs-selector-tag">jps</span> <span class="hljs-selector-attr">[options]</span> <span class="hljs-selector-attr">[hostid]</span><br></code></pre></div></td></tr></table></figure>
+<p>   <strong>第一个参数：options</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">-q 不输出类名、Jar名和传入main方法的参数<br>-m 输出传入main方法的参数<br>-l 输出main类或Jar的全限名<br>-v 输出传入JVM的参数<br></code></pre></div></td></tr></table></figure>
+<p>​    <strong>第二个参数：hostid</strong></p>
+<p>主机或者是服务器的id，如果不指定，就默认为当前的主机或者是服务器。</p>
+<p>我是在Windows10系统下测试的，当然你可以在linux下试验，方式是一样的，结果可能有不同。你可以选择不同的参数选项来进行测试。打开CMD输入相应命令</p>
+<p><img src="https://s3.ax1x.com/2021/01/04/siBFOA.png" srcset="/img/loading.gif"></p>
+<h3 id="2、jstack：堆栈跟踪工具"><a href="#2、jstack：堆栈跟踪工具" class="headerlink" title="2、jstack：堆栈跟踪工具"></a><strong>2、jstack：堆栈跟踪工具</strong></h3><p>jstack用于生成虚拟机当前时刻的线程快照。语法格式如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">jstack [option] vmid<br></code></pre></div></td></tr></table></figure>
+<p><strong>第一个参数：option</strong></p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-F</td>
+<td>当正常输出的请求不被相应时候，强制输出线程堆栈</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>出堆栈外，显示关于锁的附加信息</td>
+</tr>
+<tr>
+<td>-m</td>
+<td>如果调用本地方法的话，可以显示C/C++的堆栈</td>
+</tr>
+</tbody></table>
+<p><strong>第二个参数：vmid</strong></p>
+<p>vmid是Java虚拟机ID，在Linux/Unix系统上一般就是进程ID。</p>
+<p>我们直接在CMD中操作一下：</p>
+<p><img src="https://s3.ax1x.com/2021/01/04/siBPQH.png" srcset="/img/loading.gif"></p>
+<h3 id="3、jstat-虚拟机统计信息监控工具"><a href="#3、jstat-虚拟机统计信息监控工具" class="headerlink" title="3、jstat:虚拟机统计信息监控工具"></a><strong>3、jstat:虚拟机统计信息监控工具</strong></h3><p>jstat监视虚拟机各种运行状态信息，可以显示本地或者是远程虚拟机进程中的类装载、内存、垃圾收集、JIT编译等运行数据。语法格式如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">jstat [ generalOption | outputOptions vmid [interval] [count]] ]<br></code></pre></div></td></tr></table></figure>
+<p><strong>第一个参数：generalOption | outputOptions</strong></p>
+<p>这个参数表示的option，代表着用户希望查询的虚拟机信息，分为类加载、垃圾收集、运行期编译状况3类。</p>
+<p><img src="https://s3.ax1x.com/2021/01/04/siBVTP.png" srcset="/img/loading.gif"></p>
+<p><strong>第二个参数：vmid</strong></p>
+<p>vmid是Java虚拟机ID，在Linux/Unix系统上一般就是进程ID。</p>
+<p><strong>第三个参数：interval</strong></p>
+<p>interval是采样时间间隔，</p>
+<p><strong>第四个参数：count</strong></p>
+<p>count表示的是采样数。</p>
+<p>下面我们就是用一下这个工具，打开我们的CMD，输入相应的命令：</p>
+<p><img src="https://s3.ax1x.com/2021/01/04/siBiyd.png" srcset="/img/loading.gif"></p>
+<h3 id="4、jinfo：实时地查看和调整虚拟机各项参数"><a href="#4、jinfo：实时地查看和调整虚拟机各项参数" class="headerlink" title="4、jinfo：实时地查看和调整虚拟机各项参数"></a><strong>4、jinfo：实时地查看和调整虚拟机各项参数</strong></h3><p>命令格式:</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">jinfo [option] pid<br></code></pre></div></td></tr></table></figure>
+<p><strong>第一个参数：option</strong></p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-v</td>
+<td>查看虚拟机启动时显示指定的参数列表</td>
+</tr>
+<tr>
+<td>-flag</td>
+<td>查看虚拟机启动时未被指定的参数的默认值</td>
+</tr>
+<tr>
+<td>-sysprops</td>
+<td>打印虚拟机进程的System.getProperties()的内容</td>
+</tr>
+</tbody></table>
+<p><strong>第二个参数：pid</strong></p>
+<p>指定显示的进程id。</p>
+<p>在CMD中进行测试：</p>
+<p><img src="https://s3.ax1x.com/2021/01/04/siBEwt.png" srcset="/img/loading.gif"></p>
+<h3 id="5、jmap：生成虚拟机的内存转储快照（heapdump文件）"><a href="#5、jmap：生成虚拟机的内存转储快照（heapdump文件）" class="headerlink" title="5、jmap：生成虚拟机的内存转储快照（heapdump文件）"></a><strong>5、jmap：生成虚拟机的内存转储快照（heapdump文件）</strong></h3><p>jmap（Memory Map for Java，内存映像工具），用于生成堆转存的快照，一般是heapdump或者dump文件。如果不适用jmap命令，可以使用-XX:+HeapDumpOnOutOfMemoryError参数，当虚拟机发生内存溢出的时候可以产生快照。或者使用kill -3 pid也可以产生。jmap的作用并不仅仅是为了获取dump文件，它可以查询finalize执行队列，java堆和永久代的详细信息，如空间使用率，当前用的哪种收集器。命令格式如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">jmap [option] vmid<br></code></pre></div></td></tr></table></figure>
+<p><strong>第一个参数：</strong></p>
+<p><img src="https://s3.ax1x.com/2021/01/04/siBmY8.png" srcset="/img/loading.gif"></p>
+<p><strong>第二个参数：vmid</strong></p>
+<p>vmid是Java虚拟机ID，在Linux/Unix系统上一般就是进程ID.</p>
+<p>在cmd中测试：</p>
+<p><img src="https://s3.ax1x.com/2021/01/04/siBKSg.png" srcset="/img/loading.gif"></p>
+<h3 id="6、jhat：分析内存转储快照，不推荐使用，而且慢"><a href="#6、jhat：分析内存转储快照，不推荐使用，而且慢" class="headerlink" title="6、jhat：分析内存转储快照，不推荐使用，而且慢"></a><strong>6、jhat：分析内存转储快照，不推荐使用，而且慢</strong></h3><p>由于这个工具功能比较简陋，运行起来也比较耗时，所以这个工具不推荐使用，推荐使用MAT。</p>
+<h3 id="7、JConsole：JMX的可视化管理工具"><a href="#7、JConsole：JMX的可视化管理工具" class="headerlink" title="7、JConsole：JMX的可视化管理工具"></a><strong>7、JConsole：JMX的可视化管理工具</strong></h3><p>这个工具相比较前面几个工具，使用率比较高，很重要。它是一个java GUI监视工具，可以以图表化的形式显示各种数据。并可通过远程连接监视远程的服务器VM。用java写的GUI程序，用来监控VM，并可监控远程的VM，非常易用，而且功能非常强。</p>
+<p>在cmd里面输入 jconsole，选则进程就可以了。（前提是在IDE工具先建立一个线程运行着）</p>
+<p><img src="https://s3.ax1x.com/2021/01/04/siBeFf.png" srcset="/img/loading.gif"></p>
+<p>然后我们选择了相应的选项之后，进入这个工具就会出现下面这个界面</p>
+<p><img src="https://s3.ax1x.com/2021/01/04/siBnfS.png" srcset="/img/loading.gif"></p>
+<p>在上面有菜单，我们可以选择其中一个进行查看，就可以了，这个用具用起来很方便，也是我之前用的比较多的工具。</p>
+<h3 id="8、VisualVM：多合一故障管理工具"><a href="#8、VisualVM：多合一故障管理工具" class="headerlink" title="8、VisualVM：多合一故障管理工具"></a><strong>8、VisualVM：多合一故障管理工具</strong></h3><p>这个工具也很牛bility。它同jconsole都是一个基于图形化界面的、可以查看本地及远程的JAVA GUI监控工具，Jvisualvm同jconsole的使用方式一样，直接在命令行打入jvisualvm即可启动，jvisualvm界面更美观一些，数据更实时：</p>
+<p><img src="https://s3.ax1x.com/2021/01/04/siBMlQ.png" srcset="/img/loading.gif"></p>
+<p>最上面也有菜单，你可以选择不同的选项来展示。自己动手试一遍是最好的。</p>
+<h2 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a><strong>三、总结</strong></h2><p>这些工具就先写这么多，在文章一开始我们其实已经发现了，jdk自带的工具那是超级的多，而且随着jdk版本的不断更新，工具还有不断加强增多的趋势，想要每一个都掌握那太费时间了，我们遇到哪些问题去搜索一下，看看能用到哪些工具就可以了。</p>
+<P class="note note-warning">如需转载，请提前联系作者，否则追究法律责任</P>
+
+<p> <strong><P class="note note-primary">这有5T资源，涵盖了java小白到架构师整个体系各种相关资源（视频、电子书、面试、简历、IDE破解等），更多文章请关注：</P></strong></p>
+<p align="center"><img src="https://s3.ax1x.com/2020/12/18/rJnbO1.jpg" srcset="/img/loading.gif" height="250" width="480" /></p>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/jvm%E4%B8%93%E9%A2%98/">jvm专题</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%9D%A2%E8%AF%95/">面试</a>
+                    
+                      <a class="hover-with-bg" href="/tags/jvm/">jvm</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/01/03/java%E5%B0%8F%E7%99%BD%E5%88%B0%E6%9E%B6%E6%9E%84%E5%B8%88%E6%8A%80%E6%9C%AF%E5%9B%BE%E8%B0%B1/">
+                        <span class="hidden-mobile">java小白到架构师技术图谱</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="http://www.javachat.cc" target="_blank" rel="nofollow noopener"><span>愚公要移山</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    document.addEventListener('DOMContentLoaded', function() {
+      window.NProgress && window.NProgress.inc();
+    })
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f3cb5680bcdd7f7a451689fcff9759f2";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
