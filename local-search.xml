@@ -4,6 +4,60 @@
   
   
   <entry>
+    <title>Springboot启动了哪些bean？这两种方式可以获取</title>
+    <link href="/2021/01/07/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/Springboot%E5%90%AF%E5%8A%A8%E4%BA%86%E5%93%AA%E4%BA%9Bbean%EF%BC%9F%E8%BF%99%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F%E5%8F%AF%E4%BB%A5%E8%8E%B7%E5%8F%96/"/>
+    <url>/2021/01/07/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/Springboot%E5%90%AF%E5%8A%A8%E4%BA%86%E5%93%AA%E4%BA%9Bbean%EF%BC%9F%E8%BF%99%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F%E5%8F%AF%E4%BB%A5%E8%8E%B7%E5%8F%96/</url>
+    
+    <content type="html"><![CDATA[<blockquote><p><strong>本文出自公众号《愚公要移山》Springboot系列</strong></p></blockquote><h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>在本文中，我们将探索在容器中获取所有spring管理的bean的相关技术。这有神马用？主要是用于排查问题。一般都是我们创建的某一个bean没有启动的问题。毕竟工作中总是会遇到各种各样的bug。提前了解一些没有坏处。</p><h2 id="2-IoC容器"><a href="#2-IoC容器" class="headerlink" title="2. IoC容器"></a>2. IoC容器</h2><p>bean是spring管理的应用程序的基础，所有bean都驻留在IOC容器中，该容器负责管理它们的生命周期。</p><p>我们可以通过两种方式获取该容器内所有bean的列表:</p><ol><li>使用<em>ListableBeanFactory</em>接口</li><li>使用Spring Boot Actuator</li></ol><h2 id="3-使用ListableBeanFactory接口"><a href="#3-使用ListableBeanFactory接口" class="headerlink" title="3.使用ListableBeanFactory接口"></a>3.使用ListableBeanFactory接口</h2><p>ListableBeanFactory接口提供了getBeanDefinitionNames()方法，该方法返回在这个工厂中定义的所有bean的名称。您可以在官方文档中找到所有已知子接口及其实现类的列表。我们来看这种方式如何获取所有的bean。</p><h3 id="第一步：创建一个Controller"><a href="#第一步：创建一个Controller" class="headerlink" title="第一步：创建一个Controller"></a>第一步：创建一个Controller</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Controller</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FooController</span> </span>&#123;<br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> FooService fooService;<br>    <span class="hljs-meta">@RequestMapping(value=&quot;/displayallbeans&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getHeaderAndBody</span><span class="hljs-params">(Map model)</span></span>&#123;<br>        model.put(<span class="hljs-string">&quot;header&quot;</span>, fooService.getHeader());<br>        model.put(<span class="hljs-string">&quot;message&quot;</span>, fooService.getBody());<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;displayallbeans&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><p>这个Controller依赖于另一个FooService。</p><h3 id="第二步：创建Service"><a href="#第二步：创建Service" class="headerlink" title="第二步：创建Service"></a>第二步：创建Service</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FooService</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getHeader</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Display All Beans&quot;</span>;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getBody</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;展示所有beans的案例&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><p>注意，我们在这里创建了两个不同的bean:</p><ul><li><p>fooController</p></li><li><p>fooService</p></li></ul><p>这里使用applicationContext对象并调用它的getBeanDefinitionNames()方法，该方法将返回applicationContext容器中的所有bean:</p><h3 id="第三步：设置SpringBootApplication启动类"><a href="#第三步：设置SpringBootApplication启动类" class="headerlink" title="第三步：设置SpringBootApplication启动类"></a>第三步：设置SpringBootApplication启动类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@SpringBootApplication</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DemoApplication</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> ApplicationContext applicationContext;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        applicationContext = SpringApplication.run(DemoApplication.class, args);<br>        displayAllBeans();<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">displayAllBeans</span><span class="hljs-params">()</span> </span>&#123;<br>        String[] allBeanNames = applicationContext.getBeanDefinitionNames();<br>        <span class="hljs-keyword">for</span>(String beanName : allBeanNames) &#123;<br>            System.out.println(beanName);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><h3 id="第四步：测试打印"><a href="#第四步：测试打印" class="headerlink" title="第四步：测试打印"></a>第四步：测试打印</h3><p>这将打印applicationContext容器中的所有bean:</p><p><img src="https://s3.ax1x.com/2021/01/07/sZWQM9.png"></p><p>注意，除了我们定义的bean之外，它还将记录该容器中的所有其他bean。为了清楚起见，我们在这里省略了它们，因为它们有很多。</p><h2 id="4-使用Spring-Boot-Actuator"><a href="#4-使用Spring-Boot-Actuator" class="headerlink" title="4. 使用Spring Boot Actuator"></a>4. 使用Spring Boot Actuator</h2><p>Spring Boot Actuator提供了用于监控应用程序统计信息的端点。下面看看这种方式：</p><h3 id="第一步：添加依赖"><a href="#第一步：添加依赖" class="headerlink" title="第一步：添加依赖"></a>第一步：添加依赖</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-actuator<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure><h3 id="第二步：修改application-properties"><a href="#第二步：修改application-properties" class="headerlink" title="第二步：修改application.properties"></a>第二步：修改application.properties</h3><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-meta">management.endpoints.web.exposure.include</span>=<span class="hljs-string">*</span><br></code></pre></td></tr></table></figure><p>把上面代码添加到properties文件中。</p><h3 id="第三步：使用发布端点查看"><a href="#第三步：使用发布端点查看" class="headerlink" title="第三步：使用发布端点查看"></a>第三步：使用发布端点查看</h3><p><img src="https://s3.ax1x.com/2021/01/07/sZWKxJ.png"></p><p>由于这里的Actuator没有配置，所以显示的比较乱。关于Actuator的配置，会在下一篇文章中呈现。</p><h2 id="5-结论"><a href="#5-结论" class="headerlink" title="5. 结论"></a>5. 结论</h2><p>在本文中，我们了解了如何使用ListableBeanFactory接口和Spring Boot Actuator在Spring IoC容器中显示所有bean。希望对你有点帮助。</p><P class="note note-warning">如需转载，请提前联系作者，否则追究法律责任</P><p> <strong><P class="note note-primary">这有5T资源，涵盖了java小白到架构师整个体系各种相关资源（视频、电子书、面试、简历、IDE破解等），更多文章请关注：</P></strong></p><p align="center"><img src="https://s3.ax1x.com/2020/12/18/rJnbO1.jpg" height="250" width="480" /></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Springboot专题</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>微服务</tag>
+      
+      <tag>springboot</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>一步为你的Springboot应用自定义banner</title>
+    <link href="/2021/01/07/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/%E4%B8%80%E6%AD%A5%E4%B8%BA%E4%BD%A0%E7%9A%84Springboot%E5%BA%94%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89banner/"/>
+    <url>/2021/01/07/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/%E4%B8%80%E6%AD%A5%E4%B8%BA%E4%BD%A0%E7%9A%84Springboot%E5%BA%94%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89banner/</url>
+    
+    <content type="html"><![CDATA[<blockquote><p><strong>本文出自公众号《愚公要移山》Springboot系列</strong></p></blockquote><p>这个小功能据说是Springboot2.x的小彩蛋，出来很久很久了。之前知道没试过，这次试了一下，还可以，挺好玩的。最近因为开始重新看Springboot，看到了这个部分，于是整理到了文章中。烂大街的东西，拿来丢人显眼了。</p><h2 id="什么是banner？"><a href="#什么是banner？" class="headerlink" title="什么是banner？"></a>什么是banner？</h2><p><img src="https://s3.ax1x.com/2021/01/06/sVt9k6.png"></p><p>就是这个默认的Spring标识，有时候看着太难看，所以想换换，没什么卵用，有时候还会使你的Springboot应用启动变慢。所以看着玩玩就好。</p><h2 id="一步实现"><a href="#一步实现" class="headerlink" title="一步实现"></a>一步实现</h2><p>看好了，在你的springboot项目的resource目录下，新建一个banner.txt文件，你在里面写的内容就是要显示的内容。</p><p>比如说我们写上：愚公要移山。</p><p><img src="https://s3.ax1x.com/2021/01/06/sVtSTx.png"></p><p>这样写起来比较难看。还不如以前的格式好看，不过没关系，也有一些好看的网站已经帮我们实现了。转化之后把内容替换掉就可以。</p><ul><li>可以根据输入的字符生成字符画：<a href="http://patorjk.com/software/taag/#p=display&amp;f=Doh&amp;t=fengdongdong">http://patorjk.com/software/taag/#p=display&amp;f=Doh&amp;t=fengdongdong</a></li></ul><p><img src="https://s3.ax1x.com/2021/01/06/sVYz01.png"></p><ul><li>可以根据画显示字符：<a href="https://www.degraeve.com/img2txt.php">https://www.degraeve.com/img2txt.php</a></li></ul><p>使用一张地图试试</p><p><img src="https://file01.16sucai.com/d/file/2011/0801/20110801111724537.jpg"></p><p>效果如下：</p><p><img src="https://s3.ax1x.com/2021/01/06/sVYxmR.png"></p><p>具体的你自己琢磨吧。</p><h2 id="还是难看？没事接着看"><a href="#还是难看？没事接着看" class="headerlink" title="还是难看？没事接着看"></a>还是难看？没事接着看</h2><p>这颜色太难看了。没事，还有配置。</p><p>Spring提供了三个枚举类来设定字符的颜色，分别是：</p><ul><li><p>AnsiColor： 用来设定字符的前景色</p></li><li><p>AnsiBackground： 用来设定字符的背景色</p></li><li><p>AnsiStyle： 用来控制加粗、斜体、下划线等等。</p></li></ul><p>我们设置个颜色试试。</p><p><img src="https://s3.ax1x.com/2021/01/06/sVtPfO.png"></p><p>最后启动，看看效果</p><p><img src="https://s3.ax1x.com/2021/01/06/sVtCtK.png"></p><p>小玩意，东西虽好，不要贪用！！感谢</p><P class="note note-warning">如需转载，请提前联系作者，否则追究法律责任</P><p> <strong><P class="note note-primary">这有5T资源，涵盖了java小白到架构师整个体系各种相关资源（视频、电子书、面试、简历、IDE破解等），更多文章请关注：</P></strong></p><p align="center"><img src="https://s3.ax1x.com/2020/12/18/rJnbO1.jpg" height="250" width="480" /></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Springboot专题</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>微服务</tag>
+      
+      <tag>springboot</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>为你的Springboot应用配置通用的异常处理吧（实用干货）</title>
     <link href="/2021/01/05/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/%E4%B8%BA%E4%BD%A0%E7%9A%84Springboot%E5%BA%94%E7%94%A8%E9%85%8D%E7%BD%AE%E9%80%9A%E7%94%A8%E7%9A%84%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%90%A7%EF%BC%88%E5%AE%9E%E7%94%A8%E5%B9%B2%E8%B4%A7%EF%BC%89/"/>
     <url>/2021/01/05/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/%E4%B8%BA%E4%BD%A0%E7%9A%84Springboot%E5%BA%94%E7%94%A8%E9%85%8D%E7%BD%AE%E9%80%9A%E7%94%A8%E7%9A%84%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%90%A7%EF%BC%88%E5%AE%9E%E7%94%A8%E5%B9%B2%E8%B4%A7%EF%BC%89/</url>
@@ -122,9 +176,9 @@
       
       <tag>高效java</tag>
       
-      <tag>面试</tag>
-      
       <tag>java基础</tag>
+      
+      <tag>面试</tag>
       
     </tags>
     

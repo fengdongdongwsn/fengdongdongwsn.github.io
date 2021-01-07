@@ -17,9 +17,25 @@
   <meta name="description" content="">
   <meta name="author" content="冯冬冬">
   <meta name="keywords" content="">
-  <title>归档 - 愚公要移山</title>
+  <title>一步为你的Springboot应用自定义banner - 愚公要移山</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
 
 
 
@@ -170,11 +186,61 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="文章汇总">
+            <span class="h2" id="subtitle" title="一步为你的Springboot应用自定义banner">
               
-                文章汇总
+                一步为你的Springboot应用自定义banner
               
             </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      冯冬冬
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-01-07 10:52" pubdate>
+        2021年1月7日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      共492 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      约
+      5
+       分钟阅读完成
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        共<span id="busuanzi_value_page_pv"></span> 次浏览
+      </span>
+    
+  
+</div>
 
             
           </div>
@@ -187,70 +253,136 @@
 
   <main>
     
-      <div class="container nopadding-md">
-        <div class="py-5" id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">共计 11 篇文章</p>
-  <hr>
-  
-  
-    
       
-      <p class="h5">2021</p>
-    
-    <a href="/2021/01/07/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/Springboot%E5%90%AF%E5%8A%A8%E4%BA%86%E5%93%AA%E4%BA%9Bbean%EF%BC%9F%E8%BF%99%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F%E5%8F%AF%E4%BB%A5%E8%8E%B7%E5%8F%96/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Springboot启动了哪些bean？这两种方式可以获取</span>
-      <time style="float: right;">01-07</time>
-    </a>
-  
-    
-    <a href="/2021/01/07/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/%E4%B8%80%E6%AD%A5%E4%B8%BA%E4%BD%A0%E7%9A%84Springboot%E5%BA%94%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89banner/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">一步为你的Springboot应用自定义banner</span>
-      <time style="float: right;">01-07</time>
-    </a>
-  
-    
-    <a href="/2021/01/05/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/%E4%B8%BA%E4%BD%A0%E7%9A%84Springboot%E5%BA%94%E7%94%A8%E9%85%8D%E7%BD%AE%E9%80%9A%E7%94%A8%E7%9A%84%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%90%A7%EF%BC%88%E5%AE%9E%E7%94%A8%E5%B9%B2%E8%B4%A7%EF%BC%89/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">为你的Springboot应用配置通用的异常处理吧（实用干货）</span>
-      <time style="float: right;">01-05</time>
-    </a>
-  
-    
-    <a href="/2021/01/04/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/5%E3%80%81jvm/%E7%A8%8B%E5%BA%8F%E5%87%BA%E7%8E%B0%E4%BA%86bug%E5%A6%82%E4%BD%95%E6%8E%92%E6%9F%A5%EF%BC%9F%E7%9C%8B%E7%9C%8B%E8%BF%99%E5%87%A0%E6%AC%BEJVM%E5%B7%A5%E5%85%B7/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">程序出现了bug如何排查？看看这几款JVM工具</span>
-      <time style="float: right;">01-04</time>
-    </a>
-  
-    
-    <a href="/2021/01/03/java%E5%B0%8F%E7%99%BD%E5%88%B0%E6%9E%B6%E6%9E%84%E5%B8%88%E6%8A%80%E6%9C%AF%E5%9B%BE%E8%B0%B1/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">java小白到架构师技术图谱</span>
-      <time style="float: right;">01-03</time>
-    </a>
-  
-    
-    <a href="/2021/01/02/%E4%B8%83%E3%80%81%E5%B7%A5%E5%85%B7/%E6%97%A5%E5%BF%97/java%E4%B8%AD%E7%9A%84%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6%E4%BD%93%E7%B3%BB%E6%A2%B3%E7%90%86%EF%BC%88%E7%AE%80%E5%8D%95%E7%9B%B4%E7%99%BD%EF%BC%8C%E6%95%85%E4%BA%8B%E5%8F%99%E8%BF%B0%EF%BC%89/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">java中的日志框架体系梳理（简单直白，故事叙述）</span>
-      <time style="float: right;">01-02</time>
-    </a>
-  
-</div>
 
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">一步为你的Springboot应用自定义banner</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2021年1月7日 上午
+                
+              </p>
+            
+            <div class="markdown-body">
+              <blockquote>
+<p><strong>本文出自公众号《愚公要移山》Springboot系列</strong></p>
+</blockquote>
+<p>这个小功能据说是Springboot2.x的小彩蛋，出来很久很久了。之前知道没试过，这次试了一下，还可以，挺好玩的。最近因为开始重新看Springboot，看到了这个部分，于是整理到了文章中。烂大街的东西，拿来丢人显眼了。</p>
+<h2 id="什么是banner？"><a href="#什么是banner？" class="headerlink" title="什么是banner？"></a>什么是banner？</h2><p><img src="https://s3.ax1x.com/2021/01/06/sVt9k6.png" srcset="/img/loading.gif"></p>
+<p>就是这个默认的Spring标识，有时候看着太难看，所以想换换，没什么卵用，有时候还会使你的Springboot应用启动变慢。所以看着玩玩就好。</p>
+<h2 id="一步实现"><a href="#一步实现" class="headerlink" title="一步实现"></a>一步实现</h2><p>看好了，在你的springboot项目的resource目录下，新建一个banner.txt文件，你在里面写的内容就是要显示的内容。</p>
+<p>比如说我们写上：愚公要移山。</p>
+<p><img src="https://s3.ax1x.com/2021/01/06/sVtSTx.png" srcset="/img/loading.gif"></p>
+<p>这样写起来比较难看。还不如以前的格式好看，不过没关系，也有一些好看的网站已经帮我们实现了。转化之后把内容替换掉就可以。</p>
+<ul>
+<li>可以根据输入的字符生成字符画：<a target="_blank" rel="noopener" href="http://patorjk.com/software/taag/#p=display&amp;f=Doh&amp;t=fengdongdong">http://patorjk.com/software/taag/#p=display&amp;f=Doh&amp;t=fengdongdong</a></li>
+</ul>
+<p><img src="https://s3.ax1x.com/2021/01/06/sVYz01.png" srcset="/img/loading.gif"></p>
+<ul>
+<li>可以根据画显示字符：<a target="_blank" rel="noopener" href="https://www.degraeve.com/img2txt.php">https://www.degraeve.com/img2txt.php</a></li>
+</ul>
+<p>使用一张地图试试</p>
+<p><img src="https://file01.16sucai.com/d/file/2011/0801/20110801111724537.jpg" srcset="/img/loading.gif"></p>
+<p>效果如下：</p>
+<p><img src="https://s3.ax1x.com/2021/01/06/sVYxmR.png" srcset="/img/loading.gif"></p>
+<p>具体的你自己琢磨吧。</p>
+<h2 id="还是难看？没事接着看"><a href="#还是难看？没事接着看" class="headerlink" title="还是难看？没事接着看"></a>还是难看？没事接着看</h2><p>这颜色太难看了。没事，还有配置。</p>
+<p>Spring提供了三个枚举类来设定字符的颜色，分别是：</p>
+<ul>
+<li><p>AnsiColor： 用来设定字符的前景色</p>
+</li>
+<li><p>AnsiBackground： 用来设定字符的背景色</p>
+</li>
+<li><p>AnsiStyle： 用来控制加粗、斜体、下划线等等。</p>
+</li>
+</ul>
+<p>我们设置个颜色试试。</p>
+<p><img src="https://s3.ax1x.com/2021/01/06/sVtPfO.png" srcset="/img/loading.gif"></p>
+<p>最后启动，看看效果</p>
+<p><img src="https://s3.ax1x.com/2021/01/06/sVtCtK.png" srcset="/img/loading.gif"></p>
+<p>小玩意，东西虽好，不要贪用！！感谢</p>
+<P class="note note-warning">如需转载，请提前联系作者，否则追究法律责任</P>
 
-
-
-
-              </div>
+<p> <strong><P class="note note-primary">这有5T资源，涵盖了java小白到架构师整个体系各种相关资源（视频、电子书、面试、简历、IDE破解等），更多文章请关注：</P></strong></p>
+<p align="center"><img src="https://s3.ax1x.com/2020/12/18/rJnbO1.jpg" srcset="/img/loading.gif" height="250" width="480" /></p>
             </div>
-          </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Springboot%E4%B8%93%E9%A2%98/">Springboot专题</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">微服务</a>
+                    
+                      <a class="hover-with-bg" href="/tags/springboot/">springboot</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/01/07/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/Springboot%E5%90%AF%E5%8A%A8%E4%BA%86%E5%93%AA%E4%BA%9Bbean%EF%BC%9F%E8%BF%99%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F%E5%8F%AF%E4%BB%A5%E8%8E%B7%E5%8F%96/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Springboot启动了哪些bean？这两种方式可以获取</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/01/05/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/%E4%B8%BA%E4%BD%A0%E7%9A%84Springboot%E5%BA%94%E7%94%A8%E9%85%8D%E7%BD%AE%E9%80%9A%E7%94%A8%E7%9A%84%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%90%A7%EF%BC%88%E5%AE%9E%E7%94%A8%E5%B9%B2%E8%B4%A7%EF%BC%89/">
+                        <span class="hidden-mobile">为你的Springboot应用配置通用的异常处理吧（实用干货）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
         </div>
       </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
     
 
     
@@ -357,9 +489,15 @@
 
 
 
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
 
 
 
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
 
 
 
