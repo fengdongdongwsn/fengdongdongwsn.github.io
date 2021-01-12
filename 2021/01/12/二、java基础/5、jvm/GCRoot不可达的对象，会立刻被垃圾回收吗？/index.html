@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="冯冬冬">
   <meta name="keywords" content="">
-  <title>Springboot启动了哪些bean？这两种方式可以获取 - 愚公要移山</title>
+  <title>GCRoot不可达的对象，会立刻被垃圾回收吗？ - 愚公要移山</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -186,9 +186,9 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Springboot启动了哪些bean？这两种方式可以获取">
+            <span class="h2" id="subtitle" title="GCRoot不可达的对象，会立刻被垃圾回收吗？">
               
-                Springboot启动了哪些bean？这两种方式可以获取
+                GCRoot不可达的对象，会立刻被垃圾回收吗？
               
             </span>
 
@@ -203,8 +203,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-01-07 10:58" pubdate>
-        2021年1月7日 上午
+      <time datetime="2021-01-12 12:00" pubdate>
+        2021年1月12日 中午
       </time>
     </span>
   
@@ -215,7 +215,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      共748 字
+      共1.4k 字
     </span>
   
 
@@ -225,7 +225,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       约
-      9
+      15
        分钟阅读完成
     </span>
   
@@ -263,48 +263,50 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Springboot启动了哪些bean？这两种方式可以获取</h1>
+            <h1 style="display: none">GCRoot不可达的对象，会立刻被垃圾回收吗？</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：2021年1月7日 上午
+                  本文最后更新于：2021年1月12日 中午
                 
               </p>
             
             <div class="markdown-body">
               <blockquote>
-<p><strong>本文出自公众号《愚公要移山》Springboot系列</strong></p>
+<p><strong>出自公众号《愚公要移山》中，地址<a href="http://www.javachat.cc/">www.javachat.cc</a></strong><br><strong>本文已收录在《JVM专题》中</strong></p>
 </blockquote>
-<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>在本文中，我们将探索在容器中获取所有spring管理的bean的相关技术。这有神马用？主要是用于排查问题。一般都是我们创建的某一个bean没有启动的问题。毕竟工作中总是会遇到各种各样的bug。提前了解一些没有坏处。</p>
-<h2 id="2-IoC容器"><a href="#2-IoC容器" class="headerlink" title="2. IoC容器"></a>2. IoC容器</h2><p>bean是spring管理的应用程序的基础，所有bean都驻留在IOC容器中，该容器负责管理它们的生命周期。</p>
-<p>我们可以通过两种方式获取该容器内所有bean的列表:</p>
-<ol>
-<li>使用<em>ListableBeanFactory</em>接口</li>
-<li>使用Spring Boot Actuator</li>
-</ol>
-<h2 id="3-使用ListableBeanFactory接口"><a href="#3-使用ListableBeanFactory接口" class="headerlink" title="3.使用ListableBeanFactory接口"></a>3.使用ListableBeanFactory接口</h2><p>ListableBeanFactory接口提供了getBeanDefinitionNames()方法，该方法返回在这个工厂中定义的所有bean的名称。您可以在官方文档中找到所有已知子接口及其实现类的列表。我们来看这种方式如何获取所有的bean。</p>
-<h3 id="第一步：创建一个Controller"><a href="#第一步：创建一个Controller" class="headerlink" title="第一步：创建一个Controller"></a>第一步：创建一个Controller</h3><figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-meta">@Controller</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FooController</span> </span>&#123;<br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> FooService fooService;<br>    <span class="hljs-meta">@RequestMapping(value=&quot;/displayallbeans&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getHeaderAndBody</span><span class="hljs-params">(Map model)</span></span>&#123;<br>        model.put(<span class="hljs-string">&quot;header&quot;</span>, fooService.getHeader());<br>        model.put(<span class="hljs-string">&quot;message&quot;</span>, fooService.getBody());<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;displayallbeans&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
-<p>这个Controller依赖于另一个FooService。</p>
-<h3 id="第二步：创建Service"><a href="#第二步：创建Service" class="headerlink" title="第二步：创建Service"></a>第二步：创建Service</h3><figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FooService</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getHeader</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Display All Beans&quot;</span>;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getBody</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;展示所有beans的案例&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
-<p>注意，我们在这里创建了两个不同的bean:</p>
-<ul>
-<li><p>fooController</p>
-</li>
-<li><p>fooService</p>
-</li>
-</ul>
-<p>这里使用applicationContext对象并调用它的getBeanDefinitionNames()方法，该方法将返回applicationContext容器中的所有bean:</p>
-<h3 id="第三步：设置SpringBootApplication启动类"><a href="#第三步：设置SpringBootApplication启动类" class="headerlink" title="第三步：设置SpringBootApplication启动类"></a>第三步：设置SpringBootApplication启动类</h3><figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-meta">@SpringBootApplication</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DemoApplication</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> ApplicationContext applicationContext;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        applicationContext = SpringApplication.run(DemoApplication.class, args);<br>        displayAllBeans();<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">displayAllBeans</span><span class="hljs-params">()</span> </span>&#123;<br>        String[] allBeanNames = applicationContext.getBeanDefinitionNames();<br>        <span class="hljs-keyword">for</span>(String beanName : allBeanNames) &#123;<br>            System.out.println(beanName);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
-<h3 id="第四步：测试打印"><a href="#第四步：测试打印" class="headerlink" title="第四步：测试打印"></a>第四步：测试打印</h3><p>这将打印applicationContext容器中的所有bean:</p>
-<p><img src="https://s3.ax1x.com/2021/01/07/sZWQM9.png" srcset="/img/loading.gif"></p>
-<p>注意，除了我们定义的bean之外，它还将记录该容器中的所有其他bean。为了清楚起见，我们在这里省略了它们，因为它们有很多。</p>
-<h2 id="4-使用Spring-Boot-Actuator"><a href="#4-使用Spring-Boot-Actuator" class="headerlink" title="4. 使用Spring Boot Actuator"></a>4. 使用Spring Boot Actuator</h2><p>Spring Boot Actuator提供了用于监控应用程序统计信息的端点。下面看看这种方式：</p>
-<h3 id="第一步：添加依赖"><a href="#第一步：添加依赖" class="headerlink" title="第一步：添加依赖"></a>第一步：添加依赖</h3><figure class="highlight xml"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-actuator<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></div></td></tr></table></figure>
-<h3 id="第二步：修改application-properties"><a href="#第二步：修改application-properties" class="headerlink" title="第二步：修改application.properties"></a>第二步：修改application.properties</h3><figure class="highlight properties"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs properties"><span class="hljs-meta">management.endpoints.web.exposure.include</span>=<span class="hljs-string">*</span><br></code></pre></div></td></tr></table></figure>
-<p>把上面代码添加到properties文件中。</p>
-<h3 id="第三步：使用发布端点查看"><a href="#第三步：使用发布端点查看" class="headerlink" title="第三步：使用发布端点查看"></a>第三步：使用发布端点查看</h3><p><img src="https://s3.ax1x.com/2021/01/07/sZWKxJ.png" srcset="/img/loading.gif"></p>
-<p>由于这里的Actuator没有配置，所以显示的比较乱。关于Actuator的配置，会在下一篇文章中呈现。</p>
-<h2 id="5-结论"><a href="#5-结论" class="headerlink" title="5. 结论"></a>5. 结论</h2><p>在本文中，我们了解了如何使用ListableBeanFactory接口和Spring Boot Actuator在Spring IoC容器中显示所有bean。希望对你有点帮助。</p>
+<p>这个问题是我在刷牛客面经的时候遇到的，还特地整理在了我的常规面试题文档中，所以这道题主要考察的就是finalize方法的影响。</p>
+<p>java提供了一个finalize方法，可以帮助我们进行资源释放，类似于C++中的析构函数。但是目前普遍的认识是不要使用，为什么呢？就是因为对java虚拟机的垃圾回收有影响。这篇文章对其进行一个说明。</p>
+<h2 id="一、为什么有影响"><a href="#一、为什么有影响" class="headerlink" title="一、为什么有影响"></a>一、为什么有影响</h2><p>我们都知道一个对象GCRoot不可达，java虚拟机就认为是垃圾对象，就会进行垃圾回收，但是如果这个对象包含了finalize函数，性质就不一样了。怎么不一样了呢？</p>
+<p>java虚拟机在进行垃圾回收的时候，一看到这个对象类含有finalize函数，就把这个函数交给FinalizerThread处理，而包含了这个finalize的对象就会被添加到FinalizerThread的执行队列，并使用一个链表，把这些包含了finalize的对象串起来。</p>
+<p><img src="https://s3.ax1x.com/2021/01/12/sGzl1s.png" srcset="/img/loading.gif"></p>
+<p>他的影响在于只要finalize没有执行，那么这些对象就会一直存在堆区，不过这里只是4个包含了finalize的对象，影响不是那么大，如果有一万个或者是十万个呢？这就影响大了。</p>
+<p>finalize的原理其实很简单，在这里简要的梳理一下：</p>
+<p>（1）对象在初始化的过程中会判断是否重写了finalize，方法是判断两个字段标志has_finalizer_flag和RegisterFinalizersAtInit。</p>
+<p>（2）如果重写了finalize，那就把当前对象注册到FinalizerThread的ReferenceQueue队列中。注册之后的对象就叫做Finalizer。方法是调用register_finalizer函数。此时java虚拟机一看当前有这个对象的引用，于是就不进行垃圾回收了。</p>
+<p>（3）对象开始被调用，FinalizerThread线程负责从ReferenceQueue队列中获取Finalizer对象。开始执行finalize方法，在执行之前，这个对象一直在堆中。</p>
+<p>（4）对象执行完毕之后，将这个Finalizer对象从队列中移除，java虚拟机一看对象没有引用了，就进行垃圾回收了。</p>
+<p>这就是整个过程。不过在这里我们主要看的是finalize方法对垃圾回收的影响，其实就是在第三步，也就是这个对象含有finalize，进入了队列但一直没有被调用的这段时间，会一直占用内存。</p>
+<blockquote>
+<p><strong>注意：这里其实就是一道面试题，我在看牛客网上的面经时，看到有人被问到过。也就是GCRoot不可达的对象，会立刻被垃圾回收吗？</strong></p>
+</blockquote>
+<p>我们使用一个案例来分析一波：</p>
+<h2 id="二、案例演示"><a href="#二、案例演示" class="headerlink" title="二、案例演示"></a>二、案例演示</h2><p>我们创建一个类</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TestFinalizer</span> </span>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Fdd</span> </span>&#123;<br>    	<span class="hljs-comment">//分配1M</span><br>        <span class="hljs-keyword">private</span> <span class="hljs-keyword">byte</span>[] content = <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[<span class="hljs-number">1024</span>*<span class="hljs-number">1024</span>];<br>        <span class="hljs-meta">@Override</span><br>        <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">finalize</span><span class="hljs-params">()</span> </span>&#123;<br>            System.out.println(<span class="hljs-string">&quot;finalize被执行&quot;</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;   <br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">1000</span>; i++) &#123;<br>        	Fdd fdd = <span class="hljs-keyword">new</span> Fdd(); <br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>现在创建了类，我们设置一下参数。</p>
+<figure class="highlight properties"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs properties"><span class="hljs-comment"># 最大堆内存</span><br><span class="hljs-meta">-Xmx5m</span> <span class="hljs-string"></span><br><span class="hljs-comment"># 最小堆内存</span><br><span class="hljs-meta">-Xms5m</span>  <span class="hljs-string"></span><br><span class="hljs-comment"># 堆内存溢出错误打印</span><br><span class="hljs-meta">-XX</span>:<span class="hljs-string">+HeapDumpOnOutOfMemoryError </span><br><span class="hljs-comment"># 把堆相关信息保存在下列路径</span><br><span class="hljs-meta">-XX</span>:<span class="hljs-string">HeapDumpPath=F:/a.dump</span><br></code></pre></div></td></tr></table></figure>
+<p>在main方法中，创建了1000个Fdd对象，如果不执行finalize方法，那么因为没有调用所以会进行垃圾回收，此时不断我们创建多少个，都不会出现任何问题。但是如果存在finalize方法，就不一样了。</p>
+<figure class="highlight properties"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs properties"><span class="hljs-meta">java.lang.OutOfMemoryError</span>: <span class="hljs-string">Java heap space</span><br><span class="hljs-attr">Dumping</span> <span class="hljs-string">heap to F:/a.dump ...</span><br><span class="hljs-attr">finalize被执行</span><br><span class="hljs-attr">finalize被执行</span><br><span class="hljs-attr">finalize被执行</span><br><span class="hljs-attr">finalize被执行</span><br><span class="hljs-attr">finalize被执行</span><br><span class="hljs-attr">finalize被执行</span><br><span class="hljs-attr">finalize被执行</span><br><span class="hljs-attr">Unable</span> <span class="hljs-string">to create F:/a.dump: File exists</span><br><span class="hljs-attr">Exception</span> <span class="hljs-string">in thread &quot;main&quot; java.lang.OutOfMemoryError: Java heap space</span><br>	<span class="hljs-attr">at</span> <span class="hljs-string">com.fdd.chapter2.TestFinalizer$Fdd.&lt;init&gt;(TestFinalizer.java:6)</span><br>	<span class="hljs-attr">at</span> <span class="hljs-string">com.fdd.chapter2.TestFinalizer.main(TestFinalizer.java:14)</span><br></code></pre></div></td></tr></table></figure>
+<p>我们看到每个对象都会执行finalize，在执行之前的这段时间一直会在堆区，执行完了就会被清理，所以你看到这里执行了不少于5次的finalize方法。但是对象一旦超出了我们设置的5M，就会出现内存溢出。一句话总结就是出现了对象堆积。现在使用MAT工具来分析一下。</p>
+<blockquote>
+<p>Mat工具是一个插件，也可以自己下载一个。下载完成之后打开我们刚刚生成的a.dump即可。</p>
+</blockquote>
+<p>下面这张图就是分析的结果：</p>
+<p><img src="https://s3.ax1x.com/2021/01/12/sGzQpj.png" srcset="/img/loading.gif"></p>
+<p>a这块的内容就是Finalizer，也就是我们的Fdd对象，b包含的比较多，乱七八糟的剩余信息。当然你也可以查看一些其他的信息。都在MAT工具上。还有一些正在执行的finalizer和准备执行的。</p>
+<p><img src="https://s3.ax1x.com/2021/01/12/sGz1cn.png" srcset="/img/loading.gif"></p>
+<p>OK，一些其他的信息就不再展示了。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>一个GCRoot不可达的对象，不会立刻被垃圾回收，首先还会判断是否包含了finalize方法，如果有那就先执行finalize方法，如果这样的对象比较多，那么这部分对象及时GCRoot不可达，变得没用了，也会留在内存中，影响程序的效率。</p>
 <P class="note note-warning">如需转载，请提前联系作者，否则追究法律责任</P>
 
 <p> <strong><P class="note note-primary">这有5T资源，涵盖了java小白到架构师整个体系各种相关资源（视频、电子书、面试、简历、IDE破解等），更多文章请关注：</P></strong></p>
@@ -317,7 +319,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/Springboot%E4%B8%93%E9%A2%98/">Springboot专题</a>
+                      <a class="hover-with-bg" href="/categories/jvm%E4%B8%93%E9%A2%98/">jvm专题</a>
                     
                   </div>
                 
@@ -325,9 +327,9 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">微服务</a>
+                      <a class="hover-with-bg" href="/tags/%E9%9D%A2%E8%AF%95/">面试</a>
                     
-                      <a class="hover-with-bg" href="/tags/springboot/">springboot</a>
+                      <a class="hover-with-bg" href="/tags/jvm/">jvm</a>
                     
                   </div>
                 
@@ -338,18 +340,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/01/12/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/5%E3%80%81jvm/GCRoot%E4%B8%8D%E5%8F%AF%E8%BE%BE%E7%9A%84%E5%AF%B9%E8%B1%A1%EF%BC%8C%E4%BC%9A%E7%AB%8B%E5%88%BB%E8%A2%AB%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%90%97%EF%BC%9F/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">GCRoot不可达的对象，会立刻被垃圾回收吗？</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/01/07/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/%E4%B8%80%E6%AD%A5%E4%B8%BA%E4%BD%A0%E7%9A%84Springboot%E5%BA%94%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89banner/">
-                        <span class="hidden-mobile">一步为你的Springboot应用自定义banner</span>
+                      <a href="/2021/01/07/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/Springboot%E5%90%AF%E5%8A%A8%E4%BA%86%E5%93%AA%E4%BA%9Bbean%EF%BC%9F%E8%BF%99%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F%E5%8F%AF%E4%BB%A5%E8%8E%B7%E5%8F%96/">
+                        <span class="hidden-mobile">Springboot启动了哪些bean？这两种方式可以获取</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
