@@ -1,0 +1,595 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/./img/global/head.png">
+  <link rel="icon" type="image/png" href="/./img/global/head.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="冯冬冬">
+  <meta name="keywords" content="">
+  <title>乐观锁这么重要，如何用java两步实现一个？ - 愚公要移山</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"www.javachat.cc","root":"/","version":"1.8.6","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":6},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"f3cb5680bcdd7f7a451689fcff9759f2","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 45vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>愚公要移山</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/life/">
+                <i class="iconfont icon-th-large"></i>
+                生活
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/sources/">
+                <i class="iconfont icon-link-fill"></i>
+                资源
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" false
+         style="background: url('/img/global/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="乐观锁这么重要，如何用java两步实现一个？">
+              
+                乐观锁这么重要，如何用java两步实现一个？
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      冯冬冬
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-01-25 17:16" pubdate>
+        2021年1月25日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      共2.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      约
+      27
+       分钟阅读完成
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        共<span id="busuanzi_value_page_pv"></span> 次浏览
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">乐观锁这么重要，如何用java两步实现一个？</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2021年1月25日 下午
+                
+              </p>
+            
+            <div class="markdown-body">
+              <blockquote>
+<p><strong>出自公众号《愚公要移山》中，地址<a href="http://www.javachat.cc/">www.javachat.cc</a></strong></p>
+</blockquote>
+<p>java多线程中的锁分类多种多样，其中有一种主要的分类方式就是乐观和悲观进行划分的。这篇文章主要介绍如何自己手写一个乐观锁代码。不过文章为了保证完整性，会从基础开始介绍。</p>
+<h2 id="一、乐观锁概念"><a href="#一、乐观锁概念" class="headerlink" title="一、乐观锁概念"></a>一、乐观锁概念</h2><p>说是写乐观锁的概念，但是通常乐观锁和悲观锁的概念都要一块写。对比着来才更有意义。</p>
+<h3 id="1、悲观锁概念"><a href="#1、悲观锁概念" class="headerlink" title="1、悲观锁概念"></a><strong>1、悲观锁概念</strong></h3><p><strong>悲观锁：总是假设最坏的情况，每次去拿数据的时候都认为别人会修改，所以每次在拿数据的时候都会上锁，这样别人想拿这个数据就会阻塞，直到它拿到锁。</strong></p>
+<p>比如<code>synchronized</code>就是一个<code>悲观锁</code>，当一个方法使用了synchronized修饰时，其他的线程想要拿到这个方法就需要<code>等到别的线程释放</code>。</p>
+<p>数据库里面也用到了这种悲观锁的机制。比如行锁，表锁等，读锁，写锁等，都是在做操作之前先上锁。这样其他的线程就不能同步操作，必须要等到他释放才可以。</p>
+<h3 id="2、乐观锁概念"><a href="#2、乐观锁概念" class="headerlink" title="2、乐观锁概念"></a><strong>2、乐观锁概念</strong></h3><p><strong>乐观锁：总是假设最好的情况，每次去拿数据的时候都认为别人不会修改，所以不会上锁，只在更新的时候会判断一下<code>在此期间</code>别人有没有去更新这个数据。</strong></p>
+<blockquote>
+<p>注意<code>“在此期间”</code>的含义是<code>拿到数据到更新数据</code>的这段时间。因为没有加锁，所以别的线程可能会更改。还有一点那就是乐观锁其实是不加锁的。</p>
+</blockquote>
+<p>了解了概念之后，再看个例子：java中的<code>Atomic</code>包下的类就是使用了乐观锁机制。我们挑出来一个看看官方是如何实现的，然后按照这样的实现机制我们自己就可以实现。</p>
+<h3 id="3、乐观锁实现案例"><a href="#3、乐观锁实现案例" class="headerlink" title="3、乐观锁实现案例"></a><strong>3、乐观锁实现案例</strong></h3><p>java并发机制中主要有三个特性需要我们去考虑，<code>原子性、可见性和有序性</code>。AtomicInteger的作用就是为了保证原子性。就是用这个演示：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span> </span>&#123;<br>    <span class="hljs-comment">//一个变量a</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">volatile</span> <span class="hljs-keyword">int</span> a = <span class="hljs-number">0</span>;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        Test test = <span class="hljs-keyword">new</span> Test();<br>        Thread[] threads = <span class="hljs-keyword">new</span> Thread[<span class="hljs-number">5</span>];<br>        <span class="hljs-comment">//定义5个线程，每个线程加10</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++) &#123;<br>            threads[i] = <span class="hljs-keyword">new</span> Thread(() -&gt; &#123;<br>                <span class="hljs-keyword">try</span> &#123;<br>                    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-number">10</span>; j++) &#123;<br>                        System.out.println(a++);<br>                        Thread.sleep(<span class="hljs-number">500</span>);<br>                    &#125;<br>                &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>                    e.printStackTrace();<br>                &#125;<br>            &#125;);<br>            threads[i].start();<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>这个例子很简单：我们定义了一个<code>变量a，初始值是0</code>，然后使用<code>5个线程去增加</code>，<code>每个线程增加10</code>，按道理来说5个线程一共增加了50，<code>运行一下不到50</code>，原因就在于里面那个加一操作：<code>a++</code>;</p>
+<p>对于a++的操作，其实可以分解为3个步骤。</p>
+<p><code>**（1）从主存中读取a的值**</code></p>
+<p><code>**（2）对a进行加1操作**</code></p>
+<p><code>**（3）把a重新刷新到主存**</code></p>
+<p><code>线程1把a进行了加1操作</code>，但是还<code>没来得及重刷入到主存</code>，<code>线程2就读取了</code>，此时线程2读取的肯定是<code>没来及刷入内存的旧值</code>。这才造成了错误。解决办法就可以使用<code>AtomicInteger</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test3</span> </span>&#123;<br>    <span class="hljs-comment">//使用AtomicInteger定义a</span><br>    <span class="hljs-keyword">static</span> AtomicInteger a = <span class="hljs-keyword">new</span> AtomicInteger();<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        Test3 test = <span class="hljs-keyword">new</span> Test3();<br>        Thread[] threads = <span class="hljs-keyword">new</span> Thread[<span class="hljs-number">5</span>];<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++) &#123;<br>            threads[i] = <span class="hljs-keyword">new</span> Thread(() -&gt; &#123;<br>                <span class="hljs-keyword">try</span> &#123;<br>                    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-number">10</span>; j++) &#123;<br>                        <span class="hljs-comment">//使用getAndIncrement函数进行自增操作</span><br>                        System.out.println(a.incrementAndGet());        <br>                        Thread.sleep(<span class="hljs-number">500</span>);<br>                    &#125;<br>                &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>                    e.printStackTrace();<br>                &#125;<br>            &#125;);<br>            threads[i].start();<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>现在我们使用<code>AtomicInteger</code>定义a，然后使用<code>incrementAndGet</code>进行自增操作，最后的结果就总是<code>50</code>了。我们来分析一下：</p>
+<h3 id="4、乐观锁案例分析"><a href="#4、乐观锁案例分析" class="headerlink" title="4、乐观锁案例分析"></a><strong>4、乐观锁案例分析</strong></h3><p>想要找出来答案我们还要从<code>AtomicInteger</code>的incrementAndGet方法说起。因为这个方法实现了锁一样的功能。这里使用的是jdk1.8的版本，不同的版本会有出入。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">* Atomically increments by one the current value.</span><br><span class="hljs-comment">* <span class="hljs-doctag">@return</span> the updated value</span><br><span class="hljs-comment">*/</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> <span class="hljs-title">incrementAndGet</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> unsafe.getAndAddInt(<span class="hljs-keyword">this</span>, valueOffset, <span class="hljs-number">1</span>) + <span class="hljs-number">1</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>这里我们可以看到自增操作主要是使用了<code>unsafe</code>的<code>getAndAddInt</code>方法。因为不是专门介绍AtomicInteger，所以不会对源码进行详细的分析。</p>
+<ul>
+<li><p>Unsafe：Unsafe是位于sun.misc包下的一个类，Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力。也就是说我们直接操作了内存空间进行了加1操作。</p>
+</li>
+<li><p>unsafe.getAndAddInt：其内部又调用了Unsafe.compareAndSwapInt方法。这个机制叫做CAS机制，</p>
+</li>
+</ul>
+<p><code>**CAS 即比较并替换，实现并发算法时常用到的一种技术。CAS操作包含三个操作数——内存位置、预期原值及新值。执行CAS操作的时候，将内存位置的值与预期原值比较，如果相匹配，那么处理器会自动将该位置值更新为新值，否则，处理器不做任何操作。**</code></p>
+<p>我们使用一个例子来解释相信你会更加的清楚。</p>
+<blockquote>
+<p>意思是，你老爸想让你娶张三，等到真正结婚的那天，如果你老爸预想的新娘子(张三)和你真实取得新娘子一样，就给你办婚礼，否则不办婚礼。</p>
+</blockquote>
+<p>但是这样的CAS机制会带来一个比较常见的问题。那就是ABA问题，<code>你在桌子上放了100元，回来还是100，但是在你走的那段时间，别人已经拿走了100块，后来又还回来了</code>。这就是ABA问题。</p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/N8scgexEBuIT9PkeY64z7u5ODa0SVakiaSV2jCACpib7bpp2pI0ykBj82W5O1uDe3DKQNIRKjDPO9NHhh1PF0Pkw/640?wx_fmt=png" srcset="/img/loading.gif" alt="img"></p>
+<blockquote>
+<p>ABA问题看似没问题，其实在金融行业会造成隐患，你会容忍别人拿走你的100万再还回来，而你却毫不知情嘛？</p>
+</blockquote>
+<p>解决ABA问题的思路就是给数据加上版本号。</p>
+<p><strong>5、乐观锁思想</strong></p>
+<p>OK，上面说了这么多，其实就是想说一句话那就是乐观锁可以由CAS机制+版本机制来实现。</p>
+<ul>
+<li><p>CAS机制：当多个线程尝试使用CAS同时更新同一个变量时，只有其中一个线程能更新变量的值，而其它线程都失败。CAS 有效地说明了“ 我认为位置 V 应该包含值 A；如果包含该值，则将 B 放到这个位置；否则，不要更改该位置，只告诉我这个位置现在的值即可“。</p>
+</li>
+<li><p>版本机制：CAS机制保证了在更新数据的时候没有被修改为其他数据的同步机制，版本机制就保证了没有被修改过的同步机制（意思是上面的ABA问题）。</p>
+</li>
+</ul>
+<p>基于这个思想我们就可以实现一个乐观锁。下面我们写一下代码。这个代码在我自己电脑上亲测通过。</p>
+<h2 id="二、实现一个乐观锁"><a href="#二、实现一个乐观锁" class="headerlink" title="二、实现一个乐观锁"></a>二、实现一个乐观锁</h2><h3 id="第一步：定义我们要操作的数据"><a href="#第一步：定义我们要操作的数据" class="headerlink" title="第一步：定义我们要操作的数据"></a><strong>第一步：定义我们要操作的数据</strong></h3><figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Data</span> </span>&#123;<br>    <span class="hljs-comment">//数据版本号</span><br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> version = <span class="hljs-number">1</span>;<br>    <span class="hljs-comment">//真实数据</span><br>    <span class="hljs-keyword">static</span> String data = <span class="hljs-string">&quot;java的架构师技术栈&quot;</span>;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getVersion</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-keyword">return</span> version;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">updateVersion</span><span class="hljs-params">()</span></span>&#123;<br>        version = version + <span class="hljs-number">1</span>;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h3 id="第二步：定义一个乐观锁"><a href="#第二步：定义一个乐观锁" class="headerlink" title="第二步：定义一个乐观锁"></a><strong>第二步：定义一个乐观锁</strong></h3><figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">OptimThread</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Thread</span> </span>&#123; <br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> version;<br>    <span class="hljs-keyword">public</span> String data;<br>    <span class="hljs-comment">//构造方法和getter、setter方法</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-comment">// 1.读数据</span><br>        String text = Data.data;<br>        println(<span class="hljs-string">&quot;线程&quot;</span>+ getName() + <span class="hljs-string">&quot;，获得的数据版本号为：&quot;</span> + Data.getVersion());<br>        println(<span class="hljs-string">&quot;线程&quot;</span>+ getName() + <span class="hljs-string">&quot;，预期的数据版本号为：&quot;</span> + getVersion());<br>        System.out.println(<span class="hljs-string">&quot;线程&quot;</span>+ getName()+<span class="hljs-string">&quot;读数据完成=========data = &quot;</span> + text);<br>        <span class="hljs-comment">// 2.写数据：预期的版本号和数据版本号一致，那就更新</span><br>        <span class="hljs-keyword">if</span>(Data.getVersion() == getVersion())&#123;<br>            println(<span class="hljs-string">&quot;线程&quot;</span> + getName() + <span class="hljs-string">&quot;，版本号为：&quot;</span> + version + <span class="hljs-string">&quot;，正在操作数据&quot;</span>);<br>            <span class="hljs-keyword">synchronized</span>(OptimThread.class)&#123;<br>                <span class="hljs-keyword">if</span>(Data.getVersion() == <span class="hljs-keyword">this</span>.version)&#123;<br>                    Data.data = <span class="hljs-keyword">this</span>.data;<br>                    Data.updateVersion();<br>                    System.out.println(<span class="hljs-string">&quot;线程&quot;</span> + getName() + <span class="hljs-string">&quot;写数据完成=========data = &quot;</span> + <span class="hljs-keyword">this</span>.data);<br>                    <span class="hljs-keyword">return</span> ;<br>                &#125;<br>            &#125;<br>        &#125;<span class="hljs-keyword">else</span>&#123;<br>             <span class="hljs-comment">// 3. 版本号不正确的线程，需要重新读取，重新执行</span><br>            println(<span class="hljs-string">&quot;线程&quot;</span>+ getName() + <span class="hljs-string">&quot;，获得的数据版本号为：&quot;</span> + Data.getVersion());<br>            println(<span class="hljs-string">&quot;线程&quot;</span>+ getName() + <span class="hljs-string">&quot;，预期的版本号为：&quot;</span> + getVersion());<br>            System.err.println(<span class="hljs-string">&quot;线程&quot;</span>+ getName() + <span class="hljs-string">&quot;，需要重新执行。==============&quot;</span>);<br>        &#125;  <br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h3 id="第三步：测试"><a href="#第三步：测试" class="headerlink" title="第三步：测试"></a><strong>第三步：测试</strong></h3><figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">2</span>; i++) &#123;<br>            <span class="hljs-keyword">new</span> OptimThread(String.valueOf(i), <span class="hljs-number">1</span>, <span class="hljs-string">&quot;fdd&quot;</span>).start();<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>定义了两个线程，然后进行读写操作</p>
+<h3 id="第四步：输出结果"><a href="#第四步：输出结果" class="headerlink" title="第四步：输出结果"></a><strong>第四步：输出结果</strong></h3><p>这个结果可以看到在读数据的时候只要发现没有变化即可，但是更新数据的时候要判断当前的版本号和预期的版本号是否一致，如果一致那就更新，如果不一致，那就说明更新失败。</p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/N8scgexEBuIT9PkeY64z7u5ODa0SVakiaULE1a4noYD37YAnBWyA7uNLoMcX2jRf8jCTQwLTvscswWE3iaZEdFdg/640?wx_fmt=png" srcset="/img/loading.gif" alt="img"></p>
+<p>OK，今天的文章先写到这。如果问题还请批评指正。</p>
+<P class="note note-warning">如需转载，请提前联系作者，否则追究法律责任</P>
+
+<p> <strong><P class="note note-primary">这有5T资源，涵盖了java小白到架构师整个体系各种相关资源（视频、电子书、面试、简历、IDE破解等），更多文章请关注：</P></strong></p>
+<p align="center"><img src="https://s3.ax1x.com/2020/12/18/rJnbO1.jpg" srcset="/img/loading.gif" height="250" width="480" /></p>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+                    
+                      <a class="hover-with-bg" href="/categories/java%E5%9F%BA%E7%A1%80/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">java多线程</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/java%E5%9F%BA%E7%A1%80/">java基础</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/01/25/%E4%B8%83%E3%80%81%E5%B7%A5%E5%85%B7/linux/Linux%E5%AD%A6%E4%B8%8D%E4%BC%9A%EF%BC%9F%E6%8A%8A%E8%BF%99%E4%BA%9B%E5%91%BD%E4%BB%A4%E6%95%B2%E4%B8%80%E9%81%8D%E5%B0%B1%E9%80%9A%E4%BA%86%EF%BC%88Linux%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8%EF%BC%89/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Linux学不会？把这些命令敲一遍就通了（Linux命令大全）</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/01/14/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/5%E3%80%81jvm/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AF%B4%E4%B8%8D%E6%8E%A8%E8%8D%90%E4%BD%BF%E7%94%A8finalize%E6%96%B9%E6%B3%95/">
+                        <span class="hidden-mobile">为什么说不推荐使用finalize方法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="http://www.javachat.cc" target="_blank" rel="nofollow noopener"><span>愚公要移山</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    document.addEventListener('DOMContentLoaded', function() {
+      window.NProgress && window.NProgress.inc();
+    })
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f3cb5680bcdd7f7a451689fcff9759f2";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,582 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/./img/global/head.png">
+  <link rel="icon" type="image/png" href="/./img/global/head.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="冯冬冬">
+  <meta name="keywords" content="">
+  <title>如何通俗的理解CAS？（深入到操作系统分析） - 愚公要移山</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"www.javachat.cc","root":"/","version":"1.8.6","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":6},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"f3cb5680bcdd7f7a451689fcff9759f2","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 45vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>愚公要移山</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/life/">
+                <i class="iconfont icon-th-large"></i>
+                生活
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/sources/">
+                <i class="iconfont icon-link-fill"></i>
+                资源
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" false
+         style="background: url('/img/global/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="如何通俗的理解CAS？（深入到操作系统分析）">
+              
+                如何通俗的理解CAS？（深入到操作系统分析）
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      冯冬冬
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-01-25 17:27" pubdate>
+        2021年1月25日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      共2.5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      约
+      29
+       分钟阅读完成
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        共<span id="busuanzi_value_page_pv"></span> 次浏览
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">如何通俗的理解CAS？（深入到操作系统分析）</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2021年1月25日 下午
+                
+              </p>
+            
+            <div class="markdown-body">
+              <blockquote>
+<p><strong>出自公众号《愚公要移山》中，地址<a href="http://www.javachat.cc/">www.javachat.cc</a></strong></p>
+</blockquote>
+<p>学习Java并发编程，CAS机制都是一个不得不掌握的知识点。这篇文章主要是从出现的原因再到原理进行一个解析。希望对你有所帮助。</p>
+<h2 id="一、为什么需要CAS机制？"><a href="#一、为什么需要CAS机制？" class="headerlink" title="一、为什么需要CAS机制？"></a>一、为什么需要CAS机制？</h2><p>为什么需要CAS机制呢？我们先从一个错误现象谈起。我们经常使用volatile关键字修饰某一个变量，表明这个变量是全局共享的一个变量，同时具有了可见性和有序性。但是却没有原子性。比如说一个常见的操作a++。这个操作其实可以细分成三个步骤：</p>
+<p><code>（1）从内存中读取a</code></p>
+<p><code>（2）对a进行加1操作</code></p>
+<p><code>（3）将a的值重新写入内存中</code></p>
+<p>在单线程状态下这个操作没有一点问题，但是在多线程中就会出现各种各样的问题了。因为可能一个线程对<code>a进行了加1操作，还没来得及写入内存，其他的线程就读取了旧值。造成了线程的不安全现象</code>。如何去解决这个问题呢？最常见的方式就是使用<code>AtomicInteger</code>来修饰<code>a</code>。我们可以看一下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test3</span> </span>&#123;<br>	<span class="hljs-comment">//使用AtomicInteger定义a</span><br>	<span class="hljs-keyword">static</span> AtomicInteger a = <span class="hljs-keyword">new</span> AtomicInteger();<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>		Test3 test = <span class="hljs-keyword">new</span> Test3();<br>		Thread[] threads = <span class="hljs-keyword">new</span> Thread[<span class="hljs-number">5</span>];<br>		<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++) &#123;<br>			threads[i] = <span class="hljs-keyword">new</span> Thread(() -&gt; &#123;<br>				<span class="hljs-keyword">try</span> &#123;<br>					<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-number">10</span>; j++) &#123;<br>						<span class="hljs-comment">//使用getAndIncrement函数进行自增操作</span><br>						System.out.println(a.incrementAndGet());		<br>						Thread.sleep(<span class="hljs-number">500</span>);<br>					&#125;<br>				&#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>					e.printStackTrace();<br>				&#125;<br>			&#125;);<br>			threads[i].start();<br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>现在我们使用AtomicInteger类并且调用了incrementAndGet方法来对a进行自增操作。这个incrementAndGet是如何实现的呢？我们可以看一下AtomicInteger的源码。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">* Atomically increments by one the current value.</span><br><span class="hljs-comment">* <span class="hljs-doctag">@return</span> the updated value</span><br><span class="hljs-comment">*/</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> <span class="hljs-title">incrementAndGet</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> unsafe.getAndAddInt(<span class="hljs-keyword">this</span>, valueOffset, <span class="hljs-number">1</span>) + <span class="hljs-number">1</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>我们到这一步可以看到其实就是usafe调用了getAndAddInt的方法实现的，但是现在我们还看不出什么，我们再深入到源码中看看getAndAddInt方法又是如何实现的，</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getAndAddInt</span><span class="hljs-params">(Object var1, <span class="hljs-keyword">long</span> var2, <span class="hljs-keyword">int</span> var4)</span> </span>&#123;   <br>	<span class="hljs-keyword">int</span> var5;     <br>	<span class="hljs-keyword">do</span> &#123;          <br>		var5 = <span class="hljs-keyword">this</span>.getIntVolatile(var1, var2);   <br>	&#125; <span class="hljs-keyword">while</span>(!<span class="hljs-keyword">this</span>.compareAndSwapInt(var1, var2, var5, var5 + var4));    <br>	<span class="hljs-keyword">return</span> var5;   <br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>到了这一步就稍微有点眉目了，原来底层调用的是<code>compareAndSwapInt</code>方法，这个<code>compareAndSwapInt</code>方法其实就是CAS机制。因此如果我们想搞清楚<code>AtomicInteger</code>的原子操作是如何实现的，我们就必须要把CAS机制搞清楚，这也是为什么我们需要掌握CAS机制的原因。</p>
+<h2 id="二、分析CAS"><a href="#二、分析CAS" class="headerlink" title="二、分析CAS"></a>二、分析CAS</h2><h3 id="1、基本含义"><a href="#1、基本含义" class="headerlink" title="1、基本含义"></a>1、基本含义</h3><p>CAS全拼又叫做<code>compareAndSwap</code>，从名字上的意思就知道是比较交换的意思。比较交换什么呢？</p>
+<blockquote>
+<p>过程是这样：它包含 3 个参数 CAS（V，E，N），V表示要更新变量的值，E表示预期值，N表示新值。仅当 V值等于E值时，才会将V的值设为N，如果V值和E值不同，则说明已经有其他线程做两个更新，则当前线程则什么都不做。最后，CAS 返回当前V的真实值。</p>
+</blockquote>
+<p>我们举一个我之前举过的例子来说明这个过程：</p>
+<blockquote>
+<p><strong><code>比如说给你儿子订婚。你儿子就是内存位置，你原本以为你儿子是和杨贵妃在一起了，结果在订婚的时候发现儿子身边是西施。这时候该怎么办呢？你一气之下不做任何操作。如果儿子身边是你预想的杨贵妃，你一看很开心就给他们订婚了，也叫作执行操作。现在你应该明白了吧。</code></strong></p>
+</blockquote>
+<p>CAS 操作时抱着乐观的态度进行的，它总是认为自己可以成功完成操作。所以CAS也叫作乐观锁，那什么是悲观锁呢？悲观锁就是我们之前赫赫有名的<code>synchronized</code>。悲观锁的思想你可以这样理解，一个线程想要去获得这个锁但是却获取不到，必须要别人释放了才可以。</p>
+<h3 id="2、底层原理"><a href="#2、底层原理" class="headerlink" title="2、底层原理"></a>2、底层原理</h3><p>想要弄清楚其底层原理，深入到源码是最好的方式，在上面我们已经通过源码看到了其实就是<code>Usafe</code>的方法来完成的，在这个方法中使用了<code>compareAndSwapInt</code>这个CAS机制。因此，现在我们有必要进一步深入进去看看：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Unsafe</span> </span>&#123;<br>    <span class="hljs-comment">// compareAndSwapInt 是 native 类型的方法</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">native</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">compareAndSwapInt</span><span class="hljs-params">(</span></span><br><span class="hljs-function"><span class="hljs-params">    	Object o, </span></span><br><span class="hljs-function"><span class="hljs-params">    	<span class="hljs-keyword">long</span> offset,</span></span><br><span class="hljs-function"><span class="hljs-params">        <span class="hljs-keyword">int</span> expected,</span></span><br><span class="hljs-function"><span class="hljs-params">        <span class="hljs-keyword">int</span> x</span></span><br><span class="hljs-function"><span class="hljs-params">    )</span></span>;<br>    <span class="hljs-comment">//剩余还有很多方法</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>我们可以看到这里面主要有四个参数，第一个参数就是我们操作的对象a，第二个参数是对象a的地址偏移量，第三个参数表示我们期待这个a是什么值，第四个参数表示的是a的实际值。</p>
+<p>不过这里我们会发现这个<code>compareAndSwapInt</code>是一个<code>native</code>方法，也就是说再往下走就是C语言代码，如果我们保持好奇心，可以继续深入进去看看。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">UNSAFE_ENTRY(jboolean, Unsafe_CompareAndSwapInt(JNIEnv *env, jobject unsafe, <br>											jobject obj, jlong offset, jint e, jint x))<br>  UnsafeWrapper(<span class="hljs-string">&quot;Unsafe_CompareAndSwapInt&quot;</span>);<br>  oop p = JNIHandles::resolve(obj);<br>  <span class="hljs-comment">// 根据偏移量valueOffset，计算 value 的地址</span><br>  jint* addr = (jint *) index_oop_from_field_offset_long(p, offset);<br>  <span class="hljs-comment">// 调用 Atomic 中的函数 cmpxchg来进行比较交换</span><br>  <span class="hljs-keyword">return</span> (jint)(Atomic::cmpxchg(x, addr, e)) == e;<br>UNSAFE_END<br></code></pre></div></td></tr></table></figure>
+<p>上面的代码我们解读一下：首先使用<code>jint</code>计算了<code>value</code>的地址，然后根据这个地址，使用了<code>Atomic</code>的<code>cmpxchg</code>方法进行比较交换。现在问题又抛给了这个<code>cmpxchg</code>，真实实现的是这个函数。我们再进一步深入看看，真相已经离我们不远了。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">unsigned Atomic::cmpxchg(unsigned <span class="hljs-keyword">int</span> exchange_value,<br>                         <span class="hljs-keyword">volatile</span> unsigned <span class="hljs-keyword">int</span>* dest, <br>                         unsigned <span class="hljs-keyword">int</span> compare_value) &#123;<br>    <span class="hljs-keyword">assert</span>(sizeof(unsigned <span class="hljs-keyword">int</span>) == sizeof(jint), <span class="hljs-string">&quot;more work to do&quot;</span>);<br>  <span class="hljs-comment">/*</span><br><span class="hljs-comment">   * 根据操作系统类型调用不同平台下的重载函数，</span><br><span class="hljs-comment">     这个在预编译期间编译器会决定调用哪个平台下的重载函数</span><br><span class="hljs-comment">  */</span><br>    <span class="hljs-keyword">return</span> (unsigned <span class="hljs-keyword">int</span>)Atomic::cmpxchg((jint)exchange_value, <br>                     (<span class="hljs-keyword">volatile</span> jint*)dest, (jint)compare_value);<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>皮球又一次被完美的踢走了，现在在不同的操作系统下会调用不同的<code>cmpxchg</code>重载函数，我现在用的是win10系统，所以我们看看这个平台下的实现，别着急再往下走走：</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">inline</span> jint <span class="hljs-title">Atomic::cmpxchg</span> <span class="hljs-params">(jint exchange_value, <span class="hljs-keyword">volatile</span> jint* dest, </span></span><br><span class="hljs-function"><span class="hljs-params">							jint compare_value)</span> </span>&#123;<br>  <span class="hljs-keyword">int</span> mp = os::is_MP();<br>  __asm &#123;<br>    mov edx, dest<br>    mov ecx, exchange_value<br>    mov eax, compare_value<br>    LOCK_IF_MP(mp)<br>    cmpxchg dword ptr [edx], ecx<br>  &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>这块的代码就有点涉及到汇编指令相关的代码了，到这一步就彻底接近真相了，首先<code>三个move指令</code>表示的是将后面的值移动到前面的寄存器上。然后调用了<code>LOCK_IF_MP</code>和下面<code>cmpxchg</code>汇编指令进行了比较交换。现在我们不知道这个<code>LOCK_IF_MP</code>和<code>cmpxchg</code>是如何交换的，没关系我们最后再深入一下。</p>
+<p><strong>真相来了，他来了，他真的来了。</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">inline</span> jint <span class="hljs-title">Atomic::cmpxchg</span> <span class="hljs-params">(jint exchange_value, </span></span><br><span class="hljs-function"><span class="hljs-params">                             <span class="hljs-keyword">volatile</span> jint* dest, jint compare_value)</span> </span>&#123;<br>  <span class="hljs-comment">//1、 判断是否是多核 CPU</span><br>  <span class="hljs-keyword">int</span> mp = os::is_MP();<br>  __asm &#123;<br>    <span class="hljs-comment">//2、 将参数值放入寄存器中</span><br>    mov edx, dest   <br>    mov ecx, exchange_value<br>    mov eax, compare_value <br>    <span class="hljs-comment">//3、LOCK_IF_MP指令</span><br>    cmp mp, <span class="hljs-number">0</span><br>    <span class="hljs-comment">//4、 如果 mp = 0，表明线程运行在单核CPU环境下。此时 je 会跳转到 L0 标记处，直接执行 cmpxchg 指令</span><br>    je L0<br>    _emit <span class="hljs-number">0xF0</span><br><span class="hljs-comment">//5、这里真正实现了比较交换</span><br>L0:<br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">     * 比较并交换。简单解释一下下面这条指令，熟悉汇编的朋友可以略过下面的解释:</span><br><span class="hljs-comment">     *   cmpxchg: 即“比较并交换”指令</span><br><span class="hljs-comment">     *   dword: 全称是 double word 表示两个字，一共四个字节</span><br><span class="hljs-comment">     *   ptr: 全称是 pointer，与前面的 dword 连起来使用，表明访问的内存单元是一个双字单元 </span><br><span class="hljs-comment">     * 这一条指令的意思就是：</span><br><span class="hljs-comment">     		将 eax 寄存器中的值（compare_value）与 [edx] 双字内存单元中的值进行对比，</span><br><span class="hljs-comment">     		如果相同，则将 ecx 寄存器中的值（exchange_value）存入 [edx] 内存单元中。</span><br><span class="hljs-comment">     */</span><br>    cmpxchg dword ptr [edx], ecx<br>  &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>到这一步了，相信你应该理解了这个CAS真正实现的机制了吧，最终是由操作系统的汇编指令完成的。</p>
+<h3 id="3、CAS机制的优缺点"><a href="#3、CAS机制的优缺点" class="headerlink" title="3、CAS机制的优缺点"></a><strong>3、CAS机制的优缺点</strong></h3><p><strong>（1）优点</strong></p>
+<p>一开始在文中我们曾经提到过，<code>cas是一种乐观锁，而且是一种非阻塞的轻量级的乐观锁</code>，什么是非阻塞式的呢？其实就是一个线程想要获得锁，对方会给一个回应表示这个锁能不能获得。在资源竞争不激烈的情况下性能高，相比<code>synchronized</code>重量锁，<code>synchronized</code>会进行比较复杂的加锁，解锁和唤醒操作。</p>
+<p><strong>（2）缺点</strong></p>
+<p>缺点也是一个非常重要的知识点，因为涉及到了一个非常著名的问题，叫做<code>ABA</code>问题。假设一个变量 A ，修改为 B之后又修改为 A，CAS 的机制是无法察觉的，但实际上已经被修改过了。这就是<code>ABA</code>问题，</p>
+<p>ABA问题会带来大量的问题，比如说数据不一致的问题等等。我们可以举一个例子来解释说明。</p>
+<blockquote>
+<p><strong>你有一瓶水放在桌子上，别人把这瓶水喝完了，然后重新倒上去。你再去喝的时候发现水还是跟之前一样，就误以为是刚刚那杯水。如果你知道了真相，那是别人用过了你还会再用嘛？举一个比较黄一点的例子，<code>女朋友被别人睡过之后又回来，还是之前的那个女朋友嘛</code>？</strong></p>
+</blockquote>
+<p>ABA可以有很多种方式来解决，在其他的文章已经给出。</p>
+<P class="note note-warning">如需转载，请提前联系作者，否则追究法律责任</P>
+
+<p> <strong><P class="note note-primary">这有5T资源，涵盖了java小白到架构师整个体系各种相关资源（视频、电子书、面试、简历、IDE破解等），更多文章请关注：</P></strong></p>
+<p align="center"><img src="https://s3.ax1x.com/2020/12/18/rJnbO1.jpg" srcset="/img/loading.gif" height="250" width="480" /></p>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+                    
+                      <a class="hover-with-bg" href="/categories/java%E5%9F%BA%E7%A1%80/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">java多线程</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/java%E5%9F%BA%E7%A1%80/">java基础</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/01/25/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/6%E3%80%81java%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9/java%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E7%9A%84%E8%AF%BB%E5%8F%96%E4%B8%80%E4%B8%AA%E8%B6%85%E5%A4%A7%E6%96%87%E4%BB%B6%EF%BC%9F/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">java如何高效的读取一个超大文件？</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/01/25/%E4%B8%83%E3%80%81%E5%B7%A5%E5%85%B7/linux/Linux%E5%AD%A6%E4%B8%8D%E4%BC%9A%EF%BC%9F%E6%8A%8A%E8%BF%99%E4%BA%9B%E5%91%BD%E4%BB%A4%E6%95%B2%E4%B8%80%E9%81%8D%E5%B0%B1%E9%80%9A%E4%BA%86%EF%BC%88Linux%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8%EF%BC%89/">
+                        <span class="hidden-mobile">Linux学不会？把这些命令敲一遍就通了（Linux命令大全）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="http://www.javachat.cc" target="_blank" rel="nofollow noopener"><span>愚公要移山</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    document.addEventListener('DOMContentLoaded', function() {
+      window.NProgress && window.NProgress.inc();
+    })
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f3cb5680bcdd7f7a451689fcff9759f2";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="冯冬冬">
   <meta name="keywords" content="">
-  <title>分类 - Springboot专题 - 愚公要移山</title>
+  <title>愚公要移山</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -170,9 +170,9 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="分类 - Springboot专题">
+            <span class="h2" id="subtitle" title="也许你想要的，都在这里">
               
-                分类 - Springboot专题
+                也许你想要的，都在这里
               
             </span>
 
@@ -196,35 +196,203 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="list-group">
-  <p class="h4">共计 3 篇文章</p>
-  <hr>
-  
-  
+
+  <div class="row mx-auto index-card">
     
-      
-      <p class="h5">2021</p>
     
-    <a href="/2021/01/07/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/Springboot%E5%90%AF%E5%8A%A8%E4%BA%86%E5%93%AA%E4%BA%9Bbean%EF%BC%9F%E8%BF%99%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F%E5%8F%AF%E4%BB%A5%E8%8E%B7%E5%8F%96/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Springboot启动了哪些bean？这两种方式可以获取</span>
-      <time style="float: right;">01-07</time>
-    </a>
-  
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2020/12/26/%E5%85%AD%E3%80%81%E9%AB%98%E6%95%88java/%E6%88%91%E5%9C%A8%E4%B8%80%E4%B8%AA%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E9%87%8C%E9%9D%A2%E5%86%99%E4%BA%8630%E4%B8%AA%E5%8F%82%E6%95%B0%EF%BC%8C%E8%80%81%E6%9D%BF%E7%9C%8B%E4%BA%86%E6%83%B3%E9%AA%82%E4%BA%BA/" target="_self">
+          <img src="https://s3.ax1x.com/2020/12/26/rhBZjO.png" srcset="/img/loading.gif" alt="我在一个构造方法里面写了30个参数，老板看了想骂人">
+        </a>
+      </div>
     
-    <a href="/2021/01/07/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/%E4%B8%80%E6%AD%A5%E4%B8%BA%E4%BD%A0%E7%9A%84Springboot%E5%BA%94%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89banner/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">一步为你的Springboot应用自定义banner</span>
-      <time style="float: right;">01-07</time>
-    </a>
-  
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/12/26/%E5%85%AD%E3%80%81%E9%AB%98%E6%95%88java/%E6%88%91%E5%9C%A8%E4%B8%80%E4%B8%AA%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E9%87%8C%E9%9D%A2%E5%86%99%E4%BA%8630%E4%B8%AA%E5%8F%82%E6%95%B0%EF%BC%8C%E8%80%81%E6%9D%BF%E7%9C%8B%E4%BA%86%E6%83%B3%E9%AA%82%E4%BA%BA/">我在一个构造方法里面写了30个参数，老板看了想骂人</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/12/26/%E5%85%AD%E3%80%81%E9%AB%98%E6%95%88java/%E6%88%91%E5%9C%A8%E4%B8%80%E4%B8%AA%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E9%87%8C%E9%9D%A2%E5%86%99%E4%BA%8630%E4%B8%AA%E5%8F%82%E6%95%B0%EF%BC%8C%E8%80%81%E6%9D%BF%E7%9C%8B%E4%BA%86%E6%83%B3%E9%AA%82%E4%BA%BA/">
+          
+          
+            
+          
+          
+出自公众号《愚公要移山》中，地址www.javachat.cc本文基于《Effective java》第二条
+
+前言一般我们写参数如果写个一两个，那就可以了，如果写七八个，那就有点难受了。如果写十几个？尼玛，难受，我要去缓缓。
+
+于是乎，一种新的方法策略运用而生。那就是builder模式，在构造方法的参数过多时，可以方便的进行创建一个类对象。所以本文的中心主旨一句话总结：当构造方法的参数过多时，
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-12-26 15:15" pubdate>
+              2020-12-26
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%86%99%E4%BB%A3%E7%A0%81%E7%9A%84%E5%BB%BA%E8%AE%AE/">写代码的建议</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E9%AB%98%E6%95%88java/">高效java</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
     
-    <a href="/2021/01/05/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/%E4%B8%BA%E4%BD%A0%E7%9A%84Springboot%E5%BA%94%E7%94%A8%E9%85%8D%E7%BD%AE%E9%80%9A%E7%94%A8%E7%9A%84%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%90%A7%EF%BC%88%E5%AE%9E%E7%94%A8%E5%B9%B2%E8%B4%A7%EF%BC%89/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">为你的Springboot应用配置通用的异常处理吧（实用干货）</span>
-      <time style="float: right;">01-05</time>
-    </a>
-  
-</div>
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2020/12/26/%E5%9B%9B%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93/3%E3%80%81MongoDB/%E4%B8%BA%E4%BB%80%E4%B9%88MongoDB%E4%BD%BF%E7%94%A8B%E6%A0%91%EF%BC%8C%E8%80%8CMysql%E4%BD%BF%E7%94%A8B-%E6%A0%91%EF%BC%9F%EF%BC%88%E5%B9%B2%E6%B4%BB%E6%80%BB%E7%BB%93%EF%BC%89/" target="_self">
+          <img src="https://s3.ax1x.com/2020/12/26/rffpa8.png" srcset="/img/loading.gif" alt="为什么MongoDB使用B树，而Mysql使用B+树？（干活总结）">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/12/26/%E5%9B%9B%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93/3%E3%80%81MongoDB/%E4%B8%BA%E4%BB%80%E4%B9%88MongoDB%E4%BD%BF%E7%94%A8B%E6%A0%91%EF%BC%8C%E8%80%8CMysql%E4%BD%BF%E7%94%A8B-%E6%A0%91%EF%BC%9F%EF%BC%88%E5%B9%B2%E6%B4%BB%E6%80%BB%E7%BB%93%EF%BC%89/">为什么MongoDB使用B树，而Mysql使用B+树？（干活总结）</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/12/26/%E5%9B%9B%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93/3%E3%80%81MongoDB/%E4%B8%BA%E4%BB%80%E4%B9%88MongoDB%E4%BD%BF%E7%94%A8B%E6%A0%91%EF%BC%8C%E8%80%8CMysql%E4%BD%BF%E7%94%A8B-%E6%A0%91%EF%BC%9F%EF%BC%88%E5%B9%B2%E6%B4%BB%E6%80%BB%E7%BB%93%EF%BC%89/">
+          
+          
+            
+          
+          
+出自公众号《愚公要移山》中，地址www.javachat.cc本文已收录在《MongoDB学习系列》专栏中
+
+本文献给准备面试或者是还在面试的你。常见面试题，送分题目，不拿白不拿。
+一、B树和B+树的区别很明显，我们想向弄清楚原因就要知道B树和B+树的区别。为了不长篇大论。我们直接给出他们的形式总结他们的特点。
+1、B树B树是一种自平衡的搜索树，形式很简单：
+
+这就是一颗B-树。针对我们这个问题
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-12-26 10:25" pubdate>
+              2020-12-26
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/MongoDB%E4%B8%93%E9%A2%98/">MongoDB专题</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E9%9D%A2%E8%AF%95/">面试</a>
+            
+              <a href="/tags/MongoDB/">MongoDB</a>
+            
+              <a href="/tags/Mysql/">Mysql</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2020/12/24/%E4%B8%80%E3%80%81%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%88%91%E4%BB%AC%E5%88%B0%E5%BA%95%E8%AF%A5%E5%A6%82%E4%BD%95%E5%AD%A6%E4%B9%A0%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" target="_self">
+          <img src="https://s3.ax1x.com/2020/12/24/r2NH3j.png" srcset="/img/loading.gif" alt="我们到底该如何学习《数据结构与算法》">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/12/24/%E4%B8%80%E3%80%81%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%88%91%E4%BB%AC%E5%88%B0%E5%BA%95%E8%AF%A5%E5%A6%82%E4%BD%95%E5%AD%A6%E4%B9%A0%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">我们到底该如何学习《数据结构与算法》</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/12/24/%E4%B8%80%E3%80%81%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%88%91%E4%BB%AC%E5%88%B0%E5%BA%95%E8%AF%A5%E5%A6%82%E4%BD%95%E5%AD%A6%E4%B9%A0%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">
+          
+          
+            
+          
+          
+出自公众号《愚公要移山》中，地址www.javachat.cc本文已收录在《手牵手一起学数据结构》专栏中
+
+前言：我们到底该不该学习算法与数据结构？1、真的应该学习这个问题本身就不是个问题，所有人都在强调数据结构与算法比较重要，但是好像平时也没用到，无法直观的去感受它的重要性，于是把学习重心放在了常见的哪些框架身上，似乎只要熟悉了哪些框架的API，编程就会所向披靡。
+
+我举一个我自身的例子，我本
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-12-24 18:54" pubdate>
+              2020-12-24
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%93%E9%A2%98/">数据结构专题</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
 
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/page/2/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+    </span>
+  </nav>
+  
+  <script>
+    for (ele of document.getElementById("pagination").getElementsByTagName("a")) {
+      ele.href += '#board';
+    }
+  </script>
 
 
 

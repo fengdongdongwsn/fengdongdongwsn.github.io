@@ -1,0 +1,573 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/./img/global/head.png">
+  <link rel="icon" type="image/png" href="/./img/global/head.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="冯冬冬">
+  <meta name="keywords" content="">
+  <title>Springboot整合Swagger2（无坑版） - 愚公要移山</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"www.javachat.cc","root":"/","version":"1.8.6","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":6},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"f3cb5680bcdd7f7a451689fcff9759f2","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 45vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>愚公要移山</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/life/">
+                <i class="iconfont icon-th-large"></i>
+                生活
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/sources/">
+                <i class="iconfont icon-link-fill"></i>
+                资源
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" false
+         style="background: url('/img/global/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Springboot整合Swagger2（无坑版）">
+              
+                Springboot整合Swagger2（无坑版）
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      冯冬冬
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-01-25 17:34" pubdate>
+        2021年1月25日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      共1.6k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      约
+      20
+       分钟阅读完成
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        共<span id="busuanzi_value_page_pv"></span> 次浏览
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Springboot整合Swagger2（无坑版）</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2021年1月25日 下午
+                
+              </p>
+            
+            <div class="markdown-body">
+              <blockquote>
+<p>本文出自《愚公要移山》</p>
+<p>收录于《Springboot专题》中</p>
+</blockquote>
+<p>这种整合的文章确实已经烂大街了，写他一方面是补充我的springboot系列，另一方面确实还有一部分小伙伴没用过。最重要的是，如果你忘记了这种整合的代码。可以随时查阅。</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>现在的开发基本上都是前后端分离，前后端交互都是通过API文档。有了API文档大家各自开发，互不干扰。</p>
+<h3 id="1、传统方式"><a href="#1、传统方式" class="headerlink" title="1、传统方式"></a>1、传统方式</h3><p>传统方式是文档设计好之后，分别发给前端和后端人员。这样有个缺点，接口信息一旦变化，文档就需要重新发送给前后端人员。无法做到实时。所以浪费时间和精力。</p>
+<h3 id="2、swagger方式"><a href="#2、swagger方式" class="headerlink" title="2、swagger方式"></a>2、swagger方式</h3><p>我们的后台应用集成了swagger之后，会自动暴露出我们的接口，而且这个接口形式还是通过restful风格发布的。一旦后端的接口有变化，会立刻显示出来，因此极大地提高了效率。</p>
+<p>OK，基本上一句话就可以总结他的好处，那就是后端写的api文档可以通过swagger的形式实时的发布出来，供前端人员查看。</p>
+<h3 id="3、其他方式"><a href="#3、其他方式" class="headerlink" title="3、其他方式"></a>3、其他方式</h3><p>swagger的页面说实话长得不好看，也有一些其他的方案，不是有很多bug，就是收费。目前swagger是使用的最多的。我目前也正在做这个样的开源项目，基于swagger做出类似于其他方案的页面，而且功能更加的强大。</p>
+<h2 id="一、代码整合"><a href="#一、代码整合" class="headerlink" title="一、代码整合"></a>一、代码整合</h2><p>前提条件是要新建一个springboot项目。这点就不演示了。</p>
+<h3 id="第一步：添加依赖"><a href="#第一步：添加依赖" class="headerlink" title="第一步：添加依赖"></a>第一步：添加依赖</h3><figure class="highlight xml"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.springfox<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>springfox-swagger2<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.9.2<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.springfox<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>springfox-swagger-ui<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.9.2<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></div></td></tr></table></figure>
+<p>2.9.2的版本是用的最多的，具体的可以直接去maven的官网去搜索，找一个使用量最多的版本即可。</p>
+<h3 id="第二步：配置"><a href="#第二步：配置" class="headerlink" title="第二步：配置"></a>第二步：配置</h3><p>新建config包，创建SwaggerConfig类</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-meta">@EnableSwagger2</span><br><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Swagger2Config</span> </span>&#123;<br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Docket <span class="hljs-title">createRestApi</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Docket(DocumentationType.SWAGGER_2)<br>             .apiInfo(apiInfo())<br>             .select()<br>             <span class="hljs-comment">//为当前包路径,控制器类包</span><br>             .apis(RequestHandlerSelectors.basePackage(<span class="hljs-string">&quot;com.fdd.controller&quot;</span>))<br>            .paths(PathSelectors.any())<br>             .build();<br>    &#125;<br>    <span class="hljs-comment">//构建 api文档的详细信息函数</span><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> ApiInfo <span class="hljs-title">apiInfo</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ApiInfoBuilder()<br>            <span class="hljs-comment">//页面标题</span><br>           .title(<span class="hljs-string">&quot;XX平台API接口文档&quot;</span>)<br>            <span class="hljs-comment">//创建人</span><br>           .contact(<span class="hljs-keyword">new</span> Contact(<span class="hljs-string">&quot;冯冬冬&quot;</span>, <span class="hljs-string">&quot;http://www.javachat.cc&quot;</span>,  <br>           						<span class="hljs-string">&quot;3049352171@qq.com&quot;</span>))<br>           <span class="hljs-comment">//版本号</span><br>          .version(<span class="hljs-string">&quot;1.0&quot;</span>)<br>           <span class="hljs-comment">//描述</span><br>          .description(<span class="hljs-string">&quot;系统API描述&quot;</span>)<br>          .build();<br>    &#125;<br></code></pre></div></td></tr></table></figure>
+<p>这里的配置也比较简单。这里有很多选项供我们去配置。如果我们的项目有多个组，只需要创建多个Docket即可。这时候扫描的包换成每个组的包路径。</p>
+<h3 id="第三步：controller类中配置"><a href="#第三步：controller类中配置" class="headerlink" title="第三步：controller类中配置"></a>第三步：controller类中配置</h3><p>新建一个controller包，然后创建HelloController类</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-meta">@Api(&quot;Hello控制类&quot;)</span><br><span class="hljs-meta">@RestController</span> <br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HelloController</span> </span>&#123;<br>    <span class="hljs-meta">@GetMapping(value = &quot;/user&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> User <span class="hljs-title">getUser</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> User(<span class="hljs-string">&quot;愚公要移山&quot;</span>,<span class="hljs-string">&quot;123456&quot;</span>);<br>    &#125;<br>    <span class="hljs-meta">@ApiOperation(&quot;可以指定参数的API&quot;)</span><br>    <span class="hljs-meta">@PostMapping(&quot;/param&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">hello2</span><span class="hljs-params">(<span class="hljs-meta">@ApiParam(&quot;用户名&quot;)</span> String name)</span></span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;hello&quot;</span> + name;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>这里我们可以看出，使用注解就可以对这个类、方法、字段等等进行解释说明。其他的字段还有很多，在使用的时候会有相应的提示，可以自己试一遍：</p>
+<p><img src="https://s3.ax1x.com/2021/01/16/sDJiOx.png" srcset="/img/loading.gif"></p>
+<h3 id="第四步：查看效果"><a href="#第四步：查看效果" class="headerlink" title="第四步：查看效果"></a>第四步：查看效果</h3><p>访问:<a target="_blank" rel="noopener" href="http://127.0.0.1:8080/swagger-ui.html%E5%8D%B3%E5%8F%AF%E3%80%82">http://127.0.0.1:8080/swagger-ui.html即可。</a></p>
+<p><img src="https://s3.ax1x.com/2021/01/16/sDJA0K.png" srcset="/img/loading.gif"></p>
+<p>这里就是最终的展示效果。OK，到这一步基本上就集成进来了。下面说一下可能会遇到的配置。</p>
+<h2 id="三、常见其他问题"><a href="#三、常见其他问题" class="headerlink" title="三、常见其他问题"></a>三、常见其他问题</h2><h3 id="1、Spring-Security-配置免认证访问"><a href="#1、Spring-Security-配置免认证访问" class="headerlink" title="1、Spring Security - 配置免认证访问"></a>1、Spring Security - 配置免认证访问</h3><p>有时候我们的Springboot集成了SpringSecurity，这时候如果访问swagger的地址会自动跳转到登录页面。这是因为SpringSecurity对其进行了拦截。为此我们只需要在我们的SpringSecurity配置一下进行放行即可。</p>
+<p><img src="https://s3.ax1x.com/2021/01/16/sDJP61.png" srcset="/img/loading.gif"></p>
+<p>现在配置一下，进行放行。在config包下新建一个SpringSecurityConfig类</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@EnableWebSecurity</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SpringSecurityConfig</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">WebSecurityConfigurerAdapter</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">configure</span><span class="hljs-params">(HttpSecurity http)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        http<br>                .authorizeRequests()<br>                .antMatchers(<span class="hljs-string">&quot;/swagger-ui.html&quot;</span>).permitAll()<br>                .antMatchers(<span class="hljs-string">&quot;/webjars/**&quot;</span>).permitAll()<br>                .antMatchers(<span class="hljs-string">&quot;/swagger-resources/**&quot;</span>).permitAll()<br>                .antMatchers(<span class="hljs-string">&quot;/v2/*&quot;</span>).permitAll()<br>                .antMatchers(<span class="hljs-string">&quot;/csrf&quot;</span>).permitAll()<br>                .antMatchers(<span class="hljs-string">&quot;/&quot;</span>).permitAll()<br>                .anyRequest().authenticated()<br>                .and()<br>                .formLogin()<br>        ;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>此时就可以正常的访问了。</p>
+<h3 id="2、为swagger设置jwt"><a href="#2、为swagger设置jwt" class="headerlink" title="2、为swagger设置jwt"></a>2、为swagger设置jwt</h3><p>这种方式比较简单，只需要一步即可。修改我们的swaggerConfig类即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-meta">@EnableSwagger2</span><br><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Swagger2Config</span> </span>&#123;<br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Docket <span class="hljs-title">api</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Docket(DocumentationType.SWAGGER_2)<br>                .apiInfo(apiInfo())<br>                .securityContexts(Arrays.asList(securityContext()))<br>                .securitySchemes(Arrays.asList(apiKey()))<br>                .select()<br>                .apis(RequestHandlerSelectors.any())<br>                .paths(PathSelectors.any())<br>                .build();<br>    &#125;<br>    <span class="hljs-comment">//构建 api文档的详细信息函数</span><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> ApiInfo <span class="hljs-title">apiInfo</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ApiInfoBuilder()<br>                <span class="hljs-comment">//页面标题</span><br>                .title(<span class="hljs-string">&quot;XX平台API接口文档&quot;</span>)<br>                <span class="hljs-comment">//创建人</span><br>                .contact(<span class="hljs-keyword">new</span> Contact(<span class="hljs-string">&quot;冯冬冬&quot;</span>, <span class="hljs-string">&quot;http://www.javachat.cc&quot;</span>,<br>                        <span class="hljs-string">&quot;3049352171@qq.com&quot;</span>))<br>                <span class="hljs-comment">//版本号</span><br>                .version(<span class="hljs-string">&quot;1.0&quot;</span>)<br>                <span class="hljs-comment">//描述</span><br>                .description(<span class="hljs-string">&quot;系统API描述&quot;</span>)<br>                .build();<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> ApiKey <span class="hljs-title">apiKey</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ApiKey(<span class="hljs-string">&quot;JWT&quot;</span>, <span class="hljs-string">&quot;Authorization&quot;</span>, <span class="hljs-string">&quot;header&quot;</span>);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> SecurityContext <span class="hljs-title">securityContext</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> SecurityContext.builder().securityReferences(defaultAuth()).build();<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> List&lt;SecurityReference&gt; <span class="hljs-title">defaultAuth</span><span class="hljs-params">()</span> </span>&#123;<br>        AuthorizationScope authorizationScope <br>        	= <span class="hljs-keyword">new</span> AuthorizationScope(<span class="hljs-string">&quot;global&quot;</span>, <span class="hljs-string">&quot;accessEverything&quot;</span>);<br>        AuthorizationScope[] authorizationScopes = <span class="hljs-keyword">new</span> AuthorizationScope[<span class="hljs-number">1</span>];<br>        authorizationScopes[<span class="hljs-number">0</span>] = authorizationScope;<br>        <span class="hljs-keyword">return</span> Arrays.asList(<span class="hljs-keyword">new</span> SecurityReference(<span class="hljs-string">&quot;JWT&quot;</span>, authorizationScopes));<br>    &#125;<br><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>加了一些token验证的代码，比较简单，关于JWT的东西，可以私下了解。这里不赘述了。</p>
+<h3 id="3、隐藏Endpoint"><a href="#3、隐藏Endpoint" class="headerlink" title="3、隐藏Endpoint"></a>3、隐藏Endpoint</h3><p>有时候自己写的controller，或者是controller里面的接口方法不想让前端人员看到，我们可以隐藏即可。</p>
+<h4 id="第一：隐藏整个controller"><a href="#第一：隐藏整个controller" class="headerlink" title="第一：隐藏整个controller"></a>第一：隐藏整个controller</h4><figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-meta">@ApiIgnore</span><br><span class="hljs-meta">@RestController</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyController</span> </span>&#123;<br>    <span class="hljs-comment">//方法</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h4 id="第二：隐藏某个接口方法1"><a href="#第二：隐藏某个接口方法1" class="headerlink" title="第二：隐藏某个接口方法1"></a>第二：隐藏某个接口方法1</h4><figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-meta">@ApiIgnore</span><br><span class="hljs-meta">@ApiOperation(value = &quot;描述信息&quot;)</span><br><span class="hljs-meta">@GetMapping(&quot;/getAuthor&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getAuthor</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;愚公要移山&quot;</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h4 id="第三：隐藏某个接口方法2"><a href="#第三：隐藏某个接口方法2" class="headerlink" title="第三：隐藏某个接口方法2"></a>第三：隐藏某个接口方法2</h4><figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-meta">@ApiOperation(value = &quot;描述信息&quot;, hidden = true)</span><br><span class="hljs-meta">@GetMapping(&quot;/get&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> LocalDate <span class="hljs-title">getDate</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> LocalDate.now();<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>代码已上传到github中：<br><a target="_blank" rel="noopener" href="https://github.com/fengdongdongwsn/springboot-example">https://github.com/fengdongdongwsn/springboot-example</a></p>
+<p>OK，很多配置基本上就到这了。后续会继续补充。</p>
+<P class="note note-warning">如需转载，请提前联系作者，否则追究法律责任</P>
+
+<p> <strong><P class="note note-primary">这有5T资源，涵盖了java小白到架构师整个体系各种相关资源（视频、电子书、面试、简历、IDE破解等），更多文章请关注：</P></strong></p>
+<p align="center"><img src="https://s3.ax1x.com/2020/12/18/rJnbO1.jpg" srcset="/img/loading.gif" height="250" width="480" /></p>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Spring%E7%B3%BB%E5%88%97/">Spring系列</a>
+                    
+                      <a class="hover-with-bg" href="/categories/Spring%E7%B3%BB%E5%88%97/Springboot%E4%B8%93%E9%A2%98/">Springboot专题</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">微服务</a>
+                    
+                      <a class="hover-with-bg" href="/tags/springboot/">springboot</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/01/25/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/6%E3%80%81java%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9/%E6%9F%90%E4%B8%AA%E6%96%87%E4%BB%B6%E5%A4%B9%E5%8F%91%E7%94%9F%E4%BA%86%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E6%93%8D%E4%BD%9C%EF%BC%8C%E5%A6%82%E4%BD%95%E7%94%A8java%E5%AE%9E%E6%97%B6%E7%9B%91%E6%8E%A7%EF%BC%9F/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">某个文件夹发生了增删改查操作，如何用java实时监控？</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/01/25/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/6%E3%80%81java%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9/java%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E7%9A%84%E8%AF%BB%E5%8F%96%E4%B8%80%E4%B8%AA%E8%B6%85%E5%A4%A7%E6%96%87%E4%BB%B6%EF%BC%9F/">
+                        <span class="hidden-mobile">java如何高效的读取一个超大文件？</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="http://www.javachat.cc" target="_blank" rel="nofollow noopener"><span>愚公要移山</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    document.addEventListener('DOMContentLoaded', function() {
+      window.NProgress && window.NProgress.inc();
+    })
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f3cb5680bcdd7f7a451689fcff9759f2";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

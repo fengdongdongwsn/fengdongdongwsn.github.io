@@ -1,0 +1,1121 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/./img/global/head.png">
+  <link rel="icon" type="image/png" href="/./img/global/head.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="冯冬冬">
+  <meta name="keywords" content="">
+  <title>面试时到底该刷哪些算法题？没关系，这里整理了高频的三百道 - 愚公要移山</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"www.javachat.cc","root":"/","version":"1.8.6","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":6},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"f3cb5680bcdd7f7a451689fcff9759f2","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 45vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>愚公要移山</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/life/">
+                <i class="iconfont icon-th-large"></i>
+                生活
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/sources/">
+                <i class="iconfont icon-link-fill"></i>
+                资源
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" false
+         style="background: url('/img/global/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="面试时到底该刷哪些算法题？没关系，这里整理了高频的三百道">
+              
+                面试时到底该刷哪些算法题？没关系，这里整理了高频的三百道
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      冯冬冬
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-01-25 17:42" pubdate>
+        2021年1月25日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      共1.8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      约
+      20
+       分钟阅读完成
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        共<span id="busuanzi_value_page_pv"></span> 次浏览
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">面试时到底该刷哪些算法题？没关系，这里整理了高频的三百道</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2021年1月25日 下午
+                
+              </p>
+            
+            <div class="markdown-body">
+              <blockquote>
+<p><strong>出自公众号《愚公要移山》中，地址<a href="http://www.javachat.cc/">www.javachat.cc</a></strong></p>
+</blockquote>
+<h2 id="star-前言"><a href="#star-前言" class="headerlink" title=":star:前言"></a><font color="blue">:star:前言</font></h2><p><strong><font color="green">题目来源</font></strong></p>
+<blockquote>
+<p><strong><font color="red">本文最新的题目更新在</font></strong></p>
+<p><strong><a target="_blank" rel="noopener" href="https://github.com/fengdongdongwsn/high-frequency-algorithm">https://github.com/fengdongdongwsn/high-frequency-algorithm</a></strong></p>
+</blockquote>
+<p>本文收集了在面试中，公司高频出现的算法题目。避免你在准备开始刷题或者是正在刷题时，没有目标。力扣题目实在是太多了。但是我们没有必要去把每道题都刷一遍。本系列题目主要来源如下：</p>
+<blockquote>
+<ul>
+<li><strong><font color="red">牛客面经整理的面经真题</font></strong></li>
+<li><strong><font color="red">牛客网和力扣上高频面试题栏目收集而来</font></strong></li>
+</ul>
+</blockquote>
+<h2 id="star-高频面试真题"><a href="#star-高频面试真题" class="headerlink" title=":star:高频面试真题"></a><font color="blue">:star:高频面试真题</font></h2><p>表格中的内容很多都是力扣上的，建议牛客上的剑指offer，先刷完</p>
+<table>
+<thead>
+<tr>
+<th>数组</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>力扣1：两数之和</td>
+</tr>
+<tr>
+<td>力扣1299：将每个元素替换为右侧最大元素</td>
+</tr>
+<tr>
+<td>力扣1464：数组中两个元素的最大乘积</td>
+</tr>
+<tr>
+<td>力扣15：三数之和</td>
+</tr>
+<tr>
+<td>力扣179：最大数</td>
+</tr>
+<tr>
+<td>力扣189：旋转数组</td>
+</tr>
+<tr>
+<td>力扣215：数组中第K个最大元素</td>
+</tr>
+<tr>
+<td>力扣239：滑动窗口的最大值</td>
+</tr>
+<tr>
+<td>力扣33：搜索旋转排序数组</td>
+</tr>
+<tr>
+<td>力扣349：两个数组的交集1</td>
+</tr>
+<tr>
+<td>力扣350：两个数组的交集2</td>
+</tr>
+<tr>
+<td>力扣384：打乱数组</td>
+</tr>
+<tr>
+<td>力扣4：求两个正序数组的中位数</td>
+</tr>
+<tr>
+<td>力扣40：数组总和</td>
+</tr>
+<tr>
+<td>力扣41：缺失的第一个正数</td>
+</tr>
+<tr>
+<td>力扣416：分割等和数组</td>
+</tr>
+<tr>
+<td>力扣42：接雨水问题</td>
+</tr>
+<tr>
+<td>力扣442：数组中重复的数据</td>
+</tr>
+<tr>
+<td>力扣448：找到所有数组中消失的数字</td>
+</tr>
+<tr>
+<td>力扣45：跳跃游戏（跳跃次数）</td>
+</tr>
+<tr>
+<td>力扣48：旋转图像</td>
+</tr>
+<tr>
+<td>力扣480：滑动窗口中位数</td>
+</tr>
+<tr>
+<td>力扣525：连续子数组</td>
+</tr>
+<tr>
+<td>力扣54：螺旋矩阵</td>
+</tr>
+<tr>
+<td>力扣55：跳跃游戏（跳跃距离）</td>
+</tr>
+<tr>
+<td>力扣556：下一个更大元素</td>
+</tr>
+<tr>
+<td>力扣56：合并区间</td>
+</tr>
+<tr>
+<td>力扣560：和为K的子数组</td>
+</tr>
+<tr>
+<td>力扣658：找到K个最接近的元素</td>
+</tr>
+<tr>
+<td>力扣659：分割数组为连续子序列</td>
+</tr>
+<tr>
+<td>力扣74：搜索二维矩阵</td>
+</tr>
+<tr>
+<td>力扣84：柱状图中的最大矩行</td>
+</tr>
+<tr>
+<td>力扣88：合并两个有序数组</td>
+</tr>
+<tr>
+<td>力扣915：分割数组</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>字符串</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>力扣1312：让字符串成为回文串的最少插入次数</td>
+</tr>
+<tr>
+<td>力扣139：单词拆分1</td>
+</tr>
+<tr>
+<td>力扣140：单词拆分2</td>
+</tr>
+<tr>
+<td>力扣165：比较版本号</td>
+</tr>
+<tr>
+<td>力扣22：生成括号</td>
+</tr>
+<tr>
+<td>力扣316：去除重复字母保证字典序最小</td>
+</tr>
+<tr>
+<td>力扣415：字符串相加</td>
+</tr>
+<tr>
+<td>力扣43：字符串相乘</td>
+</tr>
+<tr>
+<td>力扣44：通配符匹配</td>
+</tr>
+<tr>
+<td>力扣443：字符串压缩</td>
+</tr>
+<tr>
+<td>力扣557：反转字符串中的单词</td>
+</tr>
+<tr>
+<td>力扣67：二进制求和</td>
+</tr>
+<tr>
+<td>力扣72：编辑距离</td>
+</tr>
+<tr>
+<td>力扣93：复原IP地址</td>
+</tr>
+<tr>
+<td>剑指offer46：把数字翻译成字符串</td>
+</tr>
+<tr>
+<td>KMP算法</td>
+</tr>
+<tr>
+<td>力扣647：一个字符串中有多少个回文字串</td>
+</tr>
+<tr>
+<td>力扣17：电话号码的字母组合</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>排序算法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>快速排序</td>
+</tr>
+<tr>
+<td>插入排序</td>
+</tr>
+<tr>
+<td>归并排序</td>
+</tr>
+<tr>
+<td>希尔排序</td>
+</tr>
+<tr>
+<td>堆排序</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>最长问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>最长回文字串</td>
+</tr>
+<tr>
+<td>最长回文子序列</td>
+</tr>
+<tr>
+<td>最长连续公共字串</td>
+</tr>
+<tr>
+<td>最长公共子序列</td>
+</tr>
+<tr>
+<td>最长连续为1的字串</td>
+</tr>
+<tr>
+<td>最长有效括号</td>
+</tr>
+<tr>
+<td>最长无重复字符的连续字串</td>
+</tr>
+<tr>
+<td>最长等差数列</td>
+</tr>
+<tr>
+<td>最长上升连续序列</td>
+</tr>
+<tr>
+<td>最长上升子序列</td>
+</tr>
+<tr>
+<td>最长和谐子序列</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>动态规划问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>力扣121：买卖股票（一次交易）</td>
+</tr>
+<tr>
+<td>力扣122：买卖股票（多次交易）</td>
+</tr>
+<tr>
+<td>力扣134：加油站</td>
+</tr>
+<tr>
+<td>力扣309：买卖股票（包含冷冻时间）</td>
+</tr>
+<tr>
+<td>力扣322：零钱兑换</td>
+</tr>
+<tr>
+<td>力扣518：零钱兑换</td>
+</tr>
+<tr>
+<td>力扣53：最大子緒和</td>
+</tr>
+<tr>
+<td>力扣674：未经排序数组最长连续递增序列</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>链表</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>力扣109：将有序链表转化为二叉搜素树</td>
+</tr>
+<tr>
+<td>力扣141：环形链表判断是否有环</td>
+</tr>
+<tr>
+<td>力扣142：环形链表检测入口位置</td>
+</tr>
+<tr>
+<td>力扣143：重拍链表</td>
+</tr>
+<tr>
+<td>力扣160：相交链表</td>
+</tr>
+<tr>
+<td>力扣206：反转链表</td>
+</tr>
+<tr>
+<td>力扣21：合并两个有序链表</td>
+</tr>
+<tr>
+<td>力扣23：合并K和有序链表</td>
+</tr>
+<tr>
+<td>力扣234：回文联表</td>
+</tr>
+<tr>
+<td>力扣25：K个一组反转链表</td>
+</tr>
+<tr>
+<td>力扣328：奇偶链表</td>
+</tr>
+<tr>
+<td>力扣445：链表求和（头对齐：尾对齐）</td>
+</tr>
+<tr>
+<td>力扣80：删除排序数组中的重复元素</td>
+</tr>
+<tr>
+<td>力扣82：删除重复元素</td>
+</tr>
+<tr>
+<td>力扣83：删除排序链表中的重复元素</td>
+</tr>
+<tr>
+<td>力扣86：分割链表</td>
+</tr>
+<tr>
+<td>剑指offer：二叉搜索树和双向链表</td>
+</tr>
+<tr>
+<td>剑指offer22：链表中倒数第K个节点</td>
+</tr>
+<tr>
+<td>剑指offer54：二叉搜索树中的第K大节点</td>
+</tr>
+<tr>
+<td>LRU实现</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>树</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>力扣102：二叉搜索树的层次遍历</td>
+</tr>
+<tr>
+<td>力扣105：从前序和中序重构二叉树</td>
+</tr>
+<tr>
+<td>力扣108：将有序数组转化为二叉搜索树</td>
+</tr>
+<tr>
+<td>力扣110：平衡二叉树</td>
+</tr>
+<tr>
+<td>力扣113：路径总和</td>
+</tr>
+<tr>
+<td>力扣124：二叉树的最大路径和</td>
+</tr>
+<tr>
+<td>力扣1325：删除给定值的叶子节点</td>
+</tr>
+<tr>
+<td>力扣144：二叉树的前序遍历（非递归）</td>
+</tr>
+<tr>
+<td>力扣145：二叉树的后续遍历（非递归）</td>
+</tr>
+<tr>
+<td>力扣199：二叉树的右视图</td>
+</tr>
+<tr>
+<td>力扣208：实现Trie前缀树</td>
+</tr>
+<tr>
+<td>力扣222：完全二叉树的节点数</td>
+</tr>
+<tr>
+<td>力扣226：翻转二叉树</td>
+</tr>
+<tr>
+<td>力扣236：二叉树的最近公共祖先</td>
+</tr>
+<tr>
+<td>力扣257：二叉树的所有路径</td>
+</tr>
+<tr>
+<td>力扣297：二叉树的序列化和反序列化</td>
+</tr>
+<tr>
+<td>力扣450：删除二叉树中的节点</td>
+</tr>
+<tr>
+<td>力扣543：二叉树的直径长度</td>
+</tr>
+<tr>
+<td>力扣617：合并二叉树</td>
+</tr>
+<tr>
+<td>力扣662：二叉树的最大宽度</td>
+</tr>
+<tr>
+<td>力扣687：最长同值路径</td>
+</tr>
+<tr>
+<td>力扣94：二叉树中序遍历（非递归）</td>
+</tr>
+<tr>
+<td>力扣958：二叉树的完全性检验</td>
+</tr>
+<tr>
+<td>力扣98：验证二叉搜索树</td>
+</tr>
+<tr>
+<td>力扣99：恢复二叉搜索树</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>深搜</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>力扣1254：封闭岛屿的数目</td>
+</tr>
+<tr>
+<td>力扣200：岛屿的数量</td>
+</tr>
+<tr>
+<td>力扣209：课程表</td>
+</tr>
+<tr>
+<td>力扣365：水壶问题</td>
+</tr>
+<tr>
+<td>力扣46：全排序</td>
+</tr>
+<tr>
+<td>力扣463：岛屿的周长</td>
+</tr>
+<tr>
+<td>力扣547：朋友圈</td>
+</tr>
+<tr>
+<td>力扣695：岛屿的面积</td>
+</tr>
+<tr>
+<td>力扣733：颜色渲染</td>
+</tr>
+<tr>
+<td>二维矩阵中寻找最大正方形</td>
+</tr>
+<tr>
+<td>矩阵中的路径</td>
+</tr>
+<tr>
+<td>括号生成</td>
+</tr>
+<tr>
+<td>幂集</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>数学问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>力扣1240：铺瓷砖</td>
+</tr>
+<tr>
+<td>力扣202：快乐数</td>
+</tr>
+<tr>
+<td>力扣204：计算质数</td>
+</tr>
+<tr>
+<td>力扣37：解数独</td>
+</tr>
+<tr>
+<td>力扣43：字符串相乘</td>
+</tr>
+<tr>
+<td>力扣50：计算pow</td>
+</tr>
+<tr>
+<td>力扣509：斐波那契数列</td>
+</tr>
+<tr>
+<td>力扣679:24点游戏</td>
+</tr>
+<tr>
+<td>力扣7：回文素数</td>
+</tr>
+<tr>
+<td>计算表达式的值</td>
+</tr>
+<tr>
+<td>开平方根函数（会两种）</td>
+</tr>
+<tr>
+<td>数字转16进制</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>堆栈问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>力扣155：最小栈</td>
+</tr>
+<tr>
+<td>力扣225：用队列实现栈</td>
+</tr>
+<tr>
+<td>力扣232：用两个栈实现队列</td>
+</tr>
+<tr>
+<td>力扣312：戳气球</td>
+</tr>
+<tr>
+<td>面试金典0305：栈排序</td>
+</tr>
+<tr>
+<td>使用数组实现队列</td>
+</tr>
+<tr>
+<td>栈的压入弹出序列是否合法</td>
+</tr>
+<tr>
+<td>会议安排</td>
+</tr>
+<tr>
+<td>力扣406：根据身高重建队列</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>其他真题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>力扣135：分发糖果</td>
+</tr>
+<tr>
+<td>力扣198：打家劫舍</td>
+</tr>
+<tr>
+<td>力扣213：打家劫舍</td>
+</tr>
+<tr>
+<td>力扣337：打家劫舍</td>
+</tr>
+<tr>
+<td>力扣301：删除无效的括号</td>
+</tr>
+<tr>
+<td>两个线程交替打印奇偶数</td>
+</tr>
+<tr>
+<td>三个线程顺序打印ABC</td>
+</tr>
+<tr>
+<td>实现读写锁</td>
+</tr>
+<tr>
+<td>死锁的案例</td>
+</tr>
+</tbody></table>
+<p><strong><font color="red">本文题目持续更新。。。。</font></strong></p>
+<blockquote>
+<p><strong><font color="red">本文最新的题目更新在</font></strong></p>
+<p><strong><a target="_blank" rel="noopener" href="https://github.com/fengdongdongwsn/high-frequency-algorithm">https://github.com/fengdongdongwsn/high-frequency-algorithm</a></strong></p>
+</blockquote>
+<p><strong><font color="blur">给个支持呗:heart:</font></strong></p>
+<P class="note note-warning">如需转载，请提前联系作者，否则追究法律责任</P>
+
+<p> <strong><P class="note note-primary">这有5T资源，涵盖了java小白到架构师整个体系各种相关资源（视频、电子书、面试、简历、IDE破解等），更多文章请关注：</P></strong></p>
+<p align="center"><img src="https://s3.ax1x.com/2020/12/18/rJnbO1.jpg" srcset="/img/loading.gif" height="250" width="480" /></p>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E9%9D%A2%E8%AF%95/%E7%AE%97%E6%B3%95/">算法</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%9D%A2%E8%AF%95/">面试</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%AB%98%E9%A2%91%E7%AE%97%E6%B3%95/">高频算法</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/01/25/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/SpringBoot%E6%95%B4%E5%90%88Actuator%EF%BC%88%E6%97%A0%E5%9D%91%E7%89%88%EF%BC%89/">
+                        <span class="hidden-mobile">SpringBoot整合Actuator（无坑版）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="http://www.javachat.cc" target="_blank" rel="nofollow noopener"><span>愚公要移山</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    document.addEventListener('DOMContentLoaded', function() {
+      window.NProgress && window.NProgress.inc();
+    })
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f3cb5680bcdd7f7a451689fcff9759f2";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

@@ -276,20 +276,14 @@ Segmentfault
   <div class="row mx-auto index-card">
     
     
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/01/14/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/5%E3%80%81jvm/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AF%B4%E4%B8%8D%E6%8E%A8%E8%8D%90%E4%BD%BF%E7%94%A8finalize%E6%96%B9%E6%B3%95/" target="_self">
-          <img src="https://s3.ax1x.com/2021/01/12/sJ9ouR.png" srcset="/img/loading.gif" alt="为什么说不推荐使用finalize方法">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
+    <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/01/14/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/5%E3%80%81jvm/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AF%B4%E4%B8%8D%E6%8E%A8%E8%8D%90%E4%BD%BF%E7%94%A8finalize%E6%96%B9%E6%B3%95/">为什么说不推荐使用finalize方法</a>
+        <a href="/2021/01/25/%E5%85%AB%E3%80%81%E9%9D%A2%E8%AF%95/%E7%AE%97%E6%B3%95/%E9%9D%A2%E8%AF%95%E6%97%B6%E5%88%B0%E5%BA%95%E8%AF%A5%E5%88%B7%E5%93%AA%E4%BA%9B%E7%AE%97%E6%B3%95%E9%A2%98%EF%BC%9F%E6%B2%A1%E5%85%B3%E7%B3%BB%EF%BC%8C%E8%BF%99%E9%87%8C%E6%95%B4%E7%90%86%E4%BA%86%E9%AB%98%E9%A2%91%E7%9A%84%E4%B8%89%E7%99%BE%E9%81%93/">面试时到底该刷哪些算法题？没关系，这里整理了高频的三百道</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/01/14/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/5%E3%80%81jvm/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AF%B4%E4%B8%8D%E6%8E%A8%E8%8D%90%E4%BD%BF%E7%94%A8finalize%E6%96%B9%E6%B3%95/">
+        <a href="/2021/01/25/%E5%85%AB%E3%80%81%E9%9D%A2%E8%AF%95/%E7%AE%97%E6%B3%95/%E9%9D%A2%E8%AF%95%E6%97%B6%E5%88%B0%E5%BA%95%E8%AF%A5%E5%88%B7%E5%93%AA%E4%BA%9B%E7%AE%97%E6%B3%95%E9%A2%98%EF%BC%9F%E6%B2%A1%E5%85%B3%E7%B3%BB%EF%BC%8C%E8%BF%99%E9%87%8C%E6%95%B4%E7%90%86%E4%BA%86%E9%AB%98%E9%A2%91%E7%9A%84%E4%B8%89%E7%99%BE%E9%81%93/">
           
           
             
@@ -297,9 +291,12 @@ Segmentfault
           
 出自公众号《愚公要移山》中，地址www.javachat.cc
 
-这个问题是我在刷牛客面经的时候遇到的，还特地整理在了我的常规面试题文档中，所以这道题主要考察的就是finalize方法的影响。
-java提供了一个finalize方法，可以帮助我们进行资源释放，类似于C++中的析构函数。但是目前普遍的认识是不要使用，为什么呢？就是因为对java虚拟机的垃圾回收有影响。这篇文章对其进行一个说明。
-一
+:star:前言题目来源
+
+本文最新的题目更新在
+https://github.com/fengdongdongwsn/high-frequency-algorithm
+
+本文收集了在面试中，公司高频出现的算法题目。避免你在准备开始刷题或者是正在刷题时，没有目标。力扣题目实在是太多了。但是我们没有必要去把每道题都刷一遍。本系列题目
         </a>
       </p>
 
@@ -307,8 +304,8 @@ java提供了一个finalize方法，可以帮助我们进行资源释放，类�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-01-14 16:30" pubdate>
-              2021-01-14
+            <time datetime="2021-01-25 17:42" pubdate>
+              2021-01-25
             </time>
           </div>
         
@@ -316,9 +313,9 @@ java提供了一个finalize方法，可以帮助我们进行资源释放，类�
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+              <a href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>
             
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/jvm%E4%B8%93%E9%A2%98/">jvm专题</a>
+              <a href="/categories/%E9%9D%A2%E8%AF%95/%E7%AE%97%E6%B3%95/">算法</a>
             
           </div>
         
@@ -328,7 +325,7 @@ java提供了一个finalize方法，可以帮助我们进行资源释放，类�
             
               <a href="/tags/%E9%9D%A2%E8%AF%95/">面试</a>
             
-              <a href="/tags/jvm/">jvm</a>
+              <a href="/tags/%E9%AB%98%E9%A2%91%E7%AE%97%E6%B3%95/">高频算法</a>
             
           </div>
         
@@ -339,20 +336,14 @@ java提供了一个finalize方法，可以帮助我们进行资源释放，类�
   <div class="row mx-auto index-card">
     
     
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/01/14/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/1%E3%80%81java%E9%9B%86%E5%90%88/java%E4%B8%AD%E5%A6%82%E4%BD%95%E5%8E%8B%E7%BC%A9%E9%9B%86%E5%90%88/" target="_self">
-          <img src="https://s3.ax1x.com/2021/01/14/sUodsK.png" srcset="/img/loading.gif" alt="java中如何压缩集合">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
+    <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/01/14/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/1%E3%80%81java%E9%9B%86%E5%90%88/java%E4%B8%AD%E5%A6%82%E4%BD%95%E5%8E%8B%E7%BC%A9%E9%9B%86%E5%90%88/">java中如何压缩集合</a>
+        <a href="/2021/01/25/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/SpringBoot%E6%95%B4%E5%90%88Actuator%EF%BC%88%E6%97%A0%E5%9D%91%E7%89%88%EF%BC%89/">SpringBoot整合Actuator（无坑版）</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/01/14/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/1%E3%80%81java%E9%9B%86%E5%90%88/java%E4%B8%AD%E5%A6%82%E4%BD%95%E5%8E%8B%E7%BC%A9%E9%9B%86%E5%90%88/">
+        <a href="/2021/01/25/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/SpringBoot%E6%95%B4%E5%90%88Actuator%EF%BC%88%E6%97%A0%E5%9D%91%E7%89%88%EF%BC%89/">
           
           
             
@@ -360,9 +351,8 @@ java提供了一个finalize方法，可以帮助我们进行资源释放，类�
           
 出自公众号《愚公要移山》中，地址www.javachat.cc
 
-前言这个问题算是开发当中偶尔会遇到的一个小问题，比如如何将两个集合压缩成为一个逻辑集合。
-如果你不理解，我们可以看一个简单的例子，去说明什么是压缩集合。本文文章不长，但是还算是比较实用的小技巧。主要内容来源于国外小哥Baeldung的博客：下面给出个地址
-https://www.baeldung.com/java-collecti
+前言有时候我们想要实时监控我们的应用程序的运行状态，比如实时显示一些指标数据，观察每时每刻访问的流量，或者是我们数据库的访问状态等等。这时候就需要Actuator了。
+使用Actuator的好处是，我们可以直接使用这个生产级别的工具，而不需要自己去实现这些东西。Actuator可以自动帮我们自动暴露出这些信息，使用HTTP或者是J
         </a>
       </p>
 
@@ -370,8 +360,8 @@ https://www.baeldung.com/java-collecti
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-01-14 16:25" pubdate>
-              2021-01-14
+            <time datetime="2021-01-25 17:39" pubdate>
+              2021-01-25
             </time>
           </div>
         
@@ -379,131 +369,9 @@ https://www.baeldung.com/java-collecti
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+              <a href="/categories/Spring%E7%B3%BB%E5%88%97/">Spring系列</a>
             
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/java%E9%9B%86%E5%90%88/">java集合</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E9%AB%98%E6%95%88java/">高效java</a>
-            
-              <a href="/tags/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/01/12/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/5%E3%80%81jvm/GCRoot%E4%B8%8D%E5%8F%AF%E8%BE%BE%E7%9A%84%E5%AF%B9%E8%B1%A1%EF%BC%8C%E4%BC%9A%E7%AB%8B%E5%88%BB%E8%A2%AB%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%90%97%EF%BC%9F/" target="_self">
-          <img src="https://s3.ax1x.com/2021/01/12/sJ9ouR.png" srcset="/img/loading.gif" alt="GCRoot不可达的对象，会立刻被垃圾回收吗？">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/01/12/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/5%E3%80%81jvm/GCRoot%E4%B8%8D%E5%8F%AF%E8%BE%BE%E7%9A%84%E5%AF%B9%E8%B1%A1%EF%BC%8C%E4%BC%9A%E7%AB%8B%E5%88%BB%E8%A2%AB%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%90%97%EF%BC%9F/">GCRoot不可达的对象，会立刻被垃圾回收吗？</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/01/12/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/5%E3%80%81jvm/GCRoot%E4%B8%8D%E5%8F%AF%E8%BE%BE%E7%9A%84%E5%AF%B9%E8%B1%A1%EF%BC%8C%E4%BC%9A%E7%AB%8B%E5%88%BB%E8%A2%AB%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%90%97%EF%BC%9F/">
-          
-          
-            
-          
-          
-出自公众号《愚公要移山》中，地址www.javachat.cc本文已收录在《JVM专题》中
-
-这个问题是我在刷牛客面经的时候遇到的，还特地整理在了我的常规面试题文档中，所以这道题主要考察的就是finalize方法的影响。
-java提供了一个finalize方法，可以帮助我们进行资源释放，类似于C++中的析构函数。但是目前普遍的认识是不要使用，为什么呢？就是因为对java虚拟机的垃圾回收有影响。这
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-01-12 12:00" pubdate>
-              2021-01-12
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/jvm%E4%B8%93%E9%A2%98/">jvm专题</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E9%9D%A2%E8%AF%95/">面试</a>
-            
-              <a href="/tags/jvm/">jvm</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/01/07/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/Springboot%E5%90%AF%E5%8A%A8%E4%BA%86%E5%93%AA%E4%BA%9Bbean%EF%BC%9F%E8%BF%99%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F%E5%8F%AF%E4%BB%A5%E8%8E%B7%E5%8F%96/" target="_self">
-          <img src="https://s3.ax1x.com/2021/01/07/sZfNT0.png" srcset="/img/loading.gif" alt="Springboot启动了哪些bean？这两种方式可以获取">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/01/07/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/Springboot%E5%90%AF%E5%8A%A8%E4%BA%86%E5%93%AA%E4%BA%9Bbean%EF%BC%9F%E8%BF%99%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F%E5%8F%AF%E4%BB%A5%E8%8E%B7%E5%8F%96/">Springboot启动了哪些bean？这两种方式可以获取</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/01/07/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/Springboot%E5%90%AF%E5%8A%A8%E4%BA%86%E5%93%AA%E4%BA%9Bbean%EF%BC%9F%E8%BF%99%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F%E5%8F%AF%E4%BB%A5%E8%8E%B7%E5%8F%96/">
-          
-          
-            
-          
-          
-本文出自公众号《愚公要移山》Springboot系列
-
-1. 概述在本文中，我们将探索在容器中获取所有spring管理的bean的相关技术。这有神马用？主要是用于排查问题。一般都是我们创建的某一个bean没有启动的问题。毕竟工作中总是会遇到各种各样的bug。提前了解一些没有坏处。
-2. IoC容器bean是spring管理的应用程序的基础，所有bean都驻留在IOC容器中，该容器负责管理它们的生
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-01-07 10:58" pubdate>
-              2021-01-07
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Springboot%E4%B8%93%E9%A2%98/">Springboot专题</a>
+              <a href="/categories/Spring%E7%B3%BB%E5%88%97/Springboot%E4%B8%93%E9%A2%98/">Springboot专题</a>
             
           </div>
         
@@ -524,141 +392,14 @@ java提供了一个finalize方法，可以帮助我们进行资源释放，类�
   <div class="row mx-auto index-card">
     
     
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/01/07/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/%E4%B8%80%E6%AD%A5%E4%B8%BA%E4%BD%A0%E7%9A%84Springboot%E5%BA%94%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89banner/" target="_self">
-          <img src="https://pic1.zhimg.com/80/v2-38463332dae28496e4a9fc865f9a1957_720w.jpg" srcset="/img/loading.gif" alt="一步为你的Springboot应用自定义banner">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
+    <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/01/07/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/%E4%B8%80%E6%AD%A5%E4%B8%BA%E4%BD%A0%E7%9A%84Springboot%E5%BA%94%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89banner/">一步为你的Springboot应用自定义banner</a>
+        <a href="/2021/01/25/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/5%E3%80%81jvm/%E5%A6%82%E4%BD%95%E7%94%A8%E9%92%A9%E5%AD%90%E5%87%BD%E6%95%B0%EF%BC%8C%E4%BC%98%E9%9B%85%E5%9C%B0%E5%85%B3%E9%97%ADJVM/">如何用钩子函数，优雅地关闭JVM</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/01/07/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/%E4%B8%80%E6%AD%A5%E4%B8%BA%E4%BD%A0%E7%9A%84Springboot%E5%BA%94%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89banner/">
-          
-          
-            
-          
-          
-本文出自公众号《愚公要移山》Springboot系列
-
-这个小功能据说是Springboot2.x的小彩蛋，出来很久很久了。之前知道没试过，这次试了一下，还可以，挺好玩的。最近因为开始重新看Springboot，看到了这个部分，于是整理到了文章中。烂大街的东西，拿来丢人显眼了。
-什么是banner？
-就是这个默认的Spring标识，有时候看着太难看，所以想换换，没什么卵用，有时候还会使你的Spr
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-01-07 10:52" pubdate>
-              2021-01-07
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Springboot%E4%B8%93%E9%A2%98/">Springboot专题</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">微服务</a>
-            
-              <a href="/tags/springboot/">springboot</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/01/05/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/%E4%B8%BA%E4%BD%A0%E7%9A%84Springboot%E5%BA%94%E7%94%A8%E9%85%8D%E7%BD%AE%E9%80%9A%E7%94%A8%E7%9A%84%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%90%A7%EF%BC%88%E5%AE%9E%E7%94%A8%E5%B9%B2%E8%B4%A7%EF%BC%89/" target="_self">
-          <img src="https://s3.ax1x.com/2021/01/05/skitDP.png" srcset="/img/loading.gif" alt="为你的Springboot应用配置通用的异常处理吧（实用干货）">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/01/05/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/%E4%B8%BA%E4%BD%A0%E7%9A%84Springboot%E5%BA%94%E7%94%A8%E9%85%8D%E7%BD%AE%E9%80%9A%E7%94%A8%E7%9A%84%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%90%A7%EF%BC%88%E5%AE%9E%E7%94%A8%E5%B9%B2%E8%B4%A7%EF%BC%89/">为你的Springboot应用配置通用的异常处理吧（实用干货）</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/01/05/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/%E4%B8%BA%E4%BD%A0%E7%9A%84Springboot%E5%BA%94%E7%94%A8%E9%85%8D%E7%BD%AE%E9%80%9A%E7%94%A8%E7%9A%84%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%90%A7%EF%BC%88%E5%AE%9E%E7%94%A8%E5%B9%B2%E8%B4%A7%EF%BC%89/">
-          
-          
-            
-          
-          
-本文出自公众号《愚公要移山》Springboot系列
-
-前言我们的项目通常来讲都是一个比较大的项目，包含了各种各样的服务。如果每个服务都以不同的方式返回异常信息，这样排查的时候就会比较凌乱。如果我们定义一个标准的异常处理体系。并在所有的服务中使用。那样开发起来就可以快速定位。页面也会更加的简单和直观。
-本文开发环境基于springboot2.4，IDE环境是IDEA。这里从一个最简单的异常案例。
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-01-05 15:31" pubdate>
-              2021-01-05
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Springboot%E4%B8%93%E9%A2%98/">Springboot专题</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">微服务</a>
-            
-              <a href="/tags/springboot/">springboot</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/01/04/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/5%E3%80%81jvm/%E7%A8%8B%E5%BA%8F%E5%87%BA%E7%8E%B0%E4%BA%86bug%E5%A6%82%E4%BD%95%E6%8E%92%E6%9F%A5%EF%BC%9F%E7%9C%8B%E7%9C%8B%E8%BF%99%E5%87%A0%E6%AC%BEJVM%E5%B7%A5%E5%85%B7/" target="_self">
-          <img src="https://s3.ax1x.com/2021/01/04/siBQyj.png" srcset="/img/loading.gif" alt="程序出现了bug如何排查？看看这几款JVM工具">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/01/04/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/5%E3%80%81jvm/%E7%A8%8B%E5%BA%8F%E5%87%BA%E7%8E%B0%E4%BA%86bug%E5%A6%82%E4%BD%95%E6%8E%92%E6%9F%A5%EF%BC%9F%E7%9C%8B%E7%9C%8B%E8%BF%99%E5%87%A0%E6%AC%BEJVM%E5%B7%A5%E5%85%B7/">程序出现了bug如何排查？看看这几款JVM工具</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/01/04/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/5%E3%80%81jvm/%E7%A8%8B%E5%BA%8F%E5%87%BA%E7%8E%B0%E4%BA%86bug%E5%A6%82%E4%BD%95%E6%8E%92%E6%9F%A5%EF%BC%9F%E7%9C%8B%E7%9C%8B%E8%BF%99%E5%87%A0%E6%AC%BEJVM%E5%B7%A5%E5%85%B7/">
+        <a href="/2021/01/25/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/5%E3%80%81jvm/%E5%A6%82%E4%BD%95%E7%94%A8%E9%92%A9%E5%AD%90%E5%87%BD%E6%95%B0%EF%BC%8C%E4%BC%98%E9%9B%85%E5%9C%B0%E5%85%B3%E9%97%ADJVM/">
           
           
             
@@ -666,8 +407,10 @@ java提供了一个finalize方法，可以帮助我们进行资源释放，类�
           
 出自公众号《愚公要移山》中，地址www.javachat.cc
 
-在平时的开发当中我们总是会遇到各种各样的问题，比如说内存泄漏、死锁、CPU等。遇到问题不可怕，关键是我们如何去排查这些错误，对症下药才是根本。不过对于很多人来说，往往找不到这些问题的根本所在，因此这篇文章主要是让我们掌握一些工具来分析到底是哪里出现了问题。
-在之前的文章中，主要是分析了JVM的内存结构、类加载机制和垃圾回收机制。文
+前言1、基本概述程序的启动很简单，启动的时候通常会做一些预加载资源的操作。但是有时候关闭的时候，启动的时候预加载的资源并没有完全清理干净，因此可以使用钩子函数来完成。
+2、JVM关闭的场景分类直接看一张图吧，本图来自博客园的BarryWang，特在此说明。
+
+从上面可以看到，JVM关闭主要分为了三类，第一种是正常的关闭，第二种是异
         </a>
       </p>
 
@@ -675,8 +418,8 @@ java提供了一个finalize方法，可以帮助我们进行资源释放，类�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-01-04 20:55" pubdate>
-              2021-01-04
+            <time datetime="2021-01-25 17:38" pubdate>
+              2021-01-25
             </time>
           </div>
         
@@ -694,8 +437,6 @@ java提供了一个finalize方法，可以帮助我们进行资源释放，类�
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E9%9D%A2%E8%AF%95/">面试</a>
-            
               <a href="/tags/jvm/">jvm</a>
             
           </div>
@@ -707,20 +448,14 @@ java提供了一个finalize方法，可以帮助我们进行资源释放，类�
   <div class="row mx-auto index-card">
     
     
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/01/02/%E4%B8%83%E3%80%81%E5%B7%A5%E5%85%B7/%E6%97%A5%E5%BF%97/java%E4%B8%AD%E7%9A%84%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6%E4%BD%93%E7%B3%BB%E6%A2%B3%E7%90%86%EF%BC%88%E7%AE%80%E5%8D%95%E7%9B%B4%E7%99%BD%EF%BC%8C%E6%95%85%E4%BA%8B%E5%8F%99%E8%BF%B0%EF%BC%89/" target="_self">
-          <img src="https://s3.ax1x.com/2021/01/02/sSQynI.png" srcset="/img/loading.gif" alt="java中的日志框架体系梳理（简单直白，故事叙述）">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
+    <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/01/02/%E4%B8%83%E3%80%81%E5%B7%A5%E5%85%B7/%E6%97%A5%E5%BF%97/java%E4%B8%AD%E7%9A%84%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6%E4%BD%93%E7%B3%BB%E6%A2%B3%E7%90%86%EF%BC%88%E7%AE%80%E5%8D%95%E7%9B%B4%E7%99%BD%EF%BC%8C%E6%95%85%E4%BA%8B%E5%8F%99%E8%BF%B0%EF%BC%89/">java中的日志框架体系梳理（简单直白，故事叙述）</a>
+        <a href="/2021/01/25/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/6%E3%80%81java%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9/%E6%9F%90%E4%B8%AA%E6%96%87%E4%BB%B6%E5%A4%B9%E5%8F%91%E7%94%9F%E4%BA%86%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E6%93%8D%E4%BD%9C%EF%BC%8C%E5%A6%82%E4%BD%95%E7%94%A8java%E5%AE%9E%E6%97%B6%E7%9B%91%E6%8E%A7%EF%BC%9F/">某个文件夹发生了增删改查操作，如何用java实时监控？</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/01/02/%E4%B8%83%E3%80%81%E5%B7%A5%E5%85%B7/%E6%97%A5%E5%BF%97/java%E4%B8%AD%E7%9A%84%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6%E4%BD%93%E7%B3%BB%E6%A2%B3%E7%90%86%EF%BC%88%E7%AE%80%E5%8D%95%E7%9B%B4%E7%99%BD%EF%BC%8C%E6%95%85%E4%BA%8B%E5%8F%99%E8%BF%B0%EF%BC%89/">
+        <a href="/2021/01/25/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/6%E3%80%81java%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9/%E6%9F%90%E4%B8%AA%E6%96%87%E4%BB%B6%E5%A4%B9%E5%8F%91%E7%94%9F%E4%BA%86%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E6%93%8D%E4%BD%9C%EF%BC%8C%E5%A6%82%E4%BD%95%E7%94%A8java%E5%AE%9E%E6%97%B6%E7%9B%91%E6%8E%A7%EF%BC%9F/">
           
           
             
@@ -728,8 +463,7 @@ java提供了一个finalize方法，可以帮助我们进行资源释放，类�
           
 出自公众号《愚公要移山》中，地址www.javachat.cc
 
-平时写代码目前也开始慢慢体会到了日志的重要作用。日志算是java工具体系的一个知识点，但又是写代码的时候绕不过去的一个知识点，以故事的形式来对目前市场上常见的一些日志框架进行一个介绍和梳理。旨在从整个日志体系的角度进行一次梳理。
-阶段一：从前有一个程序员，名字叫张三，张三呢，每天矜矜业业，业务能力代码能力都很强。老板就让他负责一个
+前言有时候你可能有个疑问，IDE总是可以检测到外部文件是否发生了变化，比如你在某个类里面加了一些代码，这时候的IDE就会弹出一个框说你做了更改。再或者是某个文件夹下的文件发生了改变，比如新建了一个或者是删除了一个等等。这时候我们的IDE依然可以检测到。这个功能到底是如何实现的呢？这篇文章主要是研究NIO的其中一个类，叫做Watch
         </a>
       </p>
 
@@ -737,68 +471,8 @@ java提供了一个finalize方法，可以帮助我们进行资源释放，类�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-01-02 16:44" pubdate>
-              2021-01-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%B7%A5%E5%85%B7/">工具</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%B7%A5%E5%85%B7/">工具</a>
-            
-              <a href="/tags/%E6%97%A5%E5%BF%97/">日志</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2020/12/31/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/6%E3%80%81java%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9/%E4%BD%A0%E4%BA%86%E8%A7%A3java%E4%B8%AD%E7%9A%84%E5%87%A0%E7%A7%8D%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F%EF%BC%9F%E8%A7%A3%E5%86%B3%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98%E5%8F%AF%E8%83%BD%E5%B9%B6%E4%B8%8D%E9%BA%BB%E7%83%A6/" target="_self">
-          <img src="https://s3.ax1x.com/2020/12/31/rjHnJ0.png" srcset="/img/loading.gif" alt="你了解java中的几种编码方式？解决乱码问题可能并不麻烦">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/12/31/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/6%E3%80%81java%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9/%E4%BD%A0%E4%BA%86%E8%A7%A3java%E4%B8%AD%E7%9A%84%E5%87%A0%E7%A7%8D%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F%EF%BC%9F%E8%A7%A3%E5%86%B3%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98%E5%8F%AF%E8%83%BD%E5%B9%B6%E4%B8%8D%E9%BA%BB%E7%83%A6/">你了解java中的几种编码方式？解决乱码问题可能并不麻烦</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/12/31/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/6%E3%80%81java%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9/%E4%BD%A0%E4%BA%86%E8%A7%A3java%E4%B8%AD%E7%9A%84%E5%87%A0%E7%A7%8D%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F%EF%BC%9F%E8%A7%A3%E5%86%B3%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98%E5%8F%AF%E8%83%BD%E5%B9%B6%E4%B8%8D%E9%BA%BB%E7%83%A6/">
-          
-          
-            
-          
-          
-出自公众号《愚公要移山》中，地址www.javachat.cc
-
-前言编码的转换通常在IO机制中使用，一个好的编码可以为我们节省很多空间，在某种程度上提高我们应用的效率。由于之前就知道String中的转换方式，还有一些工具类，因此今天就好好的整理一下java中jdk提供的几种转换方式，希望对你有帮助。
-一、编码转换原理1、为什么需要编码我们知道计算机存储信息的最小单位是一个字节8位，能够表示25
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-12-31 17:40" pubdate>
-              2020-12-31
+            <time datetime="2021-01-25 17:37" pubdate>
+              2021-01-25
             </time>
           </div>
         
@@ -828,11 +502,301 @@ java提供了一个finalize方法，可以帮助我们进行资源释放，类�
     </article>
   </div>
 
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/01/25/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/Springboot%E6%95%B4%E5%90%88Swagger2%EF%BC%88%E6%97%A0%E5%9D%91%E7%89%88%EF%BC%89/">Springboot整合Swagger2（无坑版）</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/01/25/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/Springboot%E6%95%B4%E5%90%88Swagger2%EF%BC%88%E6%97%A0%E5%9D%91%E7%89%88%EF%BC%89/">
+          
+          
+            
+          
+          
+本文出自《愚公要移山》
+收录于《Springboot专题》中
+
+这种整合的文章确实已经烂大街了，写他一方面是补充我的springboot系列，另一方面确实还有一部分小伙伴没用过。最重要的是，如果你忘记了这种整合的代码。可以随时查阅。
+前言现在的开发基本上都是前后端分离，前后端交互都是通过API文档。有了API文档大家各自开发，互不干扰。
+1、传统方式传统方式是文档设计好之后，分别发给前端和后端人
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-01-25 17:34" pubdate>
+              2021-01-25
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Spring%E7%B3%BB%E5%88%97/">Spring系列</a>
+            
+              <a href="/categories/Spring%E7%B3%BB%E5%88%97/Springboot%E4%B8%93%E9%A2%98/">Springboot专题</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">微服务</a>
+            
+              <a href="/tags/springboot/">springboot</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/01/25/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/6%E3%80%81java%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9/java%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E7%9A%84%E8%AF%BB%E5%8F%96%E4%B8%80%E4%B8%AA%E8%B6%85%E5%A4%A7%E6%96%87%E4%BB%B6%EF%BC%9F/" target="_self">
+          <img src="https://static01.imgkr.com/temp/e62e544e1f024b0190e5c466008ef656.png" srcset="/img/loading.gif" alt="java如何高效的读取一个超大文件？">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/01/25/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/6%E3%80%81java%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9/java%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E7%9A%84%E8%AF%BB%E5%8F%96%E4%B8%80%E4%B8%AA%E8%B6%85%E5%A4%A7%E6%96%87%E4%BB%B6%EF%BC%9F/">java如何高效的读取一个超大文件？</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/01/25/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/6%E3%80%81java%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9/java%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E7%9A%84%E8%AF%BB%E5%8F%96%E4%B8%80%E4%B8%AA%E8%B6%85%E5%A4%A7%E6%96%87%E4%BB%B6%EF%BC%9F/">
+          
+          
+            
+          
+          
+出自公众号《愚公要移山》中，地址www.javachat.cc
+
+前言我最近在优化我的PDF转word的开源小工具，有时候会遇到一个问题，就是如果我的PDF文件比较大，几百兆，如何更快更节省内存的读取它。于是我分析对比了四种常见的读取文件的方式，并使用javaVisualVM工具进行了分析。最后的出的结论是commons-io时间和空间都更加的高效。研究分析依然来自哪位baeldung国外大佬。
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-01-25 17:31" pubdate>
+              2021-01-25
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9/">碎知识点</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E9%AB%98%E6%95%88java/">高效java</a>
+            
+              <a href="/tags/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+              <a href="/tags/%E9%9D%A2%E8%AF%95/">面试</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/01/25/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/3%E3%80%81java%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%97%E7%9A%84%E7%90%86%E8%A7%A3CAS%EF%BC%9F%EF%BC%88%E6%B7%B1%E5%85%A5%E5%88%B0%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%88%86%E6%9E%90%EF%BC%89/">如何通俗的理解CAS？（深入到操作系统分析）</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/01/25/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/3%E3%80%81java%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%97%E7%9A%84%E7%90%86%E8%A7%A3CAS%EF%BC%9F%EF%BC%88%E6%B7%B1%E5%85%A5%E5%88%B0%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%88%86%E6%9E%90%EF%BC%89/">
+          
+          
+            
+          
+          
+出自公众号《愚公要移山》中，地址www.javachat.cc
+
+学习Java并发编程，CAS机制都是一个不得不掌握的知识点。这篇文章主要是从出现的原因再到原理进行一个解析。希望对你有所帮助。
+一、为什么需要CAS机制？为什么需要CAS机制呢？我们先从一个错误现象谈起。我们经常使用volatile关键字修饰某一个变量，表明这个变量是全局共享的一个变量，同时具有了可见性和有序性。但是却没有原子性。
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-01-25 17:27" pubdate>
+              2021-01-25
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">java多线程</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+              <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/01/25/%E4%B8%83%E3%80%81%E5%B7%A5%E5%85%B7/linux/Linux%E5%AD%A6%E4%B8%8D%E4%BC%9A%EF%BC%9F%E6%8A%8A%E8%BF%99%E4%BA%9B%E5%91%BD%E4%BB%A4%E6%95%B2%E4%B8%80%E9%81%8D%E5%B0%B1%E9%80%9A%E4%BA%86%EF%BC%88Linux%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8%EF%BC%89/">Linux学不会？把这些命令敲一遍就通了（Linux命令大全）</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/01/25/%E4%B8%83%E3%80%81%E5%B7%A5%E5%85%B7/linux/Linux%E5%AD%A6%E4%B8%8D%E4%BC%9A%EF%BC%9F%E6%8A%8A%E8%BF%99%E4%BA%9B%E5%91%BD%E4%BB%A4%E6%95%B2%E4%B8%80%E9%81%8D%E5%B0%B1%E9%80%9A%E4%BA%86%EF%BC%88Linux%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8%EF%BC%89/">
+          
+          
+            
+          
+          
+出自公众号《愚公要移山》中，地址www.javachat.cc本文已收录在《手牵手一起学数据结构》专栏中
+
+ 最全Linux命令行大全
+转载自：https://www.cnblogs.com/yjd_hycf_space/p/7730690.html
+
+ 推荐一个网址，可以查询各种Linux命令：https://man.linuxde.net/
+系统信息arch 显示机器的处理器架构
+uname
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-01-25 17:24" pubdate>
+              2021-01-25
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Linux/">Linux</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Linux/">Linux</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/01/25/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/3%E3%80%81java%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E4%B9%90%E8%A7%82%E9%94%81%E8%BF%99%E4%B9%88%E9%87%8D%E8%A6%81%EF%BC%8C%E5%A6%82%E4%BD%95%E7%94%A8java%E4%B8%A4%E6%AD%A5%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%EF%BC%9F/">乐观锁这么重要，如何用java两步实现一个？</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/01/25/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/3%E3%80%81java%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E4%B9%90%E8%A7%82%E9%94%81%E8%BF%99%E4%B9%88%E9%87%8D%E8%A6%81%EF%BC%8C%E5%A6%82%E4%BD%95%E7%94%A8java%E4%B8%A4%E6%AD%A5%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%EF%BC%9F/">
+          
+          
+            
+          
+          
+出自公众号《愚公要移山》中，地址www.javachat.cc
+
+java多线程中的锁分类多种多样，其中有一种主要的分类方式就是乐观和悲观进行划分的。这篇文章主要介绍如何自己手写一个乐观锁代码。不过文章为了保证完整性，会从基础开始介绍。
+一、乐观锁概念说是写乐观锁的概念，但是通常乐观锁和悲观锁的概念都要一块写。对比着来才更有意义。
+1、悲观锁概念悲观锁：总是假设最坏的情况，每次去拿数据的时候都认
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-01-25 17:16" pubdate>
+              2021-01-25
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">java多线程</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+              <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="iconfont icon-arrowright"></i></a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
   

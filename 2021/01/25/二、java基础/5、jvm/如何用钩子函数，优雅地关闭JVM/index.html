@@ -1,0 +1,563 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/./img/global/head.png">
+  <link rel="icon" type="image/png" href="/./img/global/head.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="冯冬冬">
+  <meta name="keywords" content="">
+  <title>如何用钩子函数，优雅地关闭JVM - 愚公要移山</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"www.javachat.cc","root":"/","version":"1.8.6","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":6},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"f3cb5680bcdd7f7a451689fcff9759f2","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 45vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>愚公要移山</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/life/">
+                <i class="iconfont icon-th-large"></i>
+                生活
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/sources/">
+                <i class="iconfont icon-link-fill"></i>
+                资源
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" false
+         style="background: url('/img/global/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="如何用钩子函数，优雅地关闭JVM">
+              
+                如何用钩子函数，优雅地关闭JVM
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      冯冬冬
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-01-25 17:38" pubdate>
+        2021年1月25日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      共1.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      约
+      16
+       分钟阅读完成
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        共<span id="busuanzi_value_page_pv"></span> 次浏览
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">如何用钩子函数，优雅地关闭JVM</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2021年1月25日 下午
+                
+              </p>
+            
+            <div class="markdown-body">
+              <blockquote>
+<p><strong>出自公众号《愚公要移山》中，地址<a href="http://www.javachat.cc/">www.javachat.cc</a></strong></p>
+</blockquote>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><h3 id="1、基本概述"><a href="#1、基本概述" class="headerlink" title="1、基本概述"></a>1、基本概述</h3><p>程序的启动很简单，启动的时候通常会做一些预加载资源的操作。但是有时候关闭的时候，启动的时候预加载的资源并没有完全清理干净，因此可以使用钩子函数来完成。</p>
+<h3 id="2、JVM关闭的场景分类"><a href="#2、JVM关闭的场景分类" class="headerlink" title="2、JVM关闭的场景分类"></a>2、JVM关闭的场景分类</h3><p>直接看一张图吧，本图来自博客园的BarryWang，特在此说明。</p>
+<p><img src="https://img2018.cnblogs.com/blog/693275/201811/693275-20181122132745586-1047326555.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p>从上面可以看到，JVM关闭主要分为了三类，第一种是正常的关闭，第二种是异常关闭的情况，第三种是强制关闭的情况。<code>对于前两种方式我们可以使用钩子函数优雅的关闭，但是强制关闭的时候钩子函数并不起作用。</code></p>
+<p>有了这些概念，我们直接使用一个案例进行演示，再进行分析。</p>
+<h2 id="一、代码演示钩子函数"><a href="#一、代码演示钩子函数" class="headerlink" title="一、代码演示钩子函数"></a>一、代码演示钩子函数</h2><h3 id="1、JVM正常关闭"><a href="#1、JVM正常关闭" class="headerlink" title="1、JVM正常关闭"></a>1、JVM正常关闭</h3><p>直接看代码吧，</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span> </span>&#123;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">start</span><span class="hljs-params">()</span></span>&#123;<br>		Runtime.getRuntime().addShutdownHook(<span class="hljs-keyword">new</span> Thread(()-&gt; <br>				System.out.println(<span class="hljs-string">&quot;钩子函数被执行，可以在这里关闭资源&quot;</span>)<br>		));<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception</span>&#123;<br>		<span class="hljs-keyword">new</span> Test().start();<br>		System.out.println(<span class="hljs-string">&quot;主应用程序在执行&quot;</span>);<br>	&#125;<br>&#125;<br><span class="hljs-comment">//控制台输出</span><br><span class="hljs-comment">//主应用程序在执行</span><br><span class="hljs-comment">//钩子函数被执行，可以在这里关闭资源</span><br></code></pre></div></td></tr></table></figure>
+<p>看控制台打印，可以发现，主应用程序执行完之后就会调用钩子函数，接下来就会正式的关闭JVM。</p>
+<h3 id="2、异常关闭"><a href="#2、异常关闭" class="headerlink" title="2、异常关闭"></a>2、异常关闭</h3><p>还是直接看代码演示，这里我们演示异常关闭的第二种OOM的情况，我们可以先设置堆的大小为20M，然后在代码中创建一个500M的对象，这样就会OOM。参数是<code>-Xmx20M</code>；</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span> </span>&#123;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">start</span><span class="hljs-params">()</span></span>&#123;<br>		Runtime.getRuntime().addShutdownHook(<span class="hljs-keyword">new</span> Thread(()-&gt; <br>				System.out.println(<span class="hljs-string">&quot;钩子函数被执行，可以在这里关闭资源&quot;</span>)<br>		));<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception</span>&#123;<br>		<span class="hljs-keyword">new</span> Test().start();<br>		System.out.println(<span class="hljs-string">&quot;主应用程序在执行&quot;</span>);<br>		Runtime.getRuntime().halt(<span class="hljs-number">1</span>);<br>		<span class="hljs-keyword">byte</span>[] b = <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[<span class="hljs-number">500</span>*<span class="hljs-number">1024</span>*<span class="hljs-number">1024</span>];<br>	&#125;<br>&#125;<br><span class="hljs-comment">//控制台输出</span><br><span class="hljs-comment">//主应用程序在执行</span><br><span class="hljs-comment">//钩子函数被执行，可以在这里关闭资源</span><br></code></pre></div></td></tr></table></figure>
+<p>从控制台可以看出，钩子函数在异常关闭的时候依然会被调用。</p>
+<h3 id="3、强制关闭"><a href="#3、强制关闭" class="headerlink" title="3、强制关闭"></a>3、强制关闭</h3><p>这里我们使用<code>Runtime.getRuntime().halt()</code>来演示强势关闭。这个方法和<code>System.exit</code>的区别是，<code>System.exit</code>会执行钩子函数，但是<code>Runtime.getRuntime().halt()</code>不会。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span> </span>&#123;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">start</span><span class="hljs-params">()</span></span>&#123;<br>		Runtime.getRuntime().addShutdownHook(<span class="hljs-keyword">new</span> Thread(()-&gt; <br>				System.out.println(<span class="hljs-string">&quot;钩子函数被执行，可以在这里关闭资源&quot;</span>)<br>		));<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception</span>&#123;<br>		<span class="hljs-keyword">new</span> Test().start();<br>		System.out.println(<span class="hljs-string">&quot;主应用程序在执行&quot;</span>);<br>		Runtime.getRuntime().halt(<span class="hljs-number">1</span>);<br>	&#125;<br>&#125;<br><span class="hljs-comment">//控制台输出</span><br><span class="hljs-comment">//主应用程序在执行</span><br></code></pre></div></td></tr></table></figure>
+<p>从上面代码的输出可以看出，调用了<code>Runtime.getRuntime().halt(1)</code>就会强制关闭JVM，钩子函数来不及执行就关闭了。而使用<code>System.exit</code>依然会执行。所以一般使用<code>System.exit</code>来关闭JVM。</p>
+<h3 id="4、移除钩子函数"><a href="#4、移除钩子函数" class="headerlink" title="4、移除钩子函数"></a>4、移除钩子函数</h3><p>上面演示了钩子函数的作用，有时候我们想移除也比较简单。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span> </span>&#123;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception</span>&#123;<br>		<span class="hljs-comment">//new Test().start();</span><br>		Thread willNotRun = <span class="hljs-keyword">new</span> Thread(() -&gt; <br>			System.out.println(<span class="hljs-string">&quot;Won&#x27;t run!&quot;</span>));<br>		Runtime.getRuntime().addShutdownHook(willNotRun);<br>		System.out.println(<span class="hljs-string">&quot;主应用程序在执行&quot;</span>);<br>		Runtime.getRuntime().removeShutdownHook(willNotRun);<br>	&#125;<br>&#125;<br><span class="hljs-comment">//控制台输出</span><br><span class="hljs-comment">//主应用程序在执行</span><br></code></pre></div></td></tr></table></figure>
+<p>OK，钩子函数的基本操作就写到这，使用起来比较简单，不过我之前看过Spring的启动流程，所以又去那个启动流程看了一波，发现也使用到了钩子函数。</p>
+<h2 id="二、典型应用场景"><a href="#二、典型应用场景" class="headerlink" title="二、典型应用场景"></a>二、典型应用场景</h2><h3 id="1、Spring使用"><a href="#1、Spring使用" class="headerlink" title="1、Spring使用"></a>1、Spring使用</h3><p>Spring在关闭上下文的时候，可以使用钩子函数来关闭残留的资源。方法是使用<code>ApplicationContext</code>注册一个钩子函数即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">ApplicationContext.registerShutdownHook();<br><span class="hljs-comment">//上面的这句代码可以分析进去看看</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">registerShutdownHook</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.shutdownHook == <span class="hljs-keyword">null</span>) &#123;<br>      <span class="hljs-keyword">this</span>.shutdownHook = <span class="hljs-keyword">new</span> Thread() &#123;<br>        <span class="hljs-meta">@Override</span><br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>&#123;<br>          <span class="hljs-comment">//Spring正常关闭</span><br>          doClose();<br>        &#125;<br>      &#125;;<br>      <span class="hljs-comment">//调用钩子函数关闭残留资源</span><br>      Runtime.getRuntime().addShutdownHook(<span class="hljs-keyword">this</span>.shutdownHook);<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>从源码可以看出，Spring其实也是调用了Java的钩子函数进行关闭的。</p>
+<h3 id="2、其他使用"><a href="#2、其他使用" class="headerlink" title="2、其他使用"></a>2、其他使用</h3><p>我在很多博客中也看到了spark和hadoop的关闭，由于我没看过源码，所以这里我说一下结论，对于其他的使用场景，基本上也是调用了Java的钩子函数来执行的。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>在关闭JVM的时候，我们可以封装钩子函数去优雅的关闭线程。不过在使用的时候还需要注意以下几个方面：</p>
+<h3 id="1、钩子函数本质是个线程"><a href="#1、钩子函数本质是个线程" class="headerlink" title="1、钩子函数本质是个线程"></a>1、钩子函数本质是个线程</h3><p>多个钩子会并发执行，JVM并不保证它们的执行顺序；因此最好是在一个钩子中执行一系列操作。</p>
+<h3 id="2、钩子中不能再新建钩子"><a href="#2、钩子中不能再新建钩子" class="headerlink" title="2、钩子中不能再新建钩子"></a>2、钩子中不能再新建钩子</h3><p>在关闭钩子中，不能执行注册、移除钩子的操作，否则JVM抛出 IllegalStateException。也不能使用System.exit()，前面提到System.exit()会触发钩子函数的执行，但是Runtime.halt()可以，因为Runtime.halt()可以强制关闭。</p>
+<h3 id="3、钩子里最好不要有耗时操作"><a href="#3、钩子里最好不要有耗时操作" class="headerlink" title="3、钩子里最好不要有耗时操作"></a>3、钩子里最好不要有耗时操作</h3><p>钩子函数主要用于关闭残留资源，因此不要有一些耗时的操作。</p>
+<p>OK，先写到这。</p>
+<P class="note note-warning">如需转载，请提前联系作者，否则追究法律责任</P>
+
+<p> <strong><P class="note note-primary">这有5T资源，涵盖了java小白到架构师整个体系各种相关资源（视频、电子书、面试、简历、IDE破解等），更多文章请关注：</P></strong></p>
+<p align="center"><img src="https://s3.ax1x.com/2020/12/18/rJnbO1.jpg" srcset="/img/loading.gif" height="250" width="480" /></p>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+                    
+                      <a class="hover-with-bg" href="/categories/java%E5%9F%BA%E7%A1%80/jvm%E4%B8%93%E9%A2%98/">jvm专题</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/jvm/">jvm</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/01/25/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/SpringBoot%E6%95%B4%E5%90%88Actuator%EF%BC%88%E6%97%A0%E5%9D%91%E7%89%88%EF%BC%89/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">SpringBoot整合Actuator（无坑版）</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/01/25/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/6%E3%80%81java%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9/%E6%9F%90%E4%B8%AA%E6%96%87%E4%BB%B6%E5%A4%B9%E5%8F%91%E7%94%9F%E4%BA%86%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E6%93%8D%E4%BD%9C%EF%BC%8C%E5%A6%82%E4%BD%95%E7%94%A8java%E5%AE%9E%E6%97%B6%E7%9B%91%E6%8E%A7%EF%BC%9F/">
+                        <span class="hidden-mobile">某个文件夹发生了增删改查操作，如何用java实时监控？</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="http://www.javachat.cc" target="_blank" rel="nofollow noopener"><span>愚公要移山</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    document.addEventListener('DOMContentLoaded', function() {
+      window.NProgress && window.NProgress.inc();
+    })
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f3cb5680bcdd7f7a451689fcff9759f2";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
