@@ -203,6 +203,62 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2021/01/25/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/3%E3%80%81java%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%97%E7%9A%84%E7%90%86%E8%A7%A3CAS%EF%BC%9F%EF%BC%88%E6%B7%B1%E5%85%A5%E5%88%B0%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%88%86%E6%9E%90%EF%BC%89/">如何通俗的理解CAS？（深入到操作系统分析）</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/01/25/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/3%E3%80%81java%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%97%E7%9A%84%E7%90%86%E8%A7%A3CAS%EF%BC%9F%EF%BC%88%E6%B7%B1%E5%85%A5%E5%88%B0%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%88%86%E6%9E%90%EF%BC%89/">
+          
+          
+            
+          
+          
+出自公众号《愚公要移山》中，地址www.javachat.cc
+
+学习Java并发编程，CAS机制都是一个不得不掌握的知识点。这篇文章主要是从出现的原因再到原理进行一个解析。希望对你有所帮助。
+一、为什么需要CAS机制？为什么需要CAS机制呢？我们先从一个错误现象谈起。我们经常使用volatile关键字修饰某一个变量，表明这个变量是全局共享的一个变量，同时具有了可见性和有序性。但是却没有原子性。
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-01-25 17:27" pubdate>
+              2021-01-25
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">java多线程</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
+            
+              <a href="/tags/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2021/01/25/%E4%B8%83%E3%80%81%E5%B7%A5%E5%85%B7/linux/Linux%E5%AD%A6%E4%B8%8D%E4%BC%9A%EF%BC%9F%E6%8A%8A%E8%BF%99%E4%BA%9B%E5%91%BD%E4%BB%A4%E6%95%B2%E4%B8%80%E9%81%8D%E5%B0%B1%E9%80%9A%E4%BA%86%EF%BC%88Linux%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8%EF%BC%89/">Linux学不会？把这些命令敲一遍就通了（Linux命令大全）</a>
       </h1>
 
@@ -300,9 +356,9 @@ java多线程中的锁分类多种多样，其中有一种主要的分类方式�
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
               <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
+            
+              <a href="/tags/java%E5%9F%BA%E7%A1%80/">java基础</a>
             
           </div>
         
@@ -740,66 +796,6 @@ java提供了一个finalize方法，可以帮助我们进行资源释放，类�
               <a href="/tags/%E9%9D%A2%E8%AF%95/">面试</a>
             
               <a href="/tags/jvm/">jvm</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/01/02/%E4%B8%83%E3%80%81%E5%B7%A5%E5%85%B7/%E6%97%A5%E5%BF%97/java%E4%B8%AD%E7%9A%84%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6%E4%BD%93%E7%B3%BB%E6%A2%B3%E7%90%86%EF%BC%88%E7%AE%80%E5%8D%95%E7%9B%B4%E7%99%BD%EF%BC%8C%E6%95%85%E4%BA%8B%E5%8F%99%E8%BF%B0%EF%BC%89/" target="_self">
-          <img src="https://s3.ax1x.com/2021/01/02/sSQynI.png" srcset="/img/loading.gif" alt="java中的日志框架体系梳理（简单直白，故事叙述）">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/01/02/%E4%B8%83%E3%80%81%E5%B7%A5%E5%85%B7/%E6%97%A5%E5%BF%97/java%E4%B8%AD%E7%9A%84%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6%E4%BD%93%E7%B3%BB%E6%A2%B3%E7%90%86%EF%BC%88%E7%AE%80%E5%8D%95%E7%9B%B4%E7%99%BD%EF%BC%8C%E6%95%85%E4%BA%8B%E5%8F%99%E8%BF%B0%EF%BC%89/">java中的日志框架体系梳理（简单直白，故事叙述）</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/01/02/%E4%B8%83%E3%80%81%E5%B7%A5%E5%85%B7/%E6%97%A5%E5%BF%97/java%E4%B8%AD%E7%9A%84%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6%E4%BD%93%E7%B3%BB%E6%A2%B3%E7%90%86%EF%BC%88%E7%AE%80%E5%8D%95%E7%9B%B4%E7%99%BD%EF%BC%8C%E6%95%85%E4%BA%8B%E5%8F%99%E8%BF%B0%EF%BC%89/">
-          
-          
-            
-          
-          
-出自公众号《愚公要移山》中，地址www.javachat.cc
-
-平时写代码目前也开始慢慢体会到了日志的重要作用。日志算是java工具体系的一个知识点，但又是写代码的时候绕不过去的一个知识点，以故事的形式来对目前市场上常见的一些日志框架进行一个介绍和梳理。旨在从整个日志体系的角度进行一次梳理。
-阶段一：从前有一个程序员，名字叫张三，张三呢，每天矜矜业业，业务能力代码能力都很强。老板就让他负责一个
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-01-02 16:44" pubdate>
-              2021-01-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%B7%A5%E5%85%B7/">工具</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%B7%A5%E5%85%B7/">工具</a>
-            
-              <a href="/tags/%E6%97%A5%E5%BF%97/">日志</a>
             
           </div>
         

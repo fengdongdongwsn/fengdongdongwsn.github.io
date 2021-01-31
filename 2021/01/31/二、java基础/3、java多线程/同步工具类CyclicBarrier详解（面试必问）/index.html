@@ -1,0 +1,563 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/./img/global/head.png">
+  <link rel="icon" type="image/png" href="/./img/global/head.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="冯冬冬">
+  <meta name="keywords" content="">
+  <title>同步工具类CyclicBarrier详解（面试必问） - 愚公要移山</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"www.javachat.cc","root":"/","version":"1.8.6","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":6},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"f3cb5680bcdd7f7a451689fcff9759f2","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 45vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>愚公要移山</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/life/">
+                <i class="iconfont icon-th-large"></i>
+                生活
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/sources/">
+                <i class="iconfont icon-link-fill"></i>
+                资源
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" false
+         style="background: url('/img/global/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="同步工具类CyclicBarrier详解（面试必问）">
+              
+                同步工具类CyclicBarrier详解（面试必问）
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      冯冬冬
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-01-31 16:50" pubdate>
+        2021年1月31日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      共1.7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      约
+      21
+       分钟阅读完成
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        共<span id="busuanzi_value_page_pv"></span> 次浏览
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">同步工具类CyclicBarrier详解（面试必问）</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2021年1月31日 下午
+                
+              </p>
+            
+            <div class="markdown-body">
+              <blockquote>
+<p><strong>出自公众号《愚公要移山》中，地址<a href="http://www.javachat.cc/">www.javachat.cc</a></strong></p>
+</blockquote>
+<p>之前介绍了java中另一个同步工具类CountDownLatch，这篇文章主要介绍CyclicBarrier。重要性不必多说，面试的时候，面试官兜兜转转给了特定场景下的问题，最后提醒才回答上。所以如果你面试用到的话，一定要结合很多场景回答。</p>
+<h2 id="一、概念理解"><a href="#一、概念理解" class="headerlink" title="一、概念理解"></a><strong>一、概念理解</strong></h2><p>CyclicBarrier允许一组线程在到达<code>某个栅栏点(common barrier point)互相等待</code>，直到最后一个线程到达栅栏点，栅栏才会打开，处于阻塞状态的线程恢复继续执行。</p>
+<p>就比如说<code>我们在打王者的时候，十个人必须全部加载到100%，才可以开局</code>。否则<code>只要有一个人没有加载到100%,那这个游戏就不能开始</code>。先加载完成的玩家必须等待最后一个玩家加载成功才可以。如果你实在记不住，你可以想象成人满发车的长途，就算你是第一个上车的人，也要等待车满才可以发车。否则车上所有人都要等待。</p>
+<p><img src="https://s3.ax1x.com/2021/01/31/yENmqK.jpg" srcset="/img/loading.gif"></p>
+<p><code>**与CountDownLatch的区别就是是否相互等待。举一个例子，CountDownLatch就好比是马拉松比赛，跑完的人不用等待其他选手是否结束，而CyclicBarrier需要等最后一个玩家加载结束。这就是区别。**</code></p>
+<p>我们直接代码演示一下这个例子。</p>
+<h2 id="二、代码演示"><a href="#二、代码演示" class="headerlink" title="二、代码演示"></a><strong>二、代码演示</strong></h2><p>在这里我们同样使用的是打王者的例子。</p>
+<p>首先我们定义main线程：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CyclicBarrierTest</span> </span>&#123;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>		<span class="hljs-comment">//第一步：定义玩家，这里写了5个</span><br>		String[] heros  = &#123;<span class="hljs-string">&quot;孙悟空&quot;</span>,<span class="hljs-string">&quot;猪八戒&quot;</span>,<span class="hljs-string">&quot;狄仁杰&quot;</span>,<span class="hljs-string">&quot;鲁班&quot;</span>,<span class="hljs-string">&quot;甄姬&quot;</span>&#125;;<br>		<span class="hljs-comment">//第二步：使用线程池来运行，也是5个。</span><br>		ExecutorService service = Executors.newFixedThreadPool(<span class="hljs-number">5</span>);<br>		<span class="hljs-comment">//第三步：常见围栏，也是5个</span><br>		<span class="hljs-keyword">final</span> CyclicBarrier barrier = <span class="hljs-keyword">new</span> CyclicBarrier(<span class="hljs-number">10</span>);<br>		<span class="hljs-comment">//第四步：通过for循环传递给每一个玩家和围栏</span><br>		<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) &#123;<br>            service.execute(<span class="hljs-keyword">new</span> Player(heros[i], barrier));<br>        &#125;<br>		service.shutdown();<br>	&#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>上面的代码我们已经解释清楚了，主要是通过线程池运行玩家，并传递给每一个玩家名字和围栏。下面我们就看看这个Player玩家线程如何实现的。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Player</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Runnable</span> </span>&#123;<br>	<span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> String hero;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> CyclicBarrier barrier;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Player</span><span class="hljs-params">(String hero, CyclicBarrier barrier)</span> </span>&#123;<br>		<span class="hljs-keyword">this</span>.hero = hero;<br>		<span class="hljs-keyword">this</span>.barrier = barrier;<br>	&#125;<br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>&#123;<br>		<span class="hljs-keyword">try</span> &#123;<br>			<span class="hljs-comment">//每一个英雄加载成功的时间不一样，所以这里用了随机数</span><br>			TimeUnit.SECONDS.sleep(<span class="hljs-number">1</span> + (<span class="hljs-keyword">new</span> Random().nextInt(<span class="hljs-number">5</span>)));<br>			System.out.println(hero + <span class="hljs-string">&quot;开始加载==========等待其他玩家加载成功&quot;</span>);<br>			barrier.await();<br>			System.out.println(hero + <span class="hljs-string">&quot;：看到所有玩家加载成功，比赛开始&quot;</span>);<br>		&#125; <span class="hljs-keyword">catch</span> (InterruptedException | BrokenBarrierException e) &#123;<br>			e.printStackTrace();<br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>在这个player线程中，我们使用随机数来表示每个玩家不同的加载时间，在休眠时间结束之前，player一直处于等待的状态，也就是调用了await方法。现在测试一遍。</p>
+<p><img src="https://s3.ax1x.com/2021/01/31/yENer6.png" srcset="/img/loading.gif"></p>
+<p>现在相信通过这个案例，大家都能掌握其用法，很简单。下面我们从源码的角度来分析一下其实现原理。</p>
+<h2 id="三、源码分析"><a href="#三、源码分析" class="headerlink" title="三、源码分析"></a><strong>三、源码分析</strong></h2><p>为了分析的彻底，我们先从构造方法开始：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">//构造方法1： parties主要是需要拦截的线程数</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">CyclicBarrier</span><span class="hljs-params">(<span class="hljs-keyword">int</span> parties)</span> </span>&#123;<br>    <span class="hljs-keyword">this</span>(parties, <span class="hljs-keyword">null</span>);<br>&#125;<br><span class="hljs-comment">//构造方法2：不仅有parties还有barrierAction</span><br><span class="hljs-comment">//主要是为了处理更加复杂的场景，当线程到达围栏时候</span><br><span class="hljs-comment">//优先执行barrierAction</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">CyclicBarrier</span><span class="hljs-params">(<span class="hljs-keyword">int</span> parties, Runnable barrierAction)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (parties &lt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalArgumentException();<br>    <span class="hljs-keyword">this</span>.parties = parties;<br>    <span class="hljs-keyword">this</span>.count = parties;<br>    <span class="hljs-keyword">this</span>.barrierCommand = barrierAction;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>以上就是两个构造方法，下面我们主要分析await方法我们进入源码看看：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">//不带超时时间</span><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">await</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException, </span><br><span class="hljs-function">						BrokenBarrierException </span>&#123;<br>       <span class="hljs-keyword">try</span> &#123;<br>           <span class="hljs-keyword">return</span> dowait(<span class="hljs-keyword">false</span>, <span class="hljs-number">0L</span>);<br>       &#125; <span class="hljs-keyword">catch</span> (TimeoutException toe) &#123;<br>           <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error(toe); <span class="hljs-comment">// cannot happen</span><br>       &#125;<br>   &#125;<br><span class="hljs-comment">//带有超时时间</span><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">await</span><span class="hljs-params">(<span class="hljs-keyword">long</span> timeout, TimeUnit unit)</span></span><br><span class="hljs-function">       <span class="hljs-keyword">throws</span> InterruptedException, BrokenBarrierException,</span><br><span class="hljs-function">              TimeoutException </span>&#123;<br>       <span class="hljs-keyword">return</span> dowait(<span class="hljs-keyword">true</span>, unit.toNanos(timeout));<br>   &#125;<br></code></pre></div></td></tr></table></figure>
+<p>返回的值是加载成功的玩家数量，既然内部是通过dowait方法实现的，不如我们再跟进去看看。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">dowait</span><span class="hljs-params">(<span class="hljs-keyword">boolean</span> timed, <span class="hljs-keyword">long</span> nanos)</span></span><br><span class="hljs-function">    <span class="hljs-keyword">throws</span> InterruptedException, BrokenBarrierException,</span><br><span class="hljs-function">           TimeoutException </span>&#123;<br>    <span class="hljs-keyword">final</span> ReentrantLock lock = <span class="hljs-keyword">this</span>.lock;<br>    lock.lock();<br>    <span class="hljs-keyword">try</span> &#123;<br>        <span class="hljs-keyword">final</span> Generation g = generation;<br>        <span class="hljs-keyword">if</span> (g.broken)<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> BrokenBarrierException();<br>        <span class="hljs-keyword">if</span> (Thread.interrupted()) &#123;<br>            breakBarrier();<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InterruptedException();<br>        &#125;<br>        <span class="hljs-keyword">int</span> index = --count;<br>        <span class="hljs-keyword">if</span> (index == <span class="hljs-number">0</span>) &#123;  <span class="hljs-comment">// tripped</span><br>            <span class="hljs-keyword">boolean</span> ranAction = <span class="hljs-keyword">false</span>;<br>            <span class="hljs-keyword">try</span> &#123;<br>                <span class="hljs-keyword">final</span> Runnable command = barrierCommand;<br>                <span class="hljs-keyword">if</span> (command != <span class="hljs-keyword">null</span>)<br>                    command.run();<br>                ranAction = <span class="hljs-keyword">true</span>;<br>                nextGeneration();<br>                <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>            &#125; <span class="hljs-keyword">finally</span> &#123;<br>                <span class="hljs-keyword">if</span> (!ranAction)<br>                    breakBarrier();<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">for</span> (;;) &#123;<br>            <span class="hljs-keyword">try</span> &#123;<br>                <span class="hljs-keyword">if</span> (!timed)<br>                    trip.await();<br>                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (nanos &gt; <span class="hljs-number">0L</span>)<br>                    nanos = trip.awaitNanos(nanos);<br>            &#125; <span class="hljs-keyword">catch</span> (InterruptedException ie) &#123;<br>                <span class="hljs-keyword">if</span> (g == generation &amp;&amp; ! g.broken) &#123;<br>                    breakBarrier();<br>                    <span class="hljs-keyword">throw</span> ie;<br>                &#125; <span class="hljs-keyword">else</span> &#123;<br>                    Thread.currentThread().interrupt();<br>                &#125;<br>            &#125;<br>            <span class="hljs-keyword">if</span> (g.broken)<br>                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> BrokenBarrierException();<br>            <span class="hljs-keyword">if</span> (g != generation)<br>               <span class="hljs-keyword">return</span> index;<br>            <span class="hljs-keyword">if</span> (timed &amp;&amp; nanos &lt;= <span class="hljs-number">0L</span>) &#123;<br>                breakBarrier();<br>                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> TimeoutException();<br>            &#125;<br>        &#125;<br>    &#125; <span class="hljs-keyword">finally</span> &#123;<br>        lock.unlock();<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>上面的代码有点长，不过也是CyclicBarrier的核心，我在这里说一下上面代码的主要功能：</p>
+<p>（1）通过ReentrantLock获取独占锁。</p>
+<p>（2）通过try里面的Generation判断当前代是否损坏， 通过Thread的interrupted方法判断是否线程中断，如果中断通过breakBarrier方法告诉其他线程。</p>
+<p>（3）if(index==0)判断当前是否是最后一个线程调用了await方法，如果是则把之前等待的线程全部唤醒。就好比是最后一个运动员到达了终点，告诉其他选手比赛结束了。</p>
+<p>（4）for(;;)循环执行等待，如果没有超时时间，那就一直等待直到被唤醒，有超时时间，那就等时间过后自动被唤醒。就好比是在运动员在路上跑步，没有时间限制的时候那就一直跑，一直到达终点。如果有时间限制，不管是否跑到终点，比赛都结束。</p>
+<p>（5）通过ReentrantLock释放独占锁。</p>
+<p>这段代码读起来比较麻烦，因为里面涉及到了两个其他的类ReentrantLock和Generation，我们只需要知道其作用即可。还有一个点，那就是线程被中断了，如何告诉其他线程的breakBarrier方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Sets current barrier generation as broken and wakes up everyone.</span><br><span class="hljs-comment"> * Called only while holding lock.</span><br><span class="hljs-comment"> */</span><br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">breakBarrier</span><span class="hljs-params">()</span> </span>&#123;<br>    generation.broken = <span class="hljs-keyword">true</span>;<br>    count = parties;<br>    trip.signalAll();<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>我们可以看到，在breakBarrier()中除了将broken设置为true，还会调用signalAll将在CyclicBarrier处于等待状态的线程全部唤醒。</p>
+<p>OK，今天的文章就先到这，关于CyclicBarrier原理我们已经解释了，其用途可以根据自己的业务场景来决定了。</p>
+<P class="note note-warning">如需转载，请提前联系作者，否则追究法律责任</P>
+
+<p> <strong><P class="note note-primary">这有5T资源，涵盖了java小白到架构师整个体系各种相关资源（视频、电子书、面试、简历、IDE破解等），更多文章请关注：</P></strong></p>
+<p align="center"><img src="https://s3.ax1x.com/2020/12/18/rJnbO1.jpg" srcset="/img/loading.gif" height="250" width="480" /></p>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+                    
+                      <a class="hover-with-bg" href="/categories/java%E5%9F%BA%E7%A1%80/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">java多线程</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
+                    
+                      <a class="hover-with-bg" href="/tags/java%E5%9F%BA%E7%A1%80/">java基础</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/01/26/%E5%9B%9B%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93/1%E3%80%81Mysql/Mysql%E9%81%87%E5%88%B0%E4%BA%86%E9%87%8D%E5%A4%8D%E6%95%B0%E6%8D%AE%EF%BC%8C%E8%AF%A5%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86%EF%BC%9F/">
+                        <span class="hidden-mobile">Mysql遇到了重复数据，该怎么处理？</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="http://www.javachat.cc" target="_blank" rel="nofollow noopener"><span>愚公要移山</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    document.addEventListener('DOMContentLoaded', function() {
+      window.NProgress && window.NProgress.inc();
+    })
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f3cb5680bcdd7f7a451689fcff9759f2";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
