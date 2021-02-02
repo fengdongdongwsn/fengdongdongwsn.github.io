@@ -276,6 +276,70 @@ Segmentfault
   <div class="row mx-auto index-card">
     
     
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/02/02/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/3%E3%80%81java%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E8%A7%A3%E5%86%B3ABA%E9%97%AE%E9%A2%98%E7%9A%84AtomicStampedReference%E8%AF%A6%E8%A7%A3/" target="_self">
+          <img src="https://s3.ax1x.com/2021/02/02/ynLy1P.png" srcset="/img/loading.gif" alt="解决ABA问题的AtomicStampedReference详解">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/02/02/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/3%E3%80%81java%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E8%A7%A3%E5%86%B3ABA%E9%97%AE%E9%A2%98%E7%9A%84AtomicStampedReference%E8%AF%A6%E8%A7%A3/">解决ABA问题的AtomicStampedReference详解</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/02/02/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/3%E3%80%81java%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E8%A7%A3%E5%86%B3ABA%E9%97%AE%E9%A2%98%E7%9A%84AtomicStampedReference%E8%AF%A6%E8%A7%A3/">
+          
+          
+            
+          
+          
+出自公众号《愚公要移山》中，地址www.javachat.cc
+
+AtomicStampedReference是一个带有时间戳的对象引用，能很好的解决CAS机制中的ABA问题，这篇文章将通过案例对其介绍分析。
+一、ABA问题ABA问题是CAS机制中出现的一个问题，他的描述是这样的。我们直接画一张图来演示，
+
+什么意思呢？就是说一个线程把数据A变为了B，然后又重新变成了A。此时另外一个线程读取的时
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-02-02 17:23" pubdate>
+              2021-02-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">java多线程</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+              <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
@@ -319,9 +383,9 @@ Segmentfault
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
-            
               <a href="/tags/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+              <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
             
           </div>
         
@@ -719,69 +783,6 @@ https://github.com/fengdongdongwsn/high-frequency-algorithm
               <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">微服务</a>
             
               <a href="/tags/springboot/">springboot</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/01/25/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/6%E3%80%81java%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9/java%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E7%9A%84%E8%AF%BB%E5%8F%96%E4%B8%80%E4%B8%AA%E8%B6%85%E5%A4%A7%E6%96%87%E4%BB%B6%EF%BC%9F/" target="_self">
-          <img src="https://static01.imgkr.com/temp/e62e544e1f024b0190e5c466008ef656.png" srcset="/img/loading.gif" alt="java如何高效的读取一个超大文件？">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/01/25/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/6%E3%80%81java%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9/java%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E7%9A%84%E8%AF%BB%E5%8F%96%E4%B8%80%E4%B8%AA%E8%B6%85%E5%A4%A7%E6%96%87%E4%BB%B6%EF%BC%9F/">java如何高效的读取一个超大文件？</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/01/25/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/6%E3%80%81java%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9/java%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E7%9A%84%E8%AF%BB%E5%8F%96%E4%B8%80%E4%B8%AA%E8%B6%85%E5%A4%A7%E6%96%87%E4%BB%B6%EF%BC%9F/">
-          
-          
-            
-          
-          
-出自公众号《愚公要移山》中，地址www.javachat.cc
-
-前言我最近在优化我的PDF转word的开源小工具，有时候会遇到一个问题，就是如果我的PDF文件比较大，几百兆，如何更快更节省内存的读取它。于是我分析对比了四种常见的读取文件的方式，并使用javaVisualVM工具进行了分析。最后的出的结论是commons-io时间和空间都更加的高效。研究分析依然来自哪位baeldung国外大佬。
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-01-25 17:31" pubdate>
-              2021-01-25
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9/">碎知识点</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E9%AB%98%E6%95%88java/">高效java</a>
-            
-              <a href="/tags/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-              <a href="/tags/%E9%9D%A2%E8%AF%95/">面试</a>
             
           </div>
         
