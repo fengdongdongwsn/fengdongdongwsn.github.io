@@ -1,0 +1,576 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/./img/global/head.png">
+  <link rel="icon" type="image/png" href="/./img/global/head.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="冯冬冬">
+  <meta name="keywords" content="">
+  <title>内存溢出问题（阿里面试原题，四种场景和排查方案） - 愚公要移山</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"www.javachat.cc","root":"/","version":"1.8.6","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":6},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"f3cb5680bcdd7f7a451689fcff9759f2","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 45vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>愚公要移山</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/life/">
+                <i class="iconfont icon-th-large"></i>
+                生活
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/sources/">
+                <i class="iconfont icon-link-fill"></i>
+                资源
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" false
+         style="background: url('/img/global/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="内存溢出问题（阿里面试原题，四种场景和排查方案）">
+              
+                内存溢出问题（阿里面试原题，四种场景和排查方案）
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      冯冬冬
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-02-03 15:14" pubdate>
+        2021年2月3日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      共1.7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      约
+      22
+       分钟阅读完成
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        共<span id="busuanzi_value_page_pv"></span> 次浏览
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">内存溢出问题（阿里面试原题，四种场景和排查方案）</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2021年2月3日 下午
+                
+              </p>
+            
+            <div class="markdown-body">
+              <blockquote>
+<p><strong>出自公众号《愚公要移山》中，地址<a href="http://www.javachat.cc/">www.javachat.cc</a></strong></p>
+</blockquote>
+<p><strong>内存溢出</strong>是指应用系统中存在无法回收的内存或使用的内存过多，最终使得程序运行要用到的内存大于虚拟机能提供的最大内存。这篇文章整理自《深入理解java虚拟机》。之前面阿里遇到过。</p>
+<h2 id="一、内存溢出原因"><a href="#一、内存溢出原因" class="headerlink" title="一、内存溢出原因"></a>一、内存溢出原因</h2><p>内存溢出就是内存不够，引起内存溢出的原因有很多种，常见的有以下几种：</p>
+<p>1、内存中加载的数据量过于庞大，如一次从数据库取出过多数据；</p>
+<p>2、集合类中有对对象的引用，使用完后未清空，使得JVM不能回收；</p>
+<p>3、代码中存在死循环或循环产生过多重复的对象实体；</p>
+<p>4、使用的第三方软件中的BUG；</p>
+<p>5、启动参数内存值设定的过小；</p>
+<p>当然实际情况中内存溢出的原因就太多了。下面我们就对这些原因分类一下：</p>
+<p><img src="https://s3.ax1x.com/2021/02/03/yMupx1.png" srcset="/img/loading.gif"></p>
+<p>以上的图是基于java7来叙述的，从上面这张图我们能够得到如下信息：java虚拟机把内存分为5个模块。</p>
+<p>（1）程序计数器：程序计数器是线程私有的，主要的作用是通过改变这个计数器的值来选取下一条需要执行的字节码指令。既然每个线程都有一个，那么这些线程的计数器是互不影响的。也不会抛出任何异常。</p>
+<p>（2）虚拟机栈和本地方法栈：虚拟机栈描述的是java方法执行的内存模型，每个方法在执行的时候都会创建一个栈帧用于存储局部变量表、操作数栈、动态连接、方法出口等信息。本地方法栈与虚拟机栈的区别是，虚拟机栈为虚拟机执行java方法服务，而本地方法栈则为虚拟机提供native方法服务。</p>
+<p>在单线程的操作中，无论是由于栈帧太大，还是虚拟机栈空间太小，当栈空间无法分配时，虚拟机抛出的都是StackOverflowError异常，而不会得到OutOfMemoryError异常。而在多线程环境下，则会抛出OutOfMemoryError异常。</p>
+<p>（3）java堆和方法区：java堆区主要存放对象实例和数组等，方法区保存类信息、常量、静态变量等等。运行时常量池也是方法区的一部分。这两块区域是线程共享的区域，只会抛出OutOfMemoryError。</p>
+<blockquote>
+<p>不知道各位在B站看见过那个面试经典场景没，在回答java的内存运行数据区结构时，以上的功能作用是一方面，如果回答时把内存溢出问题添加上是一个极大的加分项。</p>
+</blockquote>
+<h2 id="二、内存溢出实例"><a href="#二、内存溢出实例" class="headerlink" title="二、内存溢出实例"></a>二、内存溢出实例</h2><h3 id="1、堆溢出"><a href="#1、堆溢出" class="headerlink" title="1、堆溢出"></a>1、堆溢出</h3><p>既然堆是存放实例对象的，那我们就无线创建实例对象。这样堆区迟早会满。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HeapOOM</span> </span>&#123;<br>    <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>&#123;&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>		 List&lt;User&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;User&gt;();<br>	        <span class="hljs-keyword">while</span> (<span class="hljs-keyword">true</span>) &#123;<br>	            list.add(<span class="hljs-keyword">new</span> User());<br>	     &#125;<br>	&#125;<br>&#125;<br><span class="hljs-comment">/*Exception in thread &quot;main&quot; java.lang.OutOfMemoryError: </span><br><span class="hljs-comment">GC overhead limit exceeded</span><br><span class="hljs-comment">	at com.fdd.test.HeapOOM.main(HeapOOM.java:11)*/</span><br></code></pre></div></td></tr></table></figure>
+<p>因为我提前设置了堆区内存，所以无限创建就会抛出异常。</p>
+<p>2、虚拟机栈和本地方法栈溢出</p>
+<p>Java虚拟机规范中描述了两种异常：</p>
+<ul>
+<li>如果线程请求的栈深度大于虚拟机锁允许的最大深度，将抛出StackOverflowError异常。</li>
+<li>如果虚拟机在扩展栈时无法申请到足够的内存空间，则抛出OutOfMemoryError异常。</li>
+</ul>
+<p>第一种我们只需要使用方法递归调用即可模拟：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StackOutOfMemoryError</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;     <br>         test();<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">go</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;StackOverflowError异常&quot;</span>);<br>        test();<br>    &#125;<br>&#125;<br><span class="hljs-comment">/*Exception in thread &quot;main&quot; java.lang.StackOverflowError</span><br><span class="hljs-comment">	at sun.nio.cs.ext.DoubleByte$Encoder.encodeLoop(DoubleByte.java:617)</span><br><span class="hljs-comment">	at java.nio.charset.CharsetEncoder.encode(CharsetEncoder.java:579)</span><br><span class="hljs-comment">	at sun.nio.cs.StreamEncoder.implWrite(StreamEncoder.java:271)</span><br><span class="hljs-comment">	at sun.nio.cs.StreamEncoder.write(StreamEncoder.java:125)</span><br><span class="hljs-comment">	at java.io.OutputStreamWriter.write(OutputStreamWriter.java:207)</span><br><span class="hljs-comment">	at java.io.BufferedWriter.flushBuffer(BufferedWriter.java:129)</span><br><span class="hljs-comment">	at java.io.PrintStream.write(PrintStream.java:526)</span><br><span class="hljs-comment">	at java.io.PrintStream.print(PrintStream.java:597)</span><br><span class="hljs-comment">	at java.io.PrintStream.println(PrintStream.java:736)</span><br><span class="hljs-comment">	at com.fdd.test.StackOutOfMemoryError.go(StackOutOfMemoryError.java:11)</span><br><span class="hljs-comment">	at com.fdd.test.StackOutOfMemoryError.go(StackOutOfMemoryError.java:13)*/</span><br></code></pre></div></td></tr></table></figure>
+<p>第二种也可以递归调用模拟,，但是使用的是类直接调用。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">JavaVMStackSOF</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> stackLength = <span class="hljs-number">1</span>;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">stackLeak</span><span class="hljs-params">()</span> </span>&#123;<br>        stackLength++;<br>        stackLeak();<br>    &#125;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        JavaVMStackSOF oom = <span class="hljs-keyword">new</span> JavaVMStackSOF();<br>        oom.stackLeak();<br>    &#125;<br>&#125;<br><span class="hljs-comment">/*Exception in thread &quot;main&quot; java.lang.StackOverflowError</span><br><span class="hljs-comment">   at com.lindaxuan.outofmemory.JavaVMStackSOF.stackLeak(JavaVMStackSOF.java:18)</span><br><span class="hljs-comment">   at com.lindaxuan.outofmemory.JavaVMStackSOF.stackLeak(JavaVMStackSOF.java:19)</span><br><span class="hljs-comment">   at com.lindaxuan.outofmemory.JavaVMStackSOF.stackLeak(JavaVMStackSOF.java:19)</span><br><span class="hljs-comment">   at com.lindaxuan.outofmemory.JavaVMStackSOF.stackLeak(JavaVMStackSOF.java:19)</span><br><span class="hljs-comment">   at com.lindaxuan.outofmemory.JavaVMStackSOF.stackLeak(JavaVMStackSOF.java:19)</span><br><span class="hljs-comment">   at com.lindaxuan.outofmemory.JavaVMStackSOF.stackLeak(JavaVMStackSOF.java:19)</span><br><span class="hljs-comment">   at com.lindaxuan.outofmemory.JavaVMStackSOF.stackLeak(JavaVMStackSOF.java:19)</span><br><span class="hljs-comment">   at com.lindaxuan.outofmemory.JavaVMStackSOF.stackLeak(JavaVMStackSOF.java:19)</span><br><span class="hljs-comment">   at com.lindaxuan.outofmemory.JavaVMStackSOF.stackLeak(JavaVMStackSOF.java:19)</span><br><span class="hljs-comment">   ... */</span><br></code></pre></div></td></tr></table></figure>
+<h3 id="3、方法区和运行时常量池溢出"><a href="#3、方法区和运行时常量池溢出" class="headerlink" title="3、方法区和运行时常量池溢出"></a>3、方法区和运行时常量池溢出</h3><figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">JavaMethodAreaOOM</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        <span class="hljs-keyword">while</span> (<span class="hljs-keyword">true</span>) &#123;<br>            Enhancer enhancer = <span class="hljs-keyword">new</span> Enhancer();<br>            enhancer.setSuperclass(User.class);<br>            enhancer.setUseCache(<span class="hljs-keyword">false</span>);<br>            enhancer.setCallback(<span class="hljs-keyword">new</span> MethodInterceptor() &#123;<br>                <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">intercept</span><span class="hljs-params">(Object obj, Method method,</span></span><br><span class="hljs-function"><span class="hljs-params">                      Object[] args, MethodProxy proxy)</span> <span class="hljs-keyword">throws</span> Throwable </span>&#123;<br>                    <span class="hljs-keyword">return</span> proxy.invokeSuper(obj, args);<br>                &#125;<br>            &#125;);<br>            enhancer.create();<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>&#123;&#125;<br>&#125;<br><span class="hljs-comment">/*Exception in thread &quot;main&quot;</span><br><span class="hljs-comment"> Exception: java.lang.OutOfMemoryError thrown </span><br><span class="hljs-comment"> from the UncaughtExceptionHandler in thread &quot;main&quot;</span><br><span class="hljs-comment">*/</span><br></code></pre></div></td></tr></table></figure>
+<h3 id="4、本机直接内存溢出"><a href="#4、本机直接内存溢出" class="headerlink" title="4、本机直接内存溢出"></a>4、本机直接内存溢出</h3><p>DirectMemory容量可通过-XX: MaxDirectMemorySize指定，如果不指定，则默认与Java堆最大值 (-Xmx指定)一样。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DirectMemoryOOM</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> _1MB = <span class="hljs-number">1024</span> * <span class="hljs-number">1024</span>;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        Field unsafeField = Unsafe.class.getDeclaredFields()[<span class="hljs-number">0</span>];<br>        unsafeField.setAccessible(<span class="hljs-keyword">true</span>);<br>        Unsafe unsafe = (Unsafe) unsafeField.get(<span class="hljs-keyword">null</span>);<br>        <span class="hljs-keyword">while</span> (<span class="hljs-keyword">true</span>) &#123;<br>            unsafe.allocateMemory(_1MB);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>上面介绍了几个实例，那遇到这种问题如何排查呢？</p>
+<h2 id="三、内存溢出排查"><a href="#三、内存溢出排查" class="headerlink" title="三、内存溢出排查"></a>三、内存溢出排查</h2><p>排查其实最主要的就是检查代码，而且内存溢出往往都是代码的问题。当然一下几点都是需要注意的：</p>
+<p>（1）内存中加载的数据量过于庞大，如一次从数据库取出过多数据；</p>
+<p>（2）集合类中有对对象的引用，使用完后未清空，使得JVM不能回收；</p>
+<p>（3）代码中存在死循环或循环产生过多重复的对象实体；</p>
+<p>（4）使用的第三方软件中的BUG；</p>
+<p>（5）启动参数内存值设定的过小；</p>
+<p>最后就是解决了。</p>
+<p><strong>第一步</strong>，修改JVM启动参数，直接增加内存。</p>
+<p><strong>第二步</strong>，检查错误日志</p>
+<p><strong>第三步</strong>，对代码进行走查和分析，找出可能发生内存溢出的位置。</p>
+<p>一般情况下代码出错的概率会比较大一些，当然了不同的场景不同错误总是复杂多样的。</p>
+<P class="note note-warning">如需转载，请提前联系作者，否则追究法律责任</P>
+
+<p> <strong><P class="note note-primary">这有5T资源，涵盖了java小白到架构师整个体系各种相关资源（视频、电子书、面试、简历、IDE破解等），更多文章请关注：</P></strong></p>
+<p align="center"><img src="https://s3.ax1x.com/2020/12/18/rJnbO1.jpg" srcset="/img/loading.gif" height="250" width="480" /></p>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+                    
+                      <a class="hover-with-bg" href="/categories/java%E5%9F%BA%E7%A1%80/jvm%E4%B8%93%E9%A2%98/">jvm专题</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/jvm/">jvm</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/02/02/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/3%E3%80%81java%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E8%A7%A3%E5%86%B3ABA%E9%97%AE%E9%A2%98%E7%9A%84AtomicStampedReference%E8%AF%A6%E8%A7%A3/">
+                        <span class="hidden-mobile">解决ABA问题的AtomicStampedReference详解</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="http://www.javachat.cc" target="_blank" rel="nofollow noopener"><span>愚公要移山</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    document.addEventListener('DOMContentLoaded', function() {
+      window.NProgress && window.NProgress.inc();
+    })
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f3cb5680bcdd7f7a451689fcff9759f2";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
