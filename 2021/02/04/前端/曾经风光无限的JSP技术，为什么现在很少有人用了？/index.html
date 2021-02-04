@@ -1,0 +1,581 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/./img/global/head.png">
+  <link rel="icon" type="image/png" href="/./img/global/head.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="冯冬冬">
+  <meta name="keywords" content="">
+  <title>曾经风光无限的JSP技术，为什么现在很少有人用了？ - 愚公要移山</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"www.javachat.cc","root":"/","version":"1.8.6","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":6},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"f3cb5680bcdd7f7a451689fcff9759f2","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 45vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>愚公要移山</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/life/">
+                <i class="iconfont icon-th-large"></i>
+                生活
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/sources/">
+                <i class="iconfont icon-link-fill"></i>
+                资源
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" false
+         style="background: url('/img/global/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="曾经风光无限的JSP技术，为什么现在很少有人用了？">
+              
+                曾经风光无限的JSP技术，为什么现在很少有人用了？
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      冯冬冬
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-02-04 13:16" pubdate>
+        2021年2月4日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      共1.8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      约
+      22
+       分钟阅读完成
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        共<span id="busuanzi_value_page_pv"></span> 次浏览
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">曾经风光无限的JSP技术，为什么现在很少有人用了？</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2021年2月4日 下午
+                
+              </p>
+            
+            <div class="markdown-body">
+              <blockquote>
+<p><strong>出自公众号《愚公要移山》中，地址<a href="http://www.javachat.cc/">www.javachat.cc</a></strong></p>
+</blockquote>
+<p>jsp技术作为曾经一度火爆的技术，在最近几年确实使用率越来越低了，这篇文章带你一块探究一下jsp的从生到死。</p>
+<h2 id="一、jsp技术的诞生"><a href="#一、jsp技术的诞生" class="headerlink" title="一、jsp技术的诞生"></a>一、jsp技术的诞生</h2><p>在很久很久以前，那时候我们的开发都是通过servlet来完成的，这个servlet是什么呢？我们先来认识一下：</p>
+<blockquote>
+<p>servlet用Java语言编写的服务器端程序。主要功能是和浏览器进行交互，生成页面展示。</p>
+</blockquote>
+<p><img src="https://s3.ax1x.com/2021/02/04/y1uP76.jpg" srcset="/img/loading.gif"></p>
+<p>长下面这个样子：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HelloWorld</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">HttpServlet</span> </span>&#123;  <br>     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doGet</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response)</span>  </span><br><span class="hljs-function">             <span class="hljs-keyword">throws</span> ServletException, IOException </span>&#123;  <br>         response.setContentType(<span class="hljs-string">&quot;text/html&quot;</span>);  <br>         PrintWriter out = response.getWriter();  <br>         out.println(<span class="hljs-string">&quot;&lt;html&gt;&quot;</span>);  <br>         out.println(<span class="hljs-string">&quot;&lt;head&gt;&quot;</span>);  <br>         out.println(<span class="hljs-string">&quot;&lt;title&gt;Hello World&lt;/title&gt;&quot;</span>);  <br>         out.println(<span class="hljs-string">&quot;&lt;/head&gt;&quot;</span>);  <br>         out.println(<span class="hljs-string">&quot;&lt;body&gt;&quot;</span>);  <br>         out.println(<span class="hljs-string">&quot;&lt;h1&gt;Hello World!&lt;/h1&gt;&quot;</span>);  <br>         out.println(<span class="hljs-string">&quot;&lt;/body&gt;&quot;</span>);  <br>         out.println(<span class="hljs-string">&quot;&lt;/html&gt;&quot;</span>);  <br>     &#125; <br> &#125;  <br></code></pre></div></td></tr></table></figure>
+<p>我们可以看到前端所展示的页面，需要我们servlet去一个标签一个标签去生成，如果一个页面超级复杂，动不动几千行代码，那这个servlet效率也就太低了。而且整个servlet代码也会十分臃肿而且可读性非常差。</p>
+<p>这时候怎么办呢？sun公司很早就意识到了这个问题，于是便倡导很多公司一块来创建了一种能够动态生成html的新技术，不久之后jsp便诞生了。有效率的解决了上面servlet所出现的问题。</p>
+<p><img src="https://s3.ax1x.com/2021/02/04/y1uSXR.jpg" srcset="/img/loading.gif"></p>
+<h2 id="二、jsp的发展"><a href="#二、jsp的发展" class="headerlink" title="二、jsp的发展"></a>二、jsp的发展</h2><p>既然jsp技术能够解决刚刚servlet代码里面所出现的技术，我们来看一下是如何解决的：在这里我们举一个小例子，就是前端jsp向服务器servlet发送请求图书页面的功能。</p>
+<p>首先我们看一下servlet：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">List_book</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">HttpServlet</span> </span>&#123;          <br>     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doGet</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response)</span>  </span><br><span class="hljs-function">             <span class="hljs-keyword">throws</span> ServletException, IOException </span>&#123;  <br>        <span class="hljs-comment">//声明一个ArrayList.用来存放Book类中的数据  </span><br>         ArrayList&lt;Book&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;Book&gt;(); <br>         <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;<span class="hljs-number">10</span>;i++)&#123;<br>                      Book book = <span class="hljs-keyword">new</span> Book();  <br>         book.setName(res.getString(<span class="hljs-string">&quot;name&quot;</span>+i));  <br>         book.setAuthor(res.getString(<span class="hljs-string">&quot;author&quot;</span>+i));  <br>         list.add(book);  <br>         &#125;<br>         <span class="hljs-comment">//将list数据发送到.jap文件中  </span><br>         request.getRequestDispatcher(<span class="hljs-string">&quot;ListBook.jsp&quot;</span>).forward(request, response);  <br>     &#125;  <br>&#125;  <br></code></pre></div></td></tr></table></figure>
+<p>我们会发现，现在的servlet没有一点html代码了。我们只需要把数据交给jsp。此时我们的页面展示就交给jsp来做了。现在我们来看一下jsp长什么样子：</p>
+<figure class="highlight"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs jsp">&lt;%@ page language=<span class="hljs-string">&quot;java&quot;</span> <span class="hljs-keyword">import</span>=<span class="hljs-string">&quot;java.util.*&quot;</span> pageEncoding=<span class="hljs-string">&quot;utf-8&quot;</span>%&gt;<br>&lt;%String path = request.getContextPath();%&gt; <br>&lt;!DOCTYPE HTML PUBLIC <span class="hljs-string">&quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;</span>&gt;<br>&lt;html&gt;  <br>	&lt;head&gt;   <br>		 &lt;meta http-equiv=<span class="hljs-string">&quot;pragma&quot;</span> content=<span class="hljs-string">&quot;no-cache&quot;</span>&gt;	<br>		 &lt;meta http-equiv=<span class="hljs-string">&quot;description&quot;</span> content=<span class="hljs-string">&quot;This is my page&quot;</span>&gt;	<br> 		&lt;script&gt;&lt;/script&gt; <br> 	&lt;/head&gt;  <br>	 &lt;body&gt;  	  <br>		 &lt;% ArrayList list = (ArrayList) request.getAttribute(<span class="hljs-string">&quot;list&quot;</span>);  %&gt;  	<br>		 &lt;h2 align = &quot;center&quot;&gt;图书列表&lt;/h2&gt;  <br>		 &lt;table border = 1px align = <span class="hljs-string">&quot;center&quot;</span>&gt;  	<br>			 &lt;tr&gt;&lt;th&gt;图书名称&lt;/th&gt;&lt;th&gt;图书作者&lt;/th&gt;&lt;/tr&gt;  	<br> 			&lt;!-- 继续使用jsp语句 循环放入存放于list中的Book实体类中的数据 --&gt;  	<br> 			&lt;%  			<br>			 <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>;i&lt;list.size();i++)&#123;  	<br>				 Book book =(Book) <br> 				list.get(i);%&gt;  		<br> 				&lt;tr&gt;&lt;th&gt;&lt;%=book.getName() %&gt;&lt;/th&gt;&lt;th&gt;&lt;%=book.getAuthor()%&gt;&lt;/th&gt;&lt;tr&gt;	<br> 			 &#125;<br>            %&gt; 	<br>		 &lt;/table&gt;  <br> 	&lt;/body&gt;<br> &lt;/html&gt;<br></code></pre></div></td></tr></table></figure>
+<p>这就是jsp，我们可以在html页面中写一些java代码。对于我们程序员来说，在开发当中静态的页面我们只需要用html和css写一些标签来展示即可，对于那些动态的部分我们就可以使用java代码。</p>
+<p>那么jsp和servlet是不是就是这种协作的关系，本质上有什么区别呢？</p>
+<p>其实jsp只是servlet的一种特殊形式，每一个jsp页面就是一个servlet实例，通俗一点的话来说：jsp就是servlet，只不过servlet把一些业务功能剥离开来交给了或者是形成了jsp。明白了吧。在我们的项目编译的时候就是把jsp编译成了servlet。</p>
+<p>你们会发现，这样做其实挺好的，市场也验证了一切，很快jsp技术流行开来，可是随着时间的流逝，业务越来越复杂，jsp也开始跟不上时代了。</p>
+<h2 id="三、jsp的危机"><a href="#三、jsp的危机" class="headerlink" title="三、jsp的危机"></a>三、jsp的危机</h2><p>我们先看一个对话场景：</p>
+<blockquote>
+<p>java程序员：终于写完了功能，是时候在界面上展示了。</p>
+<p>前端程序员：你功能写完了，我没有数据，在页面什么没法展示呀</p>
+<p>java程序员：数据我写好了，你在jsp中调用XX方法就能获取了，</p>
+<p>前端程序员：我已经在jsp中写好了这个方法，你为什么自己写了？</p>
+<p>于是乎，无穷无尽的争吵还在继续当中。</p>
+</blockquote>
+<p><img src="https://s3.ax1x.com/2021/02/04/y1u9n1.jpg" srcset="/img/loading.gif"></p>
+<p>这就是jsp的弊端，为什么呢？我们可以来总结一下：</p>
+<p>（1）动态和静态资源放在一起，一旦服务器出现状况，前后台一起玩完，用户体验极差。</p>
+<p>（2）一旦jsp出现了问题，就需要前端后端发开人员一块来分析解决，效率低。</p>
+<p>（3）jsp无法使用nginx等。</p>
+<p>（4）jsp页面复杂，难以修改。</p>
+<p>（5）第一次加载jsp需要编译成servlet，时间久，而且业务量大的时候，jsp负担太大。</p>
+<p>（6）jsp对于开发人员简直就是一个挥之不去的痛，太难了！！！</p>
+<p>鉴于以上缺点，于是另外一套机制横空出世了，这就是<strong>前后端分离</strong>。什么是前后端分离呢？</p>
+<blockquote>
+<p>前后端分离其实就是后端工程师只关注于后端页面的开发，不再处理前端问题。前端工程师只关注于自己的页面开发。需要数据交互的时候，两者会有一份接口文档。</p>
+</blockquote>
+<p><img src="https://s3.ax1x.com/2021/02/04/y1uAhD.png" srcset="/img/loading.gif"></p>
+<p>就这样这种思想架构很快的流行开来，这也就是为什么jsp落寞的真正原因。从此java从jsp转向了restful结构，springMCV也开始流行开来，并逐渐占领了市场。前后端分离有什么优点呢？我们来总结一下：</p>
+<p>（1）动态和静态资源分开存储。</p>
+<p>（2）出现bug能很快定位是前端还是后端。</p>
+<p>（3）支持nginx。在高并发状态下极其优秀。</p>
+<p>（4）直接请求页面，不用编译，速度效率都提上来了。</p>
+<p>（5）从此前端和后端是相亲相爱的一家人了！！！！</p>
+<p><img src="https://s3.ax1x.com/2021/02/04/y1uC0x.jpg" srcset="/img/loading.gif"></p>
+<h2 id="四、jsp的落幕"><a href="#四、jsp的落幕" class="headerlink" title="四、jsp的落幕"></a>四、jsp的落幕</h2><p>又随着时间的推移，jsp的时代基本上一去不复返了，因为我们又走入了移动互联时代，这时候的客户端可不是前端页面了，还包括手机、汽车、电视等等各种设备，这种情况下，前后端必须要分离了。jsp基本上彻底告别了它的舞台。</p>
+<p>技术总是在不断地发展和完善，只有技术的革新才会带来社会的进步。</p>
+<P class="note note-warning">如需转载，请提前联系作者，否则追究法律责任</P>
+
+<p> <strong><P class="note note-primary">这有5T资源，涵盖了java小白到架构师整个体系各种相关资源（视频、电子书、面试、简历、IDE破解等），更多文章请关注：</P></strong></p>
+<p align="center"><img src="https://s3.ax1x.com/2020/12/18/rJnbO1.jpg" srcset="/img/loading.gif" height="250" width="480" /></p>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%89%8D%E7%AB%AF/jsp/">jsp</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/jsp/">jsp</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/02/03/%E4%BA%8C%E3%80%81java%E5%9F%BA%E7%A1%80/5%E3%80%81jvm/%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E9%97%AE%E9%A2%98%EF%BC%88%E9%98%BF%E9%87%8C%E9%9D%A2%E8%AF%95%E5%8E%9F%E9%A2%98%EF%BC%8C%E5%9B%9B%E7%A7%8D%E5%9C%BA%E6%99%AF%E5%92%8C%E6%8E%92%E6%9F%A5%E6%96%B9%E6%A1%88%EF%BC%89/">
+                        <span class="hidden-mobile">内存溢出问题（阿里面试原题，四种场景和排查方案）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="http://www.javachat.cc" target="_blank" rel="nofollow noopener"><span>愚公要移山</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    document.addEventListener('DOMContentLoaded', function() {
+      window.NProgress && window.NProgress.inc();
+    })
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f3cb5680bcdd7f7a451689fcff9759f2";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
