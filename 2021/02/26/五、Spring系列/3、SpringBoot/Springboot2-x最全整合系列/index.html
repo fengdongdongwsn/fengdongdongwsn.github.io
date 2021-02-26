@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="冯冬冬">
   <meta name="keywords" content="">
-  <title>数据结构中的数组，你也许了解的并不全面 - 愚公要移山</title>
+  <title>Springboot2.x最全整合系列 - 愚公要移山</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -186,9 +186,9 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="数据结构中的数组，你也许了解的并不全面">
+            <span class="h2" id="subtitle" title="Springboot2.x最全整合系列">
               
-                数据结构中的数组，你也许了解的并不全面
+                Springboot2.x最全整合系列
               
             </span>
 
@@ -203,8 +203,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-02-25 20:48" pubdate>
-        2021年2月25日 晚上
+      <time datetime="2021-02-26 22:02" pubdate>
+        2021年2月26日 晚上
       </time>
     </span>
   
@@ -215,7 +215,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      共2.1k 字
+      共606 字
     </span>
   
 
@@ -225,7 +225,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       约
-      21
+      7
        分钟阅读完成
     </span>
   
@@ -263,11 +263,11 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">数据结构中的数组，你也许了解的并不全面</h1>
+            <h1 style="display: none">Springboot2.x最全整合系列</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：2021年2月25日 晚上
+                  本文最后更新于：2021年2月26日 晚上
                 
               </p>
             
@@ -275,49 +275,92 @@
               <blockquote>
 <p><strong>出自公众号《愚公要移山》中，地址<a href="http://www.javachat.cc/">www.javachat.cc</a></strong></p>
 </blockquote>
-<p>在上一章节中已经对数据结构的基本概念有了了解，主要就是数据结构研究的三个方面（逻辑结构、存储结构、算法）。还有两个重要的词汇：时间效率和空间效率。这一节开始了解最基本的数据结构-数组。</p>
-<h2 id="一、数组的基本概念"><a href="#一、数组的基本概念" class="headerlink" title="一、数组的基本概念"></a>一、数组的基本概念</h2><h3 id="1、什么是数组？"><a href="#1、什么是数组？" class="headerlink" title="1、什么是数组？"></a>1、什么是数组？</h3><p>​    在平时使用最多的恐怕就是数组了吧，</p>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a><strong>说明</strong></h2><p><strong>本文所有案例均采用SpringBoot2.x的最新版本进行演示。</strong></p>
+<p>正逐渐对其进行分类汇总。。。</p>
+<p>力图做一个没有bug的，最全案例！！！</p>
+<h2 id="👨🏻‍💻-About-Me"><a href="#👨🏻‍💻-About-Me" class="headerlink" title="👨🏻‍💻 About Me"></a>👨🏻‍💻 About Me</h2><table>
+<thead>
+<tr>
+<th>个人网站</th>
+<th>公众号</th>
+<th>掘金</th>
+<th>知乎</th>
+<th><strong>CSDN</strong></th>
+<th><strong>头条</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="https://www.javachat.cc/">点我直达</a></td>
+<td><a target="_blank" rel="noopener" href="https://imgchr.com/i/rJnbO1">点我直达</a></td>
+<td><a target="_blank" rel="noopener" href="https://juejin.cn/user/1978776660213837/posts">点我直达</a></td>
+<td><a target="_blank" rel="noopener" href="https://www.zhihu.com/people/feng-dong-dong-10">点我直达</a></td>
+<td><a target="_blank" rel="noopener" href="https://blog.csdn.net/SDDDLLL">点我直达</a></td>
+<td><a target="_blank" rel="noopener" href="https://www.toutiao.com/c/user/token/MS4wLjABAAAAfhLQnyWhG1iqEVx_lsnoX7cUOlluuJf07J368xBJ7jU/">点我直达</a></td>
+</tr>
+<tr>
+<td><strong>百家号</strong></td>
+<td><strong>Segmentfault</strong></td>
+<td><strong>教程资源（5T）</strong></td>
+<td><strong>架构师技术图谱</strong></td>
+<td><strong>博客文章</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://author.baidu.com/home?from=bjh_article&app_id=1634941951856739">点我直达</a></td>
+<td><a target="_blank" rel="noopener" href="https://segmentfault.com/u/a_yugong">点我直达</a></td>
+<td><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/nIODGnCKFgs3BTZ9Qy5rHQ?scene=25#wechat_redirect">点我直达</a></td>
+<td><a target="_blank" rel="noopener" href="https://github.com/fengdongdongwsn/architect-java">点击直达</a></td>
+<td><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/wZ_4fy_F-NecMv3HO4Hfjw">点击直达</a></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="基础系列"><a href="#基础系列" class="headerlink" title="基础系列"></a>基础系列</h2><h3 id="一、Springboot基础配置"><a href="#一、Springboot基础配置" class="headerlink" title="一、Springboot基础配置"></a>一、Springboot基础配置</h3><p>1、Springboot搭建HelloWorld工程（跳过，不再重写）</p>
+<p>2、IDEA常用开发插件推荐</p>
+<p>3、IDEA环境热加载与热部署配置</p>
+<p>4、Springboot整合Lombok</p>
+<h3 id="二、web开发"><a href="#二、web开发" class="headerlink" title="二、web开发"></a>二、web开发</h3><p>1、Springboot整合swagger构建API文档</p>
+<p>2、Springboot整合日志框架</p>
+<p>3、Springboot实现文件上传下载问题</p>
+<p>4、Springboot解决跨域问题的几种方式</p>
+<p>5、Springboot整合模板引擎thymeleaf</p>
+<p>6、Springboot整合Mokito接口测试</p>
+<p>7、Springboot实现过滤器</p>
+<p>8、Springboot实现拦截器</p>
+<p>9、Springboot实现全局异常处理</p>
+<p>10、Springboot实现定时任务</p>
+<p>11、Springboot实现异步任务</p>
+<p>12、Springboot实现邮件发送功能</p>
+<p>13、Springboot整合websocket实现后端推送</p>
+<p>14、Springboot整合websocket+netty实现聊天功能</p>
+<h3 id="三、数据库相关整合"><a href="#三、数据库相关整合" class="headerlink" title="三、数据库相关整合"></a>三、数据库相关整合</h3><p>1、Springboot整合JDBC</p>
+<p>2、Springboot整合JDBC+JTA实现分布式事务</p>
+<p>3、Springboot整合Mybatis（全注解形式）</p>
+<p>4、Springboot整合Mybatis（XML形式）</p>
+<p>5、Springboot整合Mybatis多数据源</p>
+<p>6、Springboot整合Mybatis+atomikos实现分布式事务</p>
+<p>7、Springboot整合SpringData JPA</p>
+<p>8、Springboot整合SpringData JPA多数据源</p>
+<p>9、Springboot整合JPA+atomikos实现分布式事务</p>
+<p>10、Springboot整合redis（jedis连接池）</p>
+<p>11、Springboot整合redis（lettuce连接池）</p>
+<p>12、Springboot整合redis集群</p>
+<p>13、Springboot整合MongoDB（MongoRepository和MongoTemplate）</p>
+<p>14、Springboot整合MongoDB集群</p>
+<p>15、Springboot整合EhCache</p>
+<p>16、Springboot整合ES</p>
+<h3 id="四、常见框架整合"><a href="#四、常见框架整合" class="headerlink" title="四、常见框架整合"></a>四、常见框架整合</h3><p>1、Springboot整合Spring security</p>
+<p>2、Springboot整合shiro</p>
+<p>3、Springboot整合Kafka</p>
+<p>4、Springboot整合RabbitMQ</p>
+<p>5、Springboot集成Actuator实现应用程序监控</p>
+<p>6、Springboot整合dubbo</p>
+<p><code>未完。。。待续。。。</code></p>
+<h2 id="进阶提升"><a href="#进阶提升" class="headerlink" title="进阶提升"></a>进阶提升</h2><p>还没想好，先写一个</p>
+<p>1、Springboot常用注解梳理</p>
 <blockquote>
-<p>它是使用最广泛的一种数据结构，它是相同数据类型（可以是基本类型也可以是自定义类型）的元素按一定顺序排列的集合，它们在内存中按照这个先后顺序连续存放在一起。有一维数组，二维数组，多维数组。 </p>
+<p><code>本文的每次更新都会在本地完全测试好。</code></p>
+<p><code>本文项目地址：https://github.com/fengdongdongwsn/springboot-example</code></p>
 </blockquote>
-<p>通俗的理解就是我们一般把一群羊或者一群牛放在一个圈里面，这个圈就相当于数组容器，每一个羊相当于一个元素。</p>
-<p>以上这个概念需要知道这几个词汇：相同数据类型、一定顺序排列、集合、内存先后存放。</p>
-<h3 id="2、如何声明一个数组"><a href="#2、如何声明一个数组" class="headerlink" title="2、如何声明一个数组"></a>2、如何声明一个数组</h3><p>​    从标题就可以看到，声明和创建一个数组是两个不同的过程。声明的作用就好像是告诉别人我要去洗澡，创建的作用就好像是我真正的去洗澡了（比喻不当哈哈）。那如何声明数组呢？</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">int</span>[] students ;<br><span class="hljs-keyword">int</span> students [];<br></code></pre></div></td></tr></table></figure>
-<p>​    从上面我们看到这里有两种方式，但一般推荐第一种。毕竟第一种看起来可读性更好一点。</p>
-<h3 id="3、如何创建一个数组"><a href="#3、如何创建一个数组" class="headerlink" title="3、如何创建一个数组"></a>3、如何创建一个数组</h3><p>​    在我们知道了如何声明数组之后，接下来就是我们如何创建一个数组。不同的语言创建一个数组的方式还是不一样的，但是大体上一样，这里给出java的几种方式。</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">//第一种：</span><br><span class="hljs-keyword">int</span> [] students = <span class="hljs-keyword">new</span>  <span class="hljs-keyword">int</span>[<span class="hljs-number">50</span>]；<br><span class="hljs-comment">//第二种：</span><br>String [] colors =  &#123;<span class="hljs-string">&quot;red&quot;</span>,<span class="hljs-string">&quot;blue&quot;</span>,<span class="hljs-string">&quot;black&quot;</span>&#125;;<br></code></pre></div></td></tr></table></figure>
-<p>​    从上面可以发现创建一个数组如此简单，别急，这三种方式里面其实还是有很多知识点需要掌握的。其实数组的创建其中有一个环节叫做数组的初始化。举个例子，我创建了一个数组，但是一开始数组容器里面可能还没有这些值。那什么时候才有了这些值呢？也就是系统什么时候把我声明的那些red、blue等等装到数组容器里面的呢？这个过程就是数组的初始化。数组是如何初始化的呢？</p>
-<p>​     数组的初始化分为静态初始化、动态初始化：</p>
-<ul>
-<li>静态初始化：数组在初始化时由程序员显式指定每个数组元素的初始值。而数组长度由系统决定。在上面创建数组的那三种方式中，第三种就是静态初始化。第二种也是，但是属于静态初始化的简化方式。</li>
-<li>动态初始化：动态初始化时则必须指定元素个数。动态初始化时数组元素个数未知因此必须指定。上面第一种就是。</li>
-</ul>
-<h3 id="4、数组的分类"><a href="#4、数组的分类" class="headerlink" title="4、数组的分类"></a>4、数组的分类</h3><p>​    可能看到这个标题有一个疑问，数组还有分类吗？不就是把相同类型的元素放在一起嘛。其实不然。下面给你好好的分一下类：</p>
-<p><strong>按照是否有序分：</strong>有序数组和无序数组。</p>
-<p><strong>按照数组能否扩容分</strong>：静态数组和动态数组。</p>
-<p>先来看静态数组：在编译期间在栈中分配好内存的数组，在运行期间不能改变存储空间，运行后由系统自动释放。</p>
-<p>再来看动态数组：动态数组，是相对于静态数组而言。静态数组的长度是预先定义好的，在整个程序中，一旦给定大小后就无法改变。而动态数组则不然，它可以随程序需要而重新指定大小。动态数组的内存空间是从堆（heap）上分配（即动态分配）的。是通过执行代码而为其分配存储空间。当程序执行到这些语句时，才为其分配。程序员自己负责释放内存。</p>
-<h6 id="java中动态数组的原理"><a href="#java中动态数组的原理" class="headerlink" title="java中动态数组的原理"></a>java中动态数组的原理</h6><p>现有一个数组：</p>
-<p><code>int [] data = new int[5];</code></p>
-<p><img src="https://user-gold-cdn.xitu.io/2019/4/19/16a3545e39fabb47?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" srcset="/img/loading.gif"></p>
-<p>该数组已经无法继续添加元素了，所以我们再初始化一个新的数组，其容量为10，即数组arr容量的2倍:<code>int [] newData = new int [10];</code> </p>
-<p><img src="https://user-gold-cdn.xitu.io/2019/4/19/16a3545e329ebdf9?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" srcset="/img/loading.gif"></p>
-<p>然后将原数组的所有元素全部都赋值给新的数组。 </p>
-<p><img src="https://user-gold-cdn.xitu.io/2019/4/19/16a3545e32d5d2f9?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" srcset="/img/loading.gif"></p>
-<p>再将原数组的引用 arr指向 新的数组。 </p>
-<p><img src="https://user-gold-cdn.xitu.io/2019/4/19/16a354ccc861ee9d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" srcset="/img/loading.gif"></p>
-<p><strong>静态数组和动态数组的比较：</strong></p>
-<p>​    对于静态数组，其创建非常方便，使用完也无需释放，要引用也简单，但是创建后无法改变其大小是其致命弱点！ 对于动态数组，其创建麻烦，使用完必须由程序员自己释放，否则严重会引起内存泄露。但其使用非常灵活，能根据程序需要动态分配大小。 </p>
-<h2 id="二、数组的特点"><a href="#二、数组的特点" class="headerlink" title="二、数组的特点"></a>二、数组的特点</h2><p>​    在上面掌握了其基本概念之后，再来看一下数组有什么特点，数组的特点也是根据其分类来的，比如说有序数组其特点肯定就是有序，我们方便查找数据，无序的我们方面插入删除数据这些。所以这里讲的特点是所有数组共有的特点，也就是一般性特点：又回到了之前发过的文章，特点就是来看时间效率和空间效率的。</p>
-<p>1.数组的长度固定的，超过长度时，只能创建一个新的数组，并把旧的数组的值传进去方可；</p>
-<p>2.数组的存储类型是单一的，同一数组只能存储同一数据类型的数据。</p>
-<p>3.数组只能通过下标来访问数据</p>
-<h2 id="三、数组的使用场景"><a href="#三、数组的使用场景" class="headerlink" title="三、数组的使用场景"></a>三、数组的使用场景</h2><p>​        数组较容器，最大的优点就是效率。在Java中，数组是一种效率最高的存储和随机访问对象引用序列的方式，数组就是一个简单的线性序列，这使得元素访问非常快速， 数组的优点是效率高，但为此，所付出的代价就是数组对象的大小被固定。这也使得在工作中，数组并不实用。我们应该优选java中的容器，而不是数组。</p>
-<h2 id="四、数组的底层实现"><a href="#四、数组的底层实现" class="headerlink" title="四、数组的底层实现"></a>四、数组的底层实现</h2><p>这里的底层实现也是相比较于java语言来说的，比如在以后的文章里面，像链表这样的数据结构我也会配合Java中链表实现的容器来配合着说。</p>
-<p>Java提供了很棒的集合API和集合类如：ArrayList、HashMap，他们内部都是基于数组。java如果程序尝试访问无效的数组索引的话jvm会抛出ArrayIndexOutOfBoundException。</p>
-<h3 id="Java语言中，数组的实现原理是什么？"><a href="#Java语言中，数组的实现原理是什么？" class="headerlink" title="Java语言中，数组的实现原理是什么？"></a>Java语言中，数组的实现原理是什么？</h3><p>这个涉及到编译原理的问题，我只能说，这是一个编译规范。在规范中比如：int[]中的int告诉计算机这是一个整型数据，[]告诉计算机这是一个连续存储的内存地址空间，简单点说一个连续数据的存储空间就是数组，数组只是一个名称！！数组在Java里是一种特殊类型，有别于普通的“类的实例”的对象。   </p>
-<p>以HotSpot VM为例，答案是在数组对象的对象头里有一个length字段，记录数组长度。arraylength字节码的实现只要去读那个_length字段即可。JVM 中数组对象是一种特殊的对象，它的Object Header 比普通对象多了一个word 来存储数组的长度，length 会编译成对应的字节码读取这个field 就可以了。</p>
 <P class="note note-warning">如需转载，请提前联系作者，否则追究法律责任</P>
 
 <p> <strong><P class="note note-primary">这有5T资源，涵盖了java小白到架构师整个体系各种相关资源（视频、电子书、面试、简历、IDE破解等），更多文章请关注：</P></strong></p>
@@ -330,7 +373,9 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%93%E9%A2%98/">数据结构专题</a>
+                      <a class="hover-with-bg" href="/categories/Spring%E7%B3%BB%E5%88%97/">Spring系列</a>
+                    
+                      <a class="hover-with-bg" href="/categories/Spring%E7%B3%BB%E5%88%97/Springboot%E4%B8%93%E9%A2%98/">Springboot专题</a>
                     
                   </div>
                 
@@ -338,7 +383,9 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+                      <a class="hover-with-bg" href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">微服务</a>
+                    
+                      <a class="hover-with-bg" href="/tags/springboot/">springboot</a>
                     
                   </div>
                 
@@ -349,18 +396,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/02/26/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/Springboot2-x%E6%9C%80%E5%85%A8%E6%95%B4%E5%90%88%E7%B3%BB%E5%88%97/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Springboot2.x最全整合系列</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/02/04/%E5%89%8D%E7%AB%AF/%E6%9B%BE%E7%BB%8F%E9%A3%8E%E5%85%89%E6%97%A0%E9%99%90%E7%9A%84JSP%E6%8A%80%E6%9C%AF%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E7%8E%B0%E5%9C%A8%E5%BE%88%E5%B0%91%E6%9C%89%E4%BA%BA%E7%94%A8%E4%BA%86%EF%BC%9F/">
-                        <span class="hidden-mobile">曾经风光无限的JSP技术，为什么现在很少有人用了？</span>
+                      <a href="/2021/02/25/%E4%B8%80%E3%80%81%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%AD%E7%9A%84%E6%95%B0%E7%BB%84%EF%BC%8C%E4%BD%A0%E4%B9%9F%E8%AE%B8%E4%BA%86%E8%A7%A3%E7%9A%84%E5%B9%B6%E4%B8%8D%E5%85%A8%E9%9D%A2/">
+                        <span class="hidden-mobile">数据结构中的数组，你也许了解的并不全面</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

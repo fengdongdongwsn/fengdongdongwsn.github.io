@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>Springboot2.x最全整合系列</title>
+    <link href="/2021/02/26/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/Springboot2-x%E6%9C%80%E5%85%A8%E6%95%B4%E5%90%88%E7%B3%BB%E5%88%97/"/>
+    <url>/2021/02/26/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/Springboot2-x%E6%9C%80%E5%85%A8%E6%95%B4%E5%90%88%E7%B3%BB%E5%88%97/</url>
+    
+    <content type="html"><![CDATA[<blockquote><p><strong>出自公众号《愚公要移山》中，地址<a href="http://www.javachat.cc/">www.javachat.cc</a></strong></p></blockquote><h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a><strong>说明</strong></h2><p><strong>本文所有案例均采用SpringBoot2.x的最新版本进行演示。</strong></p><p>正逐渐对其进行分类汇总。。。</p><p>力图做一个没有bug的，最全案例！！！</p><h2 id="👨🏻‍💻-About-Me"><a href="#👨🏻‍💻-About-Me" class="headerlink" title="👨🏻‍💻 About Me"></a>👨🏻‍💻 About Me</h2><table><thead><tr><th>个人网站</th><th>公众号</th><th>掘金</th><th>知乎</th><th><strong>CSDN</strong></th><th><strong>头条</strong></th></tr></thead><tbody><tr><td><a href="https://www.javachat.cc/">点我直达</a></td><td><a href="https://imgchr.com/i/rJnbO1">点我直达</a></td><td><a href="https://juejin.cn/user/1978776660213837/posts">点我直达</a></td><td><a href="https://www.zhihu.com/people/feng-dong-dong-10">点我直达</a></td><td><a href="https://blog.csdn.net/SDDDLLL">点我直达</a></td><td><a href="https://www.toutiao.com/c/user/token/MS4wLjABAAAAfhLQnyWhG1iqEVx_lsnoX7cUOlluuJf07J368xBJ7jU/">点我直达</a></td></tr><tr><td><strong>百家号</strong></td><td><strong>Segmentfault</strong></td><td><strong>教程资源（5T）</strong></td><td><strong>架构师技术图谱</strong></td><td><strong>博客文章</strong></td><td></td></tr><tr><td><a href="https://author.baidu.com/home?from=bjh_article&app_id=1634941951856739">点我直达</a></td><td><a href="https://segmentfault.com/u/a_yugong">点我直达</a></td><td><a href="https://mp.weixin.qq.com/s/nIODGnCKFgs3BTZ9Qy5rHQ?scene=25#wechat_redirect">点我直达</a></td><td><a href="https://github.com/fengdongdongwsn/architect-java">点击直达</a></td><td><a href="https://mp.weixin.qq.com/s/wZ_4fy_F-NecMv3HO4Hfjw">点击直达</a></td><td></td></tr></tbody></table><h2 id="基础系列"><a href="#基础系列" class="headerlink" title="基础系列"></a>基础系列</h2><h3 id="一、Springboot基础配置"><a href="#一、Springboot基础配置" class="headerlink" title="一、Springboot基础配置"></a>一、Springboot基础配置</h3><p>1、Springboot搭建HelloWorld工程（跳过，不再重写）</p><p>2、IDEA常用开发插件推荐</p><p>3、IDEA环境热加载与热部署配置</p><p>4、Springboot整合Lombok</p><h3 id="二、web开发"><a href="#二、web开发" class="headerlink" title="二、web开发"></a>二、web开发</h3><p>1、Springboot整合swagger构建API文档</p><p>2、Springboot整合日志框架</p><p>3、Springboot实现文件上传下载问题</p><p>4、Springboot解决跨域问题的几种方式</p><p>5、Springboot整合模板引擎thymeleaf</p><p>6、Springboot整合Mokito接口测试</p><p>7、Springboot实现过滤器</p><p>8、Springboot实现拦截器</p><p>9、Springboot实现全局异常处理</p><p>10、Springboot实现定时任务</p><p>11、Springboot实现异步任务</p><p>12、Springboot实现邮件发送功能</p><p>13、Springboot整合websocket实现后端推送</p><p>14、Springboot整合websocket+netty实现聊天功能</p><h3 id="三、数据库相关整合"><a href="#三、数据库相关整合" class="headerlink" title="三、数据库相关整合"></a>三、数据库相关整合</h3><p>1、Springboot整合JDBC</p><p>2、Springboot整合JDBC+JTA实现分布式事务</p><p>3、Springboot整合Mybatis（全注解形式）</p><p>4、Springboot整合Mybatis（XML形式）</p><p>5、Springboot整合Mybatis多数据源</p><p>6、Springboot整合Mybatis+atomikos实现分布式事务</p><p>7、Springboot整合SpringData JPA</p><p>8、Springboot整合SpringData JPA多数据源</p><p>9、Springboot整合JPA+atomikos实现分布式事务</p><p>10、Springboot整合redis（jedis连接池）</p><p>11、Springboot整合redis（lettuce连接池）</p><p>12、Springboot整合redis集群</p><p>13、Springboot整合MongoDB（MongoRepository和MongoTemplate）</p><p>14、Springboot整合MongoDB集群</p><p>15、Springboot整合EhCache</p><p>16、Springboot整合ES</p><h3 id="四、常见框架整合"><a href="#四、常见框架整合" class="headerlink" title="四、常见框架整合"></a>四、常见框架整合</h3><p>1、Springboot整合Spring security</p><p>2、Springboot整合shiro</p><p>3、Springboot整合Kafka</p><p>4、Springboot整合RabbitMQ</p><p>5、Springboot集成Actuator实现应用程序监控</p><p>6、Springboot整合dubbo</p><p><code>未完。。。待续。。。</code></p><h2 id="进阶提升"><a href="#进阶提升" class="headerlink" title="进阶提升"></a>进阶提升</h2><p>还没想好，先写一个</p><p>1、Springboot常用注解梳理</p><blockquote><p><code>本文的每次更新都会在本地完全测试好。</code></p><p><code>本文项目地址：https://github.com/fengdongdongwsn/springboot-example</code></p></blockquote><P class="note note-warning">如需转载，请提前联系作者，否则追究法律责任</P><p> <strong><P class="note note-primary">这有5T资源，涵盖了java小白到架构师整个体系各种相关资源（视频、电子书、面试、简历、IDE破解等），更多文章请关注：</P></strong></p><p align="center"><img src="https://s3.ax1x.com/2020/12/18/rJnbO1.jpg" height="250" width="480" /></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Spring系列</category>
+      
+      <category>Springboot专题</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>微服务</tag>
+      
+      <tag>springboot</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>数据结构中的数组，你也许了解的并不全面</title>
     <link href="/2021/02/25/%E4%B8%80%E3%80%81%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%AD%E7%9A%84%E6%95%B0%E7%BB%84%EF%BC%8C%E4%BD%A0%E4%B9%9F%E8%AE%B8%E4%BA%86%E8%A7%A3%E7%9A%84%E5%B9%B6%E4%B8%8D%E5%85%A8%E9%9D%A2/"/>
     <url>/2021/02/25/%E4%B8%80%E3%80%81%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%AD%E7%9A%84%E6%95%B0%E7%BB%84%EF%BC%8C%E4%BD%A0%E4%B9%9F%E8%AE%B8%E4%BA%86%E8%A7%A3%E7%9A%84%E5%B9%B6%E4%B8%8D%E5%85%A8%E9%9D%A2/</url>
@@ -300,9 +329,9 @@
       
       <tag>高效java</tag>
       
-      <tag>面试</tag>
-      
       <tag>java基础</tag>
+      
+      <tag>面试</tag>
       
     </tags>
     
@@ -360,9 +389,9 @@
       
       <tag>高效java</tag>
       
-      <tag>面试</tag>
-      
       <tag>java基础</tag>
+      
+      <tag>面试</tag>
       
     </tags>
     
@@ -725,9 +754,9 @@
       
       <tag>高效java</tag>
       
-      <tag>面试</tag>
-      
       <tag>java基础</tag>
+      
+      <tag>面试</tag>
       
     </tags>
     
