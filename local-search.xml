@@ -8,9 +8,25 @@
     <link href="/2021/02/27/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/Springboot2-x%E6%9C%80%E5%85%A8%E6%95%B4%E5%90%88%E7%B3%BB%E5%88%97%E5%9F%BA%E7%A1%80%E7%AF%87%EF%BC%9AHelloWorld%E5%B7%A5%E7%A8%8B%E4%BB%8B%E7%BB%8D/"/>
     <url>/2021/02/27/%E4%BA%94%E3%80%81Spring%E7%B3%BB%E5%88%97/3%E3%80%81SpringBoot/Springboot2-x%E6%9C%80%E5%85%A8%E6%95%B4%E5%90%88%E7%B3%BB%E5%88%97%E5%9F%BA%E7%A1%80%E7%AF%87%EF%BC%9AHelloWorld%E5%B7%A5%E7%A8%8B%E4%BB%8B%E7%BB%8D/</url>
     
-    <content type="html"><![CDATA[<blockquote><p><strong>出自公众号《愚公要移山》中，地址<a href="http://www.javachat.cc/">www.javachat.cc</a></strong></p></blockquote><p>这里是正文</p><P class="note note-warning">如需转载，请提前联系作者，否则追究法律责任</P><p> <strong><P class="note note-primary">这有5T资源，涵盖了java小白到架构师整个体系各种相关资源（视频、电子书、面试、简历、IDE破解等），更多文章请关注：</P></strong></p><p align="center"><img src="https://s3.ax1x.com/2020/12/18/rJnbO1.jpg" height="250" width="480" /></p>]]></content>
+    <content type="html"><![CDATA[<blockquote><p><strong>出自公众号《愚公要移山》中，地址<a href="http://www.javachat.cc/">www.javachat.cc</a></strong></p></blockquote><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>SSM框架对于新手来说，往往死在配置，有时候你会发现即使按照教程一步一步走，最后还是会出错。Springboot的出现极大的解决了这个问题。本系列文章非教程文档，只是给大家提供一个完整的教程案例。概念问题建议自学。Springboot相关的教程或者是书籍已经非常多了。</p><blockquote><p>解决问题：本系列文章主要提供整合模板。不会拓展太多。方便查阅。</p><p>github地址：<a href="https://github.com/fengdongdongwsn/springboot-example">https://github.com/fengdongdongwsn/springboot-example</a></p><p>本系列基础部分约40篇</p><p>本系列进阶部分暂定</p></blockquote><h3 id="环境介绍"><a href="#环境介绍" class="headerlink" title="环境介绍"></a>环境介绍</h3><ul><li>java版本：java8</li><li>开发IDE：IDEA</li><li>Springboot版本：Springboot2.4.3</li><li>适用版本：Springboot2.x系列</li><li>maven版本：maven3.6.3</li></ul><p>OK，开始。</p><h2 id="一、创建springBoot-HelloWorld工程"><a href="#一、创建springBoot-HelloWorld工程" class="headerlink" title="一、创建springBoot-HelloWorld工程"></a>一、创建springBoot-HelloWorld工程</h2><h3 id="1、创建新工程"><a href="#1、创建新工程" class="headerlink" title="1、创建新工程"></a>1、创建新工程</h3><p>我创建了一个父子工程结构：</p><p><img src="https://s3.ax1x.com/2021/02/27/6p9jGn.png"></p><p>从上往下我们挨个分析：</p><p>（1）Spring Boot 的基础结构共三个文件夹:</p><ul><li>src/main/java：程序开发文件夹，我们的在这里写程序代码。</li><li>src/main/resources：配置文件</li><li>src/test/java：测试程序</li></ul><p>（2）src/main/java下的DemoApplication.java</p><p>主要作用就是主程序的入口，相当于main函数。</p><p>（3）src/main/resources下的static</p><p>里面保存了一些配置资源，比如图片等等。</p><p>（4）src/main/resources下的application.proties</p><p>它是全局配置文件，在这里定义一些接口的端口号等等各种信息。</p><p>（5）pom文件</p><p>这个文件极其重要，他定义了一些项目的依赖信息，</p><p>（6）其他的不重要我们这里就不说了</p><p>项目已经搭建好了，看基本案例。</p><h2 id="二、第一个SpringBoot案例"><a href="#二、第一个SpringBoot案例" class="headerlink" title="二、第一个SpringBoot案例"></a>二、第一个SpringBoot案例</h2><h3 id="第一步：我们在src-main-java文件夹下建立Controller包，新建HelloWorldController类"><a href="#第一步：我们在src-main-java文件夹下建立Controller包，新建HelloWorldController类" class="headerlink" title="第一步：我们在src/main/java文件夹下建立Controller包，新建HelloWorldController类"></a>第一步：我们在src/main/java文件夹下建立Controller包，新建HelloWorldController类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HelloWorld</span> </span>&#123;<br>    <span class="hljs-meta">@RequestMapping(&quot;/hello&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">hello</span><span class="hljs-params">(String name)</span></span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Hello World!&quot;</span>+name;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><h3 id="第二步：运行SpringbootHelloworldApplication"><a href="#第二步：运行SpringbootHelloworldApplication" class="headerlink" title="第二步：运行SpringbootHelloworldApplication"></a>第二步：运行SpringbootHelloworldApplication</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@SpringBootApplication</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SpringbootHelloworldApplication</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        SpringApplication.run(SpringbootHelloworldApplication.class, args);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><h3 id="第三步：在浏览器中直接访问"><a href="#第三步：在浏览器中直接访问" class="headerlink" title="第三步：在浏览器中直接访问"></a>第三步：在浏览器中直接访问</h3><p><img src="https://s3.ax1x.com/2021/02/27/6p9L5j.png"></p><p>OK，第一个案例完成。</p><h2 id="三、分析小例子"><a href="#三、分析小例子" class="headerlink" title="三、分析小例子"></a>三、分析小例子</h2><h3 id="1、pom-xml文件"><a href="#1、pom-xml文件" class="headerlink" title="1、pom.xml文件"></a>1、pom.xml文件</h3><p>给出最核心的一段：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span><br>    <span class="hljs-comment">&lt;!--web项目核心依赖--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-comment">&lt;!--测试依赖--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span><br></code></pre></td></tr></table></figure><p>也就是说我们在pom文件中的dependencies结构下，添加我们所需要的依赖就可以了。</p><h3 id="2、application-properties文件"><a href="#2、application-properties文件" class="headerlink" title="2、application.properties文件"></a>2、application.properties文件</h3><p>在上面添加完依赖之后，我们可以在这个文件添加一些配置，比如说我们的8080端口被占用，那么我们修改项目的端口是8888，或者是项目的根目录我们更改成test。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">server.port=<span class="hljs-number">8888</span><br>server.servlet.context-path=/test<br></code></pre></td></tr></table></figure><p>这个文件的配置超级多，这里只是给出一个案例来看一下怎么配，这个properties文件还可以修改为yml格式。</p><h3 id="3、controller、service等文件"><a href="#3、controller、service等文件" class="headerlink" title="3、controller、service等文件"></a>3、controller、service等文件</h3><p>对于我们具体的业务逻辑，我们只需要在相应的文件编码就可以和SSM框架一样。</p><p>这就是SpringBoot，用起来超级简单。对于SpringBoot和其他框架的整合文章也将陆续推出。</p><P class="note note-warning">如需转载，请提前联系作者，否则追究法律责任</P><p> <strong><P class="note note-primary">这有5T资源，涵盖了java小白到架构师整个体系各种相关资源（视频、电子书、面试、简历、IDE破解等），更多文章请关注：</P></strong></p><p align="center"><img src="https://s3.ax1x.com/2020/12/18/rJnbO1.jpg" height="250" width="480" /></p>]]></content>
     
     
+    <categories>
+      
+      <category>Spring系列</category>
+      
+      <category>Springboot专题</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>微服务</tag>
+      
+      <tag>springboot</tag>
+      
+    </tags>
     
   </entry>
   
@@ -143,9 +159,9 @@
     
     <tags>
       
-      <tag>多线程</tag>
-      
       <tag>java基础</tag>
+      
+      <tag>多线程</tag>
       
     </tags>
     
@@ -172,9 +188,9 @@
     
     <tags>
       
-      <tag>多线程</tag>
-      
       <tag>java基础</tag>
+      
+      <tag>多线程</tag>
       
     </tags>
     
@@ -431,9 +447,9 @@
     
     <tags>
       
-      <tag>多线程</tag>
-      
       <tag>java基础</tag>
+      
+      <tag>多线程</tag>
       
     </tags>
     
@@ -487,9 +503,9 @@
     
     <tags>
       
-      <tag>多线程</tag>
-      
       <tag>java基础</tag>
+      
+      <tag>多线程</tag>
       
     </tags>
     
